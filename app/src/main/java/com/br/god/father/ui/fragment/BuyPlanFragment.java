@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import god.zup.com.br.godfatherapp.R;
+import com.br.god.father.R;
+
 
 public class BuyPlanFragment extends Fragment {
 

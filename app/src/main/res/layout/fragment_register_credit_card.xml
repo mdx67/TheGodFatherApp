@@ -5,25 +5,13 @@
     android:visibility="visible">
 
     <EditText
-        android:id="@+id/etAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Endereço"
-        android:layout_below="@+id/etEmail"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp"
-        android:layout_alignParentEnd="true" />
-
-    <EditText
         android:id="@+id/etName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Nome"
+        android:hint="Numero cartão"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -35,7 +23,7 @@
         android:layout_marginTop="19dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Telefone"
+        android:hint="Validade"
         android:layout_below="@+id/etName"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
@@ -46,14 +34,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Email"
+        android:hint="Código segurança"
         android:layout_marginTop="19dp"
         android:layout_below="@+id/etPhone"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/btNext"
+        android:id="@+id/btCrediCardRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -61,5 +49,5 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="26dp"
         android:onClick="next"
-        android:text="Próximo" />
+        android:text="Cadastrar" />
 </RelativeLayout>

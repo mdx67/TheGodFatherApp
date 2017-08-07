@@ -2,22 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_item_plan"
-            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="Plano" />
+        <!--<item-->
+            <!--android:id="@+id/nav_item_plan"-->
+            <!--android:icon="@drawable/ic_account_balance_wallet_black_24dp"-->
+            <!--android:title="Plano" />-->
         <item
         android:id="@+id/nav_register_customer"
         android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-        android:title="Reg. Cliente" />
+        android:title="Cad. Cliente" />
         <!--<item-->
         <!--android:id="@+id/nav_slideshow"-->
         <!--android:icon="@drawable/ic_menu_slideshow"-->
         <!--android:title="Slideshow" />-->
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Settings" />
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Settings" />-->
     </group>
 
 </menu>

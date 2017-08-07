@@ -1,4 +1,4 @@
-package god.zup.com.br.godfatherapp;
+package com.br.god.father;
 
 import org.junit.Test;
 

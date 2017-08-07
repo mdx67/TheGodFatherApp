@@ -1,4 +1,4 @@
-package god.zup.com.br.godfatherapp;
+package com.br.god.father;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("god.zup.com.br.godfatherapp", appContext.getPackageName());
+        assertEquals("com.br.god.father", appContext.getPackageName());
     }
 }
