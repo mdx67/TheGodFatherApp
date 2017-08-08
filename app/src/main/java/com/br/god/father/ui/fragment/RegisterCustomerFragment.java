@@ -3,6 +3,7 @@ package com.br.god.father.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.br.god.father.model.Customer;
 import com.br.god.father.model.Document;
 import com.br.god.father.model.Zns;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.Constants;
 
 import java.util.Arrays;
 
@@ -31,14 +33,13 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RegisterCustomerFragment extends Fragment {
 
-    @BindView(R.id.bt_next)
-    Button buttonNext;
+    @BindView(R.id.bt_register_customer)
+    Button registerCustomerButton;
 
     EditText etName, etUserId, etDocumentNumber, etAddressStreet, etAddressNumber, etAddressDistinct, etAddressPostalCode;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static RegisterCustomerFragment newInstance() {
+        return new RegisterCustomerFragment();
     }
 
     @Nullable
@@ -55,27 +56,15 @@ public class RegisterCustomerFragment extends Fragment {
         return view;
     }
 
+    @OnClick(R.id.bt_register_customer)
+    public void onClickBtRegisterCustomer() {
+        registerCustomer(buildCustomer());
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         MainActivity.toolbar.setTitle("God Father App");
-    }
-
-    @OnClick(R.id.bt_next)
-    public void onClickBtNext() {
-//        buildCustomer();
-
-        registerCustomer();
-
-//        RegisterCreditCardFragment fragment = RegisterCreditCardFragment.newInstance();
-//
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("customer", buildCustomer());
-//        fragment.setArguments(bundle);
-//
-//        ((MainActivity) getActivity()).replaceFragment(fragment);
-//        ((MainActivity) getActivity()).getSupportActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
     }
 
     private Customer buildCustomer() {
@@ -118,37 +107,35 @@ public class RegisterCustomerFragment extends Fragment {
         etDocumentNumber = view.findViewById(R.id.et_document_number);
     }
 
-    public void registerCustomer() {
+    public void registerCustomer(Customer customer) {
         try {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.5.195:8882").addConverterFactory(JacksonConverterFactory.create()).build();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE).addConverterFactory(JacksonConverterFactory.create()).build();
 
-            Call call1 = retrofit.create(Connection.class).registerCustomer(buildCustomer());
+            Call call1 = retrofit.create(Connection.class).registerCustomer(customer);
 
             call1.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {
-                    Customer respCustomer = (Customer) response.body();
-
                     if (response.code() == 200) {
+                        Log.i("RegisterCustomerReturn:", response.body().toString());
 
-                        ((MainActivity) getActivity()).removeContent(RegisterCreditCardFragment.newInstance());
+                        ((MainActivity) getActivity()).removeContent(RegisterCustomerFragment.newInstance());
 
-                        Toast.makeText(getActivity(), "Cliente cadastrados!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Cliente cadastrado com sucesso!", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getActivity(), "Falha no cadastro!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Falha no cadastro.", Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call call, Throwable t) {
                     call.cancel();
-                    Toast.makeText(getActivity(), "Erro na requisição!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Erro na requisição.", Toast.LENGTH_LONG).show();
                 }
             });
-
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getActivity(), "Erro ao tentar fazer a chamada!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Erro ao tentar fazer a chamada.", Toast.LENGTH_LONG).show();
         }
     }
 }

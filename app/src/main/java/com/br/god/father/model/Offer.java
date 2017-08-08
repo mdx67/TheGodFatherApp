@@ -1,16 +1,17 @@
 package com.br.god.father.model;
 
-import java.util.Set;
+import java.util.List;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Offer {
 
-    private String catalogOfferId;
-    private String catalogOfferType;
+    private String id;
+    private String type;
     private Integer validity;
-    private Set<OfferItem> offerItems;
-
+    private List<OfferItem> items;
 
 }

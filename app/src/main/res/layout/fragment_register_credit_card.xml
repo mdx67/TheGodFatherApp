@@ -13,18 +13,26 @@
         android:ems="10"
         android:hint="Numero cartão"
         android:inputType="textPersonName"
-        android:text="5555444455554444" />
+        android:text="5555444455554444"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/et_credit_card_validation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_credit_card_number"
         android:layout_marginTop="19dp"
         android:ems="10"
         android:hint="Validade"
         android:inputType="textPersonName"
-        android:text="04/2020" />
+        android:text="04/2020"
+        android:layout_below="@+id/et_credit_card_number"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <EditText
         android:id="@+id/et_credit_card_cvv"
@@ -35,14 +43,22 @@
         android:ems="10"
         android:hint="Código segurança"
         android:inputType="textPersonName"
-        android:text="123" />
+        android:text="123"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/btCrediCardRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="26dp"
         android:onClick="next"
-        android:text="Cadastrar" />
+        android:text="Cadastrar"
+        android:layout_below="@+id/et_credit_card_cvv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="26dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

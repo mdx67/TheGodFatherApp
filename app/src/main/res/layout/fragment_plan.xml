@@ -4,40 +4,28 @@
     android:orientation="vertical"
     android:visibility="visible">
 
-    <EditText
-        android:id="@+id/etPlanName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        android:layout_alignParentTop="true" />
-
     <Button
-        android:id="@+id/btPlanOne"
+        android:id="@+id/bt_plan_one"
         android:layout_width="160dp"
         android:layout_height="80dp"
+        android:layout_marginTop="73dp"
         android:text="Plano 29,90"
-        android:layout_marginTop="114dp"
-        android:layout_below="@+id/etPlanName"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/btPlanTwo"
+        android:id="@+id/bt_plan_two"
         android:layout_width="160dp"
         android:layout_height="80dp"
+        android:layout_marginTop="42dp"
         android:text="Plano 39,90"
-        android:layout_marginTop="59dp"
-        android:layout_below="@+id/btPlanOne" />
+        android:layout_below="@+id/bt_plan_one"
+        android:layout_alignLeft="@+id/bt_plan_one"
+        android:layout_alignStart="@+id/bt_plan_one"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <EditText
-        android:id="@+id/etPlanEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etPlanName"
-        android:layout_marginTop="11dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Email" />
 </RelativeLayout>
