@@ -5,14 +5,39 @@
     android:visibility="visible">
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/etPlanName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="29dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        android:layout_marginStart="29dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/btPlanOne"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:text="Plano 29,90"
+        android:layout_marginTop="114dp"
+        android:layout_below="@+id/etPlanName"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btPlanTwo"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:text="Plano 39,90"
+        android:layout_marginTop="59dp"
+        android:layout_below="@+id/btPlanOne" />
+
+    <EditText
+        android:id="@+id/etPlanEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPlanName"
+        android:layout_marginTop="11dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Email" />
 </RelativeLayout>

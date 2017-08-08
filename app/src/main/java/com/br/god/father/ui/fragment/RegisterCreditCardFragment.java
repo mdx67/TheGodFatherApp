@@ -32,7 +32,7 @@ public class RegisterCreditCardFragment extends Fragment {
 
     EditText etNumber, etValidate, etCvv;
 
-    private Customer customer;
+    private CreditCard creditCard;
 
     public static RegisterCreditCardFragment newInstance() {
         return new RegisterCreditCardFragment();
@@ -45,9 +45,6 @@ public class RegisterCreditCardFragment extends Fragment {
 
         ButterKnife.bind(this, view);
         MainActivity.toolbar.setTitle("Cad. Cartão");
-
-        Bundle args = getArguments();
-        customer = (Customer) args.getSerializable("customer");
 
         idenfityFields(view);
 
@@ -62,31 +59,34 @@ public class RegisterCreditCardFragment extends Fragment {
     }
 
     private void idenfityFields(View view) {
-        etNumber = view.findViewById(R.id.etName);
-        etValidate = view.findViewById(R.id.etEmail);
-        etCvv = view.findViewById(R.id.etPhone);
+        etNumber = view.findViewById(R.id.et_credit_card_number);
+        etValidate = view.findViewById(R.id.et_credit_card_validation);
+        etCvv = view.findViewById(R.id.et_credit_card_cvv);
     }
 
     private void buildCreditCard() {
-        customer.setCreditCard(new CreditCard(etNumber.getText().toString(), etValidate.getText().toString(), etCvv.getText().toString()));
+        creditCard = new CreditCard(etNumber.getText().toString(), etValidate.getText().toString(), etCvv.getText().toString());
     }
 
     public void registerCustomer() {
         try {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://172.20.48.1:3000").addConverterFactory(JacksonConverterFactory.create()).build();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.5.195:8882").addConverterFactory(JacksonConverterFactory.create()).build();
 
-            Connection connection = retrofit.create(Connection.class);
-
-            Call call1 = connection.registerCustomer();
+            Call call1 = retrofit.create(Connection.class).registerCreditCard(creditCard);
 
             call1.enqueue(new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {
-                    Customer respCustomer = (Customer) response.body();
+                    CreditCard resp = (CreditCard) response.body();
 
-                    ((MainActivity) getActivity()).removeContent(RegisterCreditCardFragment.newInstance());
+                    if (response.code() == 200) {
 
-                    Toast.makeText(getActivity(), "Cliente e cartão cadastrados!", Toast.LENGTH_LONG).show();
+                        ((MainActivity) getActivity()).removeContent(RegisterCreditCardFragment.newInstance());
+
+                        Toast.makeText(getActivity(), "Cartão cadastrado!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Falha no cadastro!", Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 @Override

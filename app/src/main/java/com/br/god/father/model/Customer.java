@@ -3,6 +3,7 @@ package com.br.god.father.model;
 import android.support.annotation.Nullable;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.Data;
 
@@ -10,12 +11,12 @@ import lombok.Data;
 public class Customer implements Serializable {
 
     @Nullable
-    private Long id;
-    private String name;
-    private String email;
-    private String address;
-    private String phone;
-    private CreditCard creditCard;
+    private String personType;
+    private String fullName;
+    private String country;
+    private List<Document> documents;
+    private List<Address> addresses;
+    private Zns zns;
 
     public Customer() {
     }

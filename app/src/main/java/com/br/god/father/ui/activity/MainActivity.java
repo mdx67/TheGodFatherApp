@@ -13,13 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.br.god.father.R;
-import com.br.god.father.connection.WalletConnectionImpl;
-import com.br.god.father.model.Customer;
 import com.br.god.father.ui.fragment.BuyPlanFragment;
+import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.SettingsFragment;
-
-import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -104,12 +100,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Class fragmentClass;
 
         switch (menuItem.getItemId()) {
-//            case R.id.nav_item_plan:
-//                fragmentClass = BuyPlanFragment.class;
-//                break;
             case R.id.nav_register_customer:
                 fragmentClass = RegisterCustomerFragment.class;
                 break;
+            case R.id.nav_register_creditCard:
+                fragmentClass = RegisterCreditCardFragment.class;
+                break;
+            case R.id.nav_plan:
+                fragmentClass = BuyPlanFragment.class;
+                break;
+
             default:
                 return true;
         }
