@@ -5,58 +5,88 @@
     android:visibility="visible">
 
     <EditText
-        android:id="@+id/et_credit_card_number"
+        android:id="@+id/et_credit_card_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="18dp"
         android:ems="10"
-        android:hint="Numero cartão"
+        android:hint="Holder"
         android:inputType="textPersonName"
-        android:text="5555444455554444"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:text="Filipe" />
 
     <EditText
-        android:id="@+id/et_credit_card_validation"
+        android:id="@+id/et_credit_card_bin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Validade"
-        android:text="04/2020"
-        android:layout_below="@+id/et_credit_card_number"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_credit_card_holder"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:hint="bin"
+        android:text="123455" />
 
     <EditText
-        android:id="@+id/et_credit_card_cvv"
+        android:id="@+id/et_credit_card_last_digits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_credit_card_validation"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Código segurança"
-        android:text="123"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_credit_card_bin"
+        android:layout_marginTop="19dp"
+        android:ems="10"
+        android:hint="ultimos digitos"
+        android:text="1234" />
 
     <Button
-        android:id="@+id/btCrediCardRegister"
+        android:id="@+id/bt_credit_card_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="next"
         android:text="Cadastrar"
-        android:layout_below="@+id/et_credit_card_cvv"
+        android:layout_below="@+id/et_credit_card_brand"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="28dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/et_credit_card_expiration_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_credit_card_last_digits"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Data de validade"
+        android:inputType="textPersonName"
+        android:text="0128" />
+
+    <EditText
+        android:id="@+id/et_credit_card_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Bandeira"
+        android:inputType="textPersonName"
+        android:text="AMEX"
+        android:layout_below="@+id/et_credit_card_expiration_date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>

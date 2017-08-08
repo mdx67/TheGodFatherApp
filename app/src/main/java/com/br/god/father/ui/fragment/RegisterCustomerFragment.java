@@ -2,14 +2,11 @@ package com.br.god.father.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.Connection;
@@ -22,7 +19,6 @@ import com.br.god.father.utils.Constants;
 
 import java.util.Arrays;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -31,10 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class RegisterCustomerFragment extends Fragment {
-
-    @BindView(R.id.bt_register_customer)
-    Button registerCustomerButton;
+public class RegisterCustomerFragment extends BaseFragment {
 
     EditText etName, etUserId, etDocumentNumber, etAddressStreet, etAddressNumber, etAddressDistinct, etAddressPostalCode;
 
@@ -103,39 +96,33 @@ public class RegisterCustomerFragment extends Fragment {
         etAddressNumber = view.findViewById(R.id.et_address_number);
         etAddressDistinct = view.findViewById(R.id.et_address_complement);
         etAddressPostalCode = view.findViewById(R.id.et_address_postal_code);
-
         etDocumentNumber = view.findViewById(R.id.et_document_number);
     }
 
     public void registerCustomer(Customer customer) {
-        try {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE).addConverterFactory(JacksonConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE_WALLET).addConverterFactory(JacksonConverterFactory.create()).build();
 
-            Call call1 = retrofit.create(Connection.class).registerCustomer(customer);
+        Call call1 = retrofit.create(Connection.class).registerCustomer(customer);
 
-            call1.enqueue(new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) {
-                    if (response.code() == 200) {
-                        Log.i("RegisterCustomerReturn:", response.body().toString());
+        call1.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.code() == 200) {
+                    Log.i("RegisterCustomerReturn:", response.body().toString());
 
-                        ((MainActivity) getActivity()).removeContent(RegisterCustomerFragment.newInstance());
+                    ((MainActivity) getActivity()).removeContent(RegisterCustomerFragment.newInstance());
 
-                        Toast.makeText(getActivity(), "Cliente cadastrado com sucesso!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Falha no cadastro.", Toast.LENGTH_LONG).show();
-                    }
+                    showMessage("Cliente cadastrado com sucesso!");
+                } else {
+                    showMessage("Falha no cadastro.");
                 }
+            }
 
-                @Override
-                public void onFailure(Call call, Throwable t) {
-                    call.cancel();
-                    Toast.makeText(getActivity(), "Erro na requisição.", Toast.LENGTH_LONG).show();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getActivity(), "Erro ao tentar fazer a chamada.", Toast.LENGTH_LONG).show();
-        }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                call.cancel();
+                showMessage("Erro ao realizar requisição.");
+            }
+        });
     }
 }

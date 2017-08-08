@@ -2,14 +2,11 @@ package com.br.god.father.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.Connection;
@@ -17,7 +14,6 @@ import com.br.god.father.model.CreditCard;
 import com.br.god.father.ui.activity.MainActivity;
 import com.br.god.father.utils.Constants;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -26,12 +22,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-public class RegisterCreditCardFragment extends Fragment {
+public class RegisterCreditCardFragment extends BaseFragment {
 
-    @BindView(R.id.btCrediCardRegister)
-    Button buttonCreditCardRegister;
-
-    EditText etNumber, etValidate, etCvv;
+    EditText etHolderName, etBin, etLastDigits, etExpirationDate, etBrand;
 
     public static RegisterCreditCardFragment newInstance() {
         return new RegisterCreditCardFragment();
@@ -50,58 +43,49 @@ public class RegisterCreditCardFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.btCrediCardRegister)
+    @OnClick(R.id.bt_credit_card_register)
     public void onClickBtCrediCardRegister() {
         CreditCard creditCard = buildCreditCard();
 
-        registerCustomer(creditCard);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MainActivity.toolbar.setTitle("God Father App");
+        register(creditCard);
     }
 
     private void idenfityFields(View view) {
-        etNumber = view.findViewById(R.id.et_credit_card_number);
-        etValidate = view.findViewById(R.id.et_credit_card_validation);
-        etCvv = view.findViewById(R.id.et_credit_card_cvv);
+        etHolderName = view.findViewById(R.id.et_credit_card_holder);
+        etBin = view.findViewById(R.id.et_credit_card_bin);
+        etLastDigits = view.findViewById(R.id.et_credit_card_last_digits);
+        etExpirationDate = view.findViewById(R.id.et_credit_card_expiration_date);
+        etBrand = view.findViewById(R.id.et_credit_card_brand);
     }
 
     private CreditCard buildCreditCard() {
-        return new CreditCard(etNumber.getText().toString(), etValidate.getText().toString(), etCvv.getText().toString());
+        return new CreditCard("EXTERNAL_CREDIT_CARD", etHolderName.getText().toString(), etBin.getText().toString(), etLastDigits.getText().toString(), etExpirationDate.getText().toString(), etBrand.getText().toString(), "ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL");
     }
 
-    public void registerCustomer(CreditCard creditCard) {
-        try {
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE).addConverterFactory(JacksonConverterFactory.create()).build();
+    public void register(CreditCard creditCard) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE_WALLET).addConverterFactory(JacksonConverterFactory.create()).build();
 
-            Call call1 = retrofit.create(Connection.class).registerCreditCard(creditCard);
+        Call call1 = retrofit.create(Connection.class).registerCreditCard(creditCard);
 
-            call1.enqueue(new Callback() {
-                @Override
-                public void onResponse(Call call, Response response) {
-                    if (response.code() == 200) {
-                        Log.i("CreditCardReturn:", response.body().toString());
+        call1.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.code() == 200) {
+                    Log.i("CreditCardReturn:", response.body().toString());
 
-                        ((MainActivity) getActivity()).removeContent(RegisterCreditCardFragment.newInstance());
+                    ((MainActivity) getActivity()).removeContent(RegisterCreditCardFragment.newInstance());
 
-                        Toast.makeText(getActivity(), "Cartão cadastrado com sucesso!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Falha no cadastro.", Toast.LENGTH_LONG).show();
-                    }
+                    showMessage("Cartão cadastrado com sucesso!");
+                } else {
+                    showMessage("Falha no cadastro.");
                 }
+            }
 
-                @Override
-                public void onFailure(Call call, Throwable t) {
-                    call.cancel();
-                    Toast.makeText(getActivity(), "Erro na requisição.", Toast.LENGTH_LONG).show();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getActivity(), "Erro ao tentar fazer a chamada.", Toast.LENGTH_LONG).show();
-        }
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                call.cancel();
+                showMessage("Erro ao realizar requisição.");
+            }
+        });
     }
 }
