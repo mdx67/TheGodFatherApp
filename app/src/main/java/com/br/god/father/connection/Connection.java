@@ -1,5 +1,6 @@
 package com.br.god.father.connection;
 
+import com.br.god.father.model.Authorization;
 import com.br.god.father.model.CreditCard;
 import com.br.god.father.model.Customer;
 import com.br.god.father.model.Subscription;
@@ -22,5 +23,9 @@ public interface Connection {
     @Headers({"Content-Type: application/json"})
     @POST("/mobile/register/plan")
     Call<Subscription> subscriptionPlan(@Body Subscription subscription);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("/mobile/authorize")
+    Call<Authorization> authorize(@Body Authorization authorization);
 
 }

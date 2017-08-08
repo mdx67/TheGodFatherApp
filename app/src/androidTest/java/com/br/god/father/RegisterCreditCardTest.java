@@ -40,7 +40,13 @@ public class RegisterCreditCardTest {
 
     @Before
     public void setUp() {
-        creditCard = new CreditCard("5555444455554444", "04/2020", "123");
+        creditCard = new CreditCard("EXTERNAL_CREDIT_CARD",
+                "Filipe",
+                "123455",
+                "1234",
+                "0128",
+                "AMEX",
+                "ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL");
     }
 
     public static Matcher<View> navigationIconMatcher() {
@@ -54,14 +60,18 @@ public class RegisterCreditCardTest {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Cad. Cartão")).perform(click());
 
-        onView(withId(R.id.et_credit_card_number))
-                .perform(typeText(creditCard.getNumber()), closeSoftKeyboard());
-        onView(withId(R.id.et_credit_card_validation))
-                .perform(typeText(creditCard.getValidationDate()), closeSoftKeyboard());
-        onView(withId(R.id.et_credit_card_cvv))
-                .perform(typeText(creditCard.getCvv()), closeSoftKeyboard());
+        onView(withId(R.id.et_credit_card_holder))
+                .perform(typeText(creditCard.getCardHolderName()), closeSoftKeyboard());
+        onView(withId(R.id.et_credit_card_bin))
+                .perform(typeText(creditCard.getBin()), closeSoftKeyboard());
+        onView(withId(R.id.et_credit_card_last_digits))
+                .perform(typeText(creditCard.getLastDigits()), closeSoftKeyboard());
+        onView(withId(R.id.et_credit_card_expiration_date))
+                .perform(typeText(creditCard.getExpirationDate()), closeSoftKeyboard());
+        onView(withId(R.id.et_credit_card_brand))
+                .perform(typeText(creditCard.getBrand()), closeSoftKeyboard());
 
-        onView(withId(R.id.btCrediCardRegister)).perform(click());
+        onView(withId(R.id.bt_credit_card_register)).perform(click());
 
         onView(withText(CreditCardSuccessSave))
                 .inRoot(new ToastMatcher())

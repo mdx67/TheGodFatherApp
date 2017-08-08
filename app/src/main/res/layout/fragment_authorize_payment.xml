@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/et_authorize_intent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Intenção"
+        android:inputType="textPersonName"
+        android:text="AUTHORIZE" />
+
+    <EditText
+        android:id="@+id/et_authorize_external_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_authorize_intent"
+        android:ems="10"
+        android:hint="External ID"
+        android:inputType="textPersonName"
+        android:text="YOUR_TRANSACTION_ID" />
+
+    <EditText
+        android:id="@+id/et_authorize_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_authorize_external_id"
+        android:ems="10"
+        android:hint="Preço"
+        android:inputType="textPersonName"
+        android:text="199" />
+
+    <EditText
+        android:id="@+id/et_authorize_item_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Código item"
+        android:inputType="textPersonName"
+        android:text="CODE-PRODUCT-001"
+        android:layout_marginTop="19dp"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/et_authorize_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_authorize_item_code"
+        android:ems="10"
+        android:hint="Nome item"
+        android:inputType="textPersonName"
+        android:text="100 min outras operadoras" />
+
+    <EditText
+        android:id="@+id/et_authorize_item_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_authorize_item_name"
+        android:ems="10"
+        android:hint="Quantidade"
+        android:inputType="textPersonName"
+        android:text="1" />
+
+    <EditText
+        android:id="@+id/et_authorize_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_authorize_item_quantity"
+        android:ems="10"
+        android:hint="Preço item"
+        android:inputType="textPersonName"
+        android:text="199" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_authorize_price"
+        android:layout_marginTop="28dp"
+        android:text="Item:"
+        android:layout_marginLeft="15dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/bt_authorize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_authorize_item_price"
+        android:layout_marginTop="18dp"
+        android:text="Authorizar" />
+
+</RelativeLayout>
