@@ -27,8 +27,7 @@
                 android:layout_marginTop="21dp"
                 android:ems="10"
                 android:hint="UserId"
-                android:inputType="textPersonName"
-                android:text="123" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_address_number"
@@ -38,8 +37,7 @@
                 android:layout_marginTop="18dp"
                 android:ems="10"
                 android:hint="Número"
-                android:inputType="textPersonName"
-                android:text="470" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_name"
@@ -53,8 +51,7 @@
                 android:layout_marginTop="18dp"
                 android:ems="10"
                 android:hint="Nome"
-                android:inputType="textPersonName"
-                android:text="Fulano" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_address_street"
@@ -68,8 +65,7 @@
                 android:layout_marginTop="19dp"
                 android:ems="10"
                 android:hint="Endereço"
-                android:inputType="textPersonName"
-                android:text="Max Colim" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_document_number"
@@ -83,8 +79,7 @@
                 android:layout_marginTop="19dp"
                 android:ems="10"
                 android:hint="Numero documento"
-                android:inputType="textPersonName"
-                android:text="000000000" />
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/bt_register_customer"
@@ -111,8 +106,7 @@
                 android:layout_marginTop="19dp"
                 android:ems="10"
                 android:hint="CEP"
-                android:inputType="textPersonName"
-                android:text="89204040" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_address_complement"
@@ -125,8 +119,7 @@
                 android:layout_toRightOf="@+id/et_address_number"
                 android:ems="10"
                 android:hint="Complemento"
-                android:inputType="textPersonName"
-                android:text="America" />
+                android:inputType="textPersonName" />
         </RelativeLayout>
     </ScrollView>
 
