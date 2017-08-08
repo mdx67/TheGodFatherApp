@@ -21,7 +21,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -44,7 +46,7 @@ public class RegisterCustomerTest {
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     private Customer customer;
-    private final String CustomerSuccessSave = "Cliente cadastrado com sucesso!";
+    private final String customerSuccessSave = "Cliente cadastrado com sucesso!";
 
     @Before
     public void setUp(){
@@ -52,23 +54,17 @@ public class RegisterCustomerTest {
         Document document = new Document();
         document.setNumber("000000000");
 
-        List<Document> documentList = new ArrayList<>();
-        documentList.add(document);
-
         Address address = new Address();
         address.setStreet("Max Colim");
         address.setNumber("470");
         address.setDistrict("America");
         address.setZipCode("89204040");
 
-        List<Address> addressList = new ArrayList<>();
-        addressList.add(address);
-
         customer = new Customer();
         customer.setFullName("Fulano");
         customer.setZns(zns);
-        customer.setDocuments(documentList);
-        customer.setAddresses(addressList);
+        customer.setDocuments(Arrays.asList(document));
+        customer.setAddresses(Arrays.asList(address));
 
     }
 
@@ -79,7 +75,7 @@ public class RegisterCustomerTest {
     }
 
     @Test
-    public void registeCustomer() throws InterruptedException {
+    public void registerCustomer() throws InterruptedException {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Cad. Cliente")).perform(click());
 
@@ -100,13 +96,13 @@ public class RegisterCustomerTest {
 
         onView(withId(R.id.bt_register_customer)).perform(click());
 
-        onView(withText(CustomerSuccessSave))
+        onView(withText(customerSuccessSave))
                 .inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
 
-        onView(withText(CustomerSuccessSave))
+        onView(withText(customerSuccessSave))
                 .inRoot(new ToastMatcher())
-                .check(matches(withText(CustomerSuccessSave)));
+                .check(matches(withText(customerSuccessSave)));
     }
 
 }

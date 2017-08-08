@@ -36,7 +36,7 @@ public class RegisterCreditCardTest {
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     private CreditCard creditCard;
-    private final String CreditCardSuccessSave = "Cartão cadastrado com sucesso!";
+    private final String creditCardSuccessSave = "Cartão cadastrado com sucesso!";
 
     @Before
     public void setUp() {
@@ -56,7 +56,7 @@ public class RegisterCreditCardTest {
     }
 
     @Test
-    public void registeCreditCad() throws InterruptedException {
+    public void registerCreditCad() throws InterruptedException {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Cad. Cartão")).perform(click());
 
@@ -73,12 +73,12 @@ public class RegisterCreditCardTest {
 
         onView(withId(R.id.bt_credit_card_register)).perform(click());
 
-        onView(withText(CreditCardSuccessSave))
+        onView(withText(creditCardSuccessSave))
                 .inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
 
-        onView(withText(CreditCardSuccessSave))
+        onView(withText(creditCardSuccessSave))
                 .inRoot(new ToastMatcher())
-                .check(matches(withText(CreditCardSuccessSave)));
+                .check(matches(withText(creditCardSuccessSave)));
     }
 }
