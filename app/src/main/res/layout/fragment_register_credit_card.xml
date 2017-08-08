@@ -26,13 +26,12 @@
         android:layout_marginTop="19dp"
         android:ems="10"
         android:hint="Validade"
-        android:inputType="textPersonName"
         android:text="04/2020"
         android:layout_below="@+id/et_credit_card_number"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/et_credit_card_cvv"
@@ -42,7 +41,6 @@
         android:layout_marginTop="19dp"
         android:ems="10"
         android:hint="Código segurança"
-        android:inputType="textPersonName"
         android:text="123"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
