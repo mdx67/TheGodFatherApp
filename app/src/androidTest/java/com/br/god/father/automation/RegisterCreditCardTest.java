@@ -1,5 +1,7 @@
 package com.br.god.father.automation;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -52,6 +54,8 @@ public class RegisterCreditCardTest {
 
     @Test
     public void registerCreditCad() throws InterruptedException {
+
+        Activity activity = mainActivityRule.getActivity();
         CreditCard creditCard = AbstractAutomationMock.getCreditCard();
 
         onView(navigationIconMatcher()).perform(click());
@@ -67,6 +71,12 @@ public class RegisterCreditCardTest {
                 .perform(typeText(creditCard.getExpirationDate()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_brand))
                 .perform(typeText(creditCard.getBrand()), closeSoftKeyboard());
+
+        SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
+        String custumerId = settings.getString("customerId", null);
+
+        onView(withId(R.id.et_custumer_id))
+                .perform(typeText(custumerId), closeSoftKeyboard());
 
         onView(withId(R.id.bt_credit_card_register)).perform(click());
 

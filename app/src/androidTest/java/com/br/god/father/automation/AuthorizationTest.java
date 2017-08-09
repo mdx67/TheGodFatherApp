@@ -42,26 +42,7 @@ public class AuthorizationTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private Authorization authorization = new Authorization();
     private final String authorizationSuccessSave = "Autorizado com sucesso!";
-
-    @Before
-    public void setUp() {
-
-        TransactionItem item = new TransactionItem();
-        item.setCode("CODE-PRODUCT-001");
-        item.setName("100 min outras operadoras");
-        item.setPrice(new Money("BRL", 199, 2));
-        item.setQuantity(1);
-
-        Transaction transaction = new Transaction();
-        transaction.setPrice(new Money("BRL", 199, 2));
-        transaction.setExternalId("YOUR_TRANSACTION_ID");
-        transaction.setItems(Arrays.asList(item));
-
-        authorization.setIntent("CAPTURE");
-        authorization.setTransaction(transaction);
-    }
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -73,6 +54,8 @@ public class AuthorizationTest {
     public void registerAuthorization() throws InterruptedException {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Autorização")).perform(click());
+
+        Authorization authorization = AbstractAutomationMock.getAuthorization();
 
         onView(ViewMatchers.withId(R.id.et_authorize_intent))
                 .perform(typeText(authorization.getIntent()), closeSoftKeyboard());
