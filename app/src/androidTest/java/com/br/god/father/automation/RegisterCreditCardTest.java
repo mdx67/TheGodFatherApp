@@ -1,5 +1,6 @@
-package com.br.god.father;
+package com.br.god.father.automation;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.br.god.father.R;
 import com.br.god.father.model.CreditCard;
 import com.br.god.father.ui.activity.MainActivity;
 
@@ -35,18 +37,11 @@ public class RegisterCreditCardTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private CreditCard creditCard;
     private final String creditCardSuccessSave = "Cartão cadastrado com sucesso!";
 
     @Before
     public void setUp() {
-        creditCard = new CreditCard("EXTERNAL_CREDIT_CARD",
-                "Filipe",
-                "123455",
-                "1234",
-                "0128",
-                "AMEX",
-                "ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL");
+
     }
 
     public static Matcher<View> navigationIconMatcher() {
@@ -57,10 +52,12 @@ public class RegisterCreditCardTest {
 
     @Test
     public void registerCreditCad() throws InterruptedException {
+        CreditCard creditCard = AbstractAutomationMock.getCreditCard();
+
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Cad. Cartão")).perform(click());
 
-        onView(withId(R.id.et_credit_card_holder))
+        onView(ViewMatchers.withId(R.id.et_credit_card_holder))
                 .perform(typeText(creditCard.getCardHolderName()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_bin))
                 .perform(typeText(creditCard.getBin()), closeSoftKeyboard());

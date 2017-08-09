@@ -1,5 +1,6 @@
-package com.br.god.father;
+package com.br.god.father.automation;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.br.god.father.R;
 import com.br.god.father.model.Authorization;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Transaction;
@@ -19,7 +21,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -73,7 +74,7 @@ public class AuthorizationTest {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Autorização")).perform(click());
 
-        onView(withId(R.id.et_authorize_intent))
+        onView(ViewMatchers.withId(R.id.et_authorize_intent))
                 .perform(typeText(authorization.getIntent()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_external_id))
                 .perform(typeText(authorization.getTransaction().getExternalId()), closeSoftKeyboard());
