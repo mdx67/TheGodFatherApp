@@ -1,5 +1,6 @@
 package com.br.god.father.ui.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -132,13 +133,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+
+
+    public String getSharedPreferences(String key) {
+        SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
+
+        return settings.getString(key, null);
+    }
+
+    public void saveSharedPreferences(String key, String value) {
+        if (key != null) {
+            SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
+            SharedPreferences.Editor editor = settings.edit();
+
+            editor.putString(key, value);
+
+            editor.commit();
+        }
+    }
+
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).addToBackStack(null).commit();
     }
 
-    public void removeContent(Fragment fragment) {
+    public void removeContent() {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment_content)).commit();
     }
 }

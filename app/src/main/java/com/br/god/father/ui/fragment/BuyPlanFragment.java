@@ -65,7 +65,11 @@ public class BuyPlanFragment extends BaseFragment {
     }
 
     public void subscriptionPlan(Subscription subscription) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE_SUBSCRIPTION).addConverterFactory(JacksonConverterFactory.create()).build();
+        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+
+        if (baseUrl == null) return;
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
         Call call = retrofit.create(Connection.class).subscriptionPlan(subscription);
 
@@ -75,7 +79,7 @@ public class BuyPlanFragment extends BaseFragment {
                 if (response.code() == 200) {
                     Log.i("SubscriptionReturn:", response.body().toString());
 
-                    ((MainActivity) getActivity()).removeContent(BuyPlanFragment.newInstance());
+                    ((MainActivity) getActivity()).removeContent();
 
                     showMessage("Plano assinado com sucesso!");
                 } else {

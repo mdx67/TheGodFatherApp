@@ -63,7 +63,11 @@ public class RegisterCreditCardFragment extends BaseFragment {
     }
 
     public void register(CreditCard creditCard) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE_WALLET).addConverterFactory(JacksonConverterFactory.create()).build();
+        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+
+        if (baseUrl == null) return;
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
         Call call1 = retrofit.create(Connection.class).registerCreditCard(creditCard);
 
@@ -73,7 +77,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
                 if (response.code() == 200) {
                     Log.i("CreditCardReturn:", response.body().toString());
 
-                    ((MainActivity) getActivity()).removeContent(RegisterCreditCardFragment.newInstance());
+                    ((MainActivity) getActivity()).removeContent();
 
                     showMessage("Cartão cadastrado com sucesso!");
                 } else {

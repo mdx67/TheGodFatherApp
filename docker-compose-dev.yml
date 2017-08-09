@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  stubby4j:
+        image: sandokandias/stubby4j-docker
+        ports:
+          - "8882:8882"
+        environment:
+          STUBBY_PORT: 8882
+        volumes:
+          - ./stubby.yml:/usr/local/stubby.yml:Z

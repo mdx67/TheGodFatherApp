@@ -1,0 +1,86 @@
+# For Android project
+
+# Register customer
+-  request:
+      method: POST
+      url: /mobile/register/customer
+      headers:
+          content-type: application/json
+      post: >
+          {"id": null, "personType":"INDIVIDUAL","fullName":"Fulano","country":"Brasil","documents":[{"number":"000000000","docType":"CPF"}],"addresses":[{"name":"Principal","street":"Max Colim","number":"470","district":"America","city":"Joinville","state":"Santa Catarina","country":"Brasil","zipCode":"89204040"}],"zns":{"userId":"123"}}
+          
+   response:
+      status: 200
+      headers:
+          content-type: application/json
+      body: >
+          {"id": "123-abc", "personType":"INDIVIDUAL","fullName":"Fulano","country":"Brasil","documents":[{"number":"000000000","docType":"CPF"}],"addresses":[{"name":"Principal","street":"Max Colim","number":"470","district":"America","city":"Joinville","state":"Santa Catarina","country":"Brasil","zipCode":"89204040"}],"zns":{"userId":"123"}}
+           
+# Register creditCard
+-  request:
+      method: POST
+      url: /mobile/register/creditCard
+      headers:
+          content-type: application/json
+      post: >
+          {"type":"EXTERNAL_CREDIT_CARD","cardHolderName":"Filipe","bin":"123455","lastDigits":"1234","expirationDate":"0128","brand":"AMEX","externalToken":"ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL","billingAddress":null,"customFields":null}       
+
+   response:
+      status: 200
+      headers:
+          content-type: application/json
+      body: >
+          {"type":"EXTERNAL_CREDIT_CARD","cardHolderName":"Filipe","bin":"123455","lastDigits":"1234","expirationDate":"0128","brand":"AMEX","externalToken":"ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL","billingAddress":null,"customFields":null}       
+          
+# Buy plan 29
+-  request:
+      method: POST
+      url: /mobile/register/plan
+      headers:
+          content-type: application/json
+      post: >
+          {"offer":{"id":"41530168-12dd-4510-be2b-7add0e7d14e9","type":"PLAN","validity":30,"items":[{"id":"1f0ef0f7-3a46-4b9f-8143-6490a046ff5b","productId":1,"component":"INTERNET_MOBILE"}]},"price":{"amount":2990,"currency":"BRL","scale":2},"payment":{"method":"CREDIT_CARD","methodId":"CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"},"recurring":{"starDate":"2018-06-08","period":"DAY","cycles":15,"endDate":"2019-01-01"}}
+
+   response:
+      status: 200
+      headers:
+          content-type: application/json
+      body: >
+          {"offer":{"id":"41530168-12dd-4510-be2b-7add0e7d14e9","type":"PLAN","validity":30,"items":[{"id":"1f0ef0f7-3a46-4b9f-8143-6490a046ff5b","productId":1,"component":"INTERNET_MOBILE"}]},"price":{"amount":2990,"currency":"BRL","scale":2},"payment":{"method":"CREDIT_CARD","methodId":"CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"},"recurring":{"starDate":"2018-06-08","period":"DAY","cycles":15,"endDate":"2019-01-01"}}
+                                 
+
+# Buy plan 39
+-  request:
+      method: POST
+      url: /mobile/register/plan
+      headers:
+          content-type: application/json
+      post: >
+          {"offer":{"id":"41530168-12dd-4510-be2b-7add0e7d14e9","type":"PLAN","validity":30,"items":[{"id":"1f0ef0f7-3a46-4b9f-8143-6490a046ff5b","productId":1,"component":"INTERNET_MOBILE"}]},"price":{"amount":3990,"currency":"BRL","scale":2},"payment":{"method":"CREDIT_CARD","methodId":"CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"},"recurring":{"starDate":"2018-06-08","period":"DAY","cycles":15,"endDate":"2019-01-01"}}
+
+   response:
+      status: 200
+      headers:
+          content-type: application/json
+      body: >
+          {"offer":{"id":"41530168-12dd-4510-be2b-7add0e7d14e9","type":"PLAN","validity":30,"items":[{"id":"1f0ef0f7-3a46-4b9f-8143-6490a046ff5b","productId":1,"component":"INTERNET_MOBILE"}]},"price":{"amount":3990,"currency":"BRL","scale":2},"payment":{"method":"CREDIT_CARD","methodId":"CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"},"recurring":{"starDate":"2018-06-08","period":"DAY","cycles":15,"endDate":"2019-01-01"}}
+       
+
+# Authorize by App
+-  request:
+      method: POST
+      url: /mobile/authorize
+      headers:
+          content-type: application/json
+      post: >
+          {"intent":"CAPTURE","payment":{"method":"CREDIT_CARD","methodId":"CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"},"transaction":{"externalId":"YOUR_TRANSACTION_ID","description":{"full":"TELECOM ADDON PURCHASE","soft":"ADDON"},"type":"SINGLE","price":{"amount":199,"currency":"BRL","scale":2},"details":null,"items":[{"code":"CODE-PRODUCT-001","name":"100 min outras operadoras","quantity":1,"price":{"amount":199,"currency":"BRL","scale":2},"customFields":null}]},"customFields":null}
+
+   response:
+      status: 200
+      headers:
+          content-type: application/json
+      body: >
+          {"intent":"CAPTURE","payment":{"method":"CREDIT_CARD","methodId":"CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"},"transaction":{"externalId":"YOUR_TRANSACTION_ID","description":{"full":"TELECOM ADDON PURCHASE","soft":"ADDON"},"type":"SINGLE","price":{"amount":199,"currency":"BRL","scale":2},"details":null,"items":[{"code":"CODE-PRODUCT-001","name":"100 min outras operadoras","quantity":1,"price":{"amount":199,"currency":"BRL","scale":2},"customFields":null}]},"customFields":null}
+       
+
+

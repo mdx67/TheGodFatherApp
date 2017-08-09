@@ -57,7 +57,11 @@ public class AuthorizationFragment extends BaseFragment {
     }
 
     public void register(Authorization authorization) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE_WALLET).addConverterFactory(JacksonConverterFactory.create()).build();
+        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+
+        if (baseUrl == null) return;
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
         Call call = retrofit.create(Connection.class).authorize(authorization);
 
@@ -67,7 +71,7 @@ public class AuthorizationFragment extends BaseFragment {
                 if (response.code() == 200) {
                     Log.i("AuthorizeReturn:", response.body().toString());
 
-                    ((MainActivity) getActivity()).removeContent(RegisterCustomerFragment.newInstance());
+                    ((MainActivity) getActivity()).removeContent();
 
                     showMessage("Autorizado com sucesso!");
                 } else {
