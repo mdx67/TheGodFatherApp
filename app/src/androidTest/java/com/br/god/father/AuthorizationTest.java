@@ -58,7 +58,7 @@ public class AuthorizationTest {
         transaction.setExternalId("YOUR_TRANSACTION_ID");
         transaction.setItems(Arrays.asList(item));
 
-        authorization.setIntent("AUTHORIZE");
+        authorization.setIntent("CAPTURE");
         authorization.setTransaction(transaction);
     }
 
