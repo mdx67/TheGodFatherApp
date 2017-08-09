@@ -16,7 +16,6 @@ import com.br.god.father.model.Payment;
 import com.br.god.father.model.Recurring;
 import com.br.god.father.model.Subscription;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Constants;
 
 import java.util.Arrays;
 
@@ -30,6 +29,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class BuyPlanFragment extends BaseFragment {
 
+    private static String baseUrl;
+    private static String customerId;
+
     public static BuyPlanFragment newInstance() {
         return new BuyPlanFragment();
     }
@@ -42,6 +44,9 @@ public class BuyPlanFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         MainActivity.toolbar.setTitle("Ass. plano");
+
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
+        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
 
         return view;
     }
@@ -65,13 +70,11 @@ public class BuyPlanFragment extends BaseFragment {
     }
 
     public void subscriptionPlan(Subscription subscription) {
-        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
-
-        if (baseUrl == null) return;
+        if (baseUrl == null || customerId == null) return;
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
-        Call call = retrofit.create(Connection.class).subscriptionPlan(subscription);
+        Call call = retrofit.create(Connection.class).subscriptionPlan(customerId, subscription);
 
         call.enqueue(new Callback() {
             @Override

@@ -133,8 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-
     public String getSharedPreferences(String key) {
         SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
 

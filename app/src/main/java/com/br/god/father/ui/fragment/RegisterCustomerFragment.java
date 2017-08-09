@@ -28,6 +28,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RegisterCustomerFragment extends BaseFragment {
 
+    private static String baseUrl;
+    private static String customerId;
+
     EditText etName, etUserId, etDocumentNumber, etAddressStreet, etAddressNumber, etAddressDistinct, etAddressPostalCode;
 
     @Nullable
@@ -40,6 +43,9 @@ public class RegisterCustomerFragment extends BaseFragment {
         MainActivity.toolbar.setTitle("Cad. Cliente");
 
         idenfityFields(view);
+
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
+        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
 
         return view;
     }
@@ -95,9 +101,7 @@ public class RegisterCustomerFragment extends BaseFragment {
     }
 
     public void registerCustomer(Customer customer) {
-        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
-
-        if (baseUrl == null) return;
+        if (baseUrl == null || customerId == null) return;
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
