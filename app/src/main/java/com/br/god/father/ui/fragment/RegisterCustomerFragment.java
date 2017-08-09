@@ -30,10 +30,6 @@ public class RegisterCustomerFragment extends BaseFragment {
 
     EditText etName, etUserId, etDocumentNumber, etAddressStreet, etAddressNumber, etAddressDistinct, etAddressPostalCode;
 
-    public static RegisterCustomerFragment newInstance() {
-        return new RegisterCustomerFragment();
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -113,7 +109,11 @@ public class RegisterCustomerFragment extends BaseFragment {
                 if (response.code() == 200) {
                     Log.i("RegisterCustomerReturn:", response.body().toString());
 
+                    Customer customerResponse = (Customer) response.body();
+
                     ((MainActivity) getActivity()).removeContent();
+
+                    ((MainActivity) getActivity()).saveSharedPreferences("customerId", customerResponse.getId());
 
                     showMessage("Cliente cadastrado com sucesso!");
                 } else {
