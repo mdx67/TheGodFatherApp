@@ -1,6 +1,6 @@
 package com.br.god.father.model;
 
-import android.support.annotation.Nullable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +10,8 @@ import lombok.Data;
 @Data
 public class Customer implements Serializable {
 
-    @Nullable
+    @JsonIgnore
+    private String id;
     private String personType;
     private String fullName;
     private String country;

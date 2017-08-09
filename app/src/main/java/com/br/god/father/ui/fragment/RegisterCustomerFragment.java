@@ -15,7 +15,6 @@ import com.br.god.father.model.Customer;
 import com.br.god.father.model.Document;
 import com.br.god.father.model.Zns;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Constants;
 
 import java.util.Arrays;
 
@@ -100,7 +99,11 @@ public class RegisterCustomerFragment extends BaseFragment {
     }
 
     public void registerCustomer(Customer customer) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.URL_BASE_WALLET).addConverterFactory(JacksonConverterFactory.create()).build();
+        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+
+        if (baseUrl == null) return;
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
         Call call1 = retrofit.create(Connection.class).registerCustomer(customer);
 
@@ -110,7 +113,7 @@ public class RegisterCustomerFragment extends BaseFragment {
                 if (response.code() == 200) {
                     Log.i("RegisterCustomerReturn:", response.body().toString());
 
-                    ((MainActivity) getActivity()).removeContent(RegisterCustomerFragment.newInstance());
+                    ((MainActivity) getActivity()).removeContent();
 
                     showMessage("Cliente cadastrado com sucesso!");
                 } else {

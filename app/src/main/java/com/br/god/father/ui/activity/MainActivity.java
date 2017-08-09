@@ -1,5 +1,7 @@
 package com.br.god.father.ui.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,15 @@ import com.br.god.father.ui.fragment.BuyPlanFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.SettingsFragment;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Map;
+
+import lombok.val;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -132,13 +143,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    public String getSharedPreferences(String key) {
+        SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
+
+        return settings.getString(key, null);
+    }
+
+    public void saveSharedPreferences(String key, String value) {
+        if (key != null) {
+            SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
+            SharedPreferences.Editor editor = settings.edit();
+
+            editor.putString(key, value);
+
+            editor.commit();
+        }
+    }
+
     public void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).addToBackStack(null).commit();
     }
 
-    public void removeContent(Fragment fragment) {
+    public void removeContent() {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment_content)).commit();
     }
 }
