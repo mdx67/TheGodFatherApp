@@ -17,7 +17,6 @@ import com.br.god.father.model.Transaction;
 import com.br.god.father.model.TransactionDescription;
 import com.br.god.father.model.TransactionItem;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Constants;
 
 import java.util.Arrays;
 
@@ -31,11 +30,10 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class AuthorizationFragment extends BaseFragment {
 
-    EditText etAuthorizeIntent, etAuthorizeExternalId, etAuthorizePrice, etAuthorizeItemCode, etAuthorizeItemName, etAuthorizeItemQuantity, etAuthorizeItemPrice;
+    private static String baseUrl;
+    private static String customerId;
 
-    public static AuthorizationFragment newInstance() {
-        return new AuthorizationFragment();
-    }
+    EditText etAuthorizeIntent, etAuthorizeExternalId, etAuthorizePrice, etAuthorizeItemCode, etAuthorizeItemName, etAuthorizeItemQuantity, etAuthorizeItemPrice;
 
     @Nullable
     @Override
@@ -48,6 +46,9 @@ public class AuthorizationFragment extends BaseFragment {
 
         idenfityFields(view);
 
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
+        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+
         return view;
     }
 
@@ -57,13 +58,11 @@ public class AuthorizationFragment extends BaseFragment {
     }
 
     public void register(Authorization authorization) {
-        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
-
-        if (baseUrl == null) return;
+        if (baseUrl == null || customerId == null) return;
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
-        Call call = retrofit.create(Connection.class).authorize(authorization);
+        Call call = retrofit.create(Connection.class).authorize(customerId, authorization);
 
         call.enqueue(new Callback() {
             @Override

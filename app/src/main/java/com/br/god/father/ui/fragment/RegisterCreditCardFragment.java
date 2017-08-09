@@ -26,6 +26,9 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
     EditText etHolderName, etBin, etLastDigits, etExpirationDate, etBrand;
 
+    private static String baseUrl;
+    private static String customerId;
+
     public static RegisterCreditCardFragment newInstance() {
         return new RegisterCreditCardFragment();
     }
@@ -39,6 +42,9 @@ public class RegisterCreditCardFragment extends BaseFragment {
         MainActivity.toolbar.setTitle("Cad. Cartão");
 
         idenfityFields(view);
+
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
 
         return view;
     }
@@ -63,13 +69,11 @@ public class RegisterCreditCardFragment extends BaseFragment {
     }
 
     public void register(CreditCard creditCard) {
-        String baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
-
-        if (baseUrl == null) return;
+        if (baseUrl == null || customerId == null) return;
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
 
-        Call call1 = retrofit.create(Connection.class).registerCreditCard(creditCard);
+        Call call1 = retrofit.create(Connection.class).registerCreditCard(customerId, creditCard);
 
         call1.enqueue(new Callback() {
             @Override
