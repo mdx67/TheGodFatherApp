@@ -1,5 +1,6 @@
-package com.br.god.father;
+package com.br.god.father.automation;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.br.god.father.R;
 import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;
@@ -44,7 +46,7 @@ public class PlanTest {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Plano")).perform(click());
 
-        onView(withId(R.id.bt_plan_two)).perform(click());
+        onView(ViewMatchers.withId(R.id.bt_plan_two)).perform(click());
 
         onView(withText(planSuccessSave))
                 .inRoot(new ToastMatcher())

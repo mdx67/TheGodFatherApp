@@ -1,4 +1,4 @@
-package com.br.god.father;
+package com.br.god.father.automation;
 
 import android.os.IBinder;
 import android.support.test.espresso.Root;
