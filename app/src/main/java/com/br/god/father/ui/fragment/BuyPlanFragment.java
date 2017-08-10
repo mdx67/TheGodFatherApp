@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.br.god.father.R;
+import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Offer;
@@ -24,13 +25,12 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class BuyPlanFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
+    private static Connection connection;
 
     public static BuyPlanFragment newInstance() {
         return new BuyPlanFragment();
@@ -47,6 +47,7 @@ public class BuyPlanFragment extends BaseFragment {
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
         customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+        connection = ApiUtils.getConnection(baseUrl);
 
         return view;
     }
@@ -57,7 +58,7 @@ public class BuyPlanFragment extends BaseFragment {
 
         subscription.setPrice(new Money("BRL", 2990, 2));
 
-        subscriptionPlan(subscription);
+        subscribe(subscription);
     }
 
     @OnClick(R.id.bt_plan_two)
@@ -66,20 +67,20 @@ public class BuyPlanFragment extends BaseFragment {
 
         subscription.setPrice(new Money("BRL", 3990, 2));
 
-        subscriptionPlan(subscription);
+        subscribe(subscription);
     }
 
-    public void subscriptionPlan(Subscription subscription) {
+    private void subscribe(Subscription subscription) {
         if (baseUrl == null || customerId == null) return;
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
+        doSubscribe(subscription);
+    }
 
-        Call call = retrofit.create(Connection.class).subscriptionPlan(customerId, subscription);
-
-        call.enqueue(new Callback() {
+    private void doSubscribe(Subscription subscription) {
+        connection.subscriptionPlan(customerId, subscription).enqueue(new Callback<Subscription>() {
             @Override
-            public void onResponse(Call call, Response response) {
-                if (response.code() == 200) {
+            public void onResponse(Call<Subscription> call, Response<Subscription> response) {
+                if (response.isSuccessful()) {
                     Log.i("SubscriptionReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();
@@ -121,5 +122,4 @@ public class BuyPlanFragment extends BaseFragment {
 
         return subscription;
     }
-
 }

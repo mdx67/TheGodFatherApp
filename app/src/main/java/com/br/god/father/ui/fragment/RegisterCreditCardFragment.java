@@ -9,18 +9,16 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.br.god.father.R;
+import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.CreditCard;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Constants;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RegisterCreditCardFragment extends BaseFragment {
 
@@ -28,6 +26,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
+    private static Connection connection;
 
     public static RegisterCreditCardFragment newInstance() {
         return new RegisterCreditCardFragment();
@@ -45,6 +44,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
         customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+        connection = ApiUtils.getConnection(baseUrl);
 
         return view;
     }
@@ -52,6 +52,8 @@ public class RegisterCreditCardFragment extends BaseFragment {
     @OnClick(R.id.bt_credit_card_register)
     public void onClickBtCrediCardRegister() {
         CreditCard creditCard = buildCreditCard();
+
+        if (baseUrl == null || customerId == null) return;
 
         register(creditCard);
     }
@@ -69,16 +71,10 @@ public class RegisterCreditCardFragment extends BaseFragment {
     }
 
     public void register(CreditCard creditCard) {
-        if (baseUrl == null || customerId == null) return;
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
-
-        Call call1 = retrofit.create(Connection.class).registerCreditCard(customerId, creditCard);
-
-        call1.enqueue(new Callback() {
+        connection.registerCreditCard(customerId, creditCard).enqueue(new Callback<CreditCard>() {
             @Override
-            public void onResponse(Call call, Response response) {
-                if (response.code() == 200) {
+            public void onResponse(Call<CreditCard> call, Response<CreditCard> response) {
+                if (response.isSuccessful()) {
                     Log.i("CreditCardReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();

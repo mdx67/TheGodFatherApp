@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.br.god.father.R;
+import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.Authorization;
 import com.br.god.father.model.Money;
@@ -25,15 +26,18 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class AuthorizationFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
+    private static Connection connection;
 
     EditText etAuthorizeIntent, etAuthorizeExternalId, etAuthorizePrice, etAuthorizeItemCode, etAuthorizeItemName, etAuthorizeItemQuantity, etAuthorizeItemPrice;
+
+    public static AuthorizationFragment newInstance() {
+        return new AuthorizationFragment();
+    }
 
     @Nullable
     @Override
@@ -48,25 +52,22 @@ public class AuthorizationFragment extends BaseFragment {
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
         customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+        connection = ApiUtils.getConnection(baseUrl);
 
         return view;
     }
 
     @OnClick(R.id.bt_authorize)
     public void onClickAuthorizationButton() {
+        if (baseUrl == null || customerId == null) return;
+
         register(buildAuthorization());
     }
 
-    public void register(Authorization authorization) {
-        if (baseUrl == null || customerId == null) return;
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
-
-        Call call = retrofit.create(Connection.class).authorize(customerId, authorization);
-
-        call.enqueue(new Callback() {
+    private void register(Authorization authorization) {
+        connection.authorize(customerId, authorization).enqueue(new Callback<Authorization>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<Authorization> call, Response<Authorization> response) {
                 if (response.code() == 200) {
                     Log.i("AuthorizeReturn:", response.body().toString());
 
@@ -77,7 +78,6 @@ public class AuthorizationFragment extends BaseFragment {
                     showMessage("Falha na autorização.");
                 }
             }
-
             @Override
             public void onFailure(Call call, Throwable t) {
                 call.cancel();

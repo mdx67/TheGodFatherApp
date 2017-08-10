@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.br.god.father.R;
+import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.Address;
 import com.br.god.father.model.Customer;
@@ -23,15 +24,18 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class RegisterCustomerFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
+    private static Connection connection;
 
     EditText etName, etUserId, etDocumentNumber, etAddressStreet, etAddressNumber, etAddressDistinct, etAddressPostalCode;
+
+    public static RegisterCustomerFragment newInstance() {
+        return new RegisterCustomerFragment();
+    }
 
     @Nullable
     @Override
@@ -46,12 +50,15 @@ public class RegisterCustomerFragment extends BaseFragment {
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
         customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+        connection = ApiUtils.getConnection(baseUrl);
 
         return view;
     }
 
     @OnClick(R.id.bt_register_customer)
     public void onClickBtRegisterCustomer() {
+        if (baseUrl == null || customerId == null) return;
+
         registerCustomer(buildCustomer());
     }
 
@@ -59,6 +66,41 @@ public class RegisterCustomerFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         MainActivity.toolbar.setTitle("God Father App");
+    }
+
+    private void idenfityFields(View view) {
+        etName = view.findViewById(R.id.et_name);
+        etUserId = view.findViewById(R.id.et_user_id);
+        etAddressStreet = view.findViewById(R.id.et_address_street);
+        etAddressNumber = view.findViewById(R.id.et_address_number);
+        etAddressDistinct = view.findViewById(R.id.et_address_complement);
+        etAddressPostalCode = view.findViewById(R.id.et_address_postal_code);
+        etDocumentNumber = view.findViewById(R.id.et_document_number);
+    }
+
+    public void registerCustomer(Customer customer) {
+        connection.registerCustomer(customer).enqueue(new Callback<Customer>() {
+            @Override
+            public void onResponse(Call<Customer> call, Response<Customer> response) {
+                if (response.code() == 200) {
+                    Log.i("RegisterCustomerReturn:", response.body().toString());
+
+                    ((MainActivity) getActivity()).removeContent();
+
+                    ((MainActivity) getActivity()).saveSharedPreferences("customerId", response.body().getId());
+
+                    showMessage("Cliente cadastrado com sucesso!");
+                } else {
+                    showMessage("Falha no cadastro.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                call.cancel();
+                showMessage("Erro ao realizar requisição.");
+            }
+        });
     }
 
     private Customer buildCustomer() {
@@ -88,48 +130,5 @@ public class RegisterCustomerFragment extends BaseFragment {
         customer.setDocuments(Arrays.asList(document));
 
         return customer;
-    }
-
-    private void idenfityFields(View view) {
-        etName = view.findViewById(R.id.et_name);
-        etUserId = view.findViewById(R.id.et_user_id);
-        etAddressStreet = view.findViewById(R.id.et_address_street);
-        etAddressNumber = view.findViewById(R.id.et_address_number);
-        etAddressDistinct = view.findViewById(R.id.et_address_complement);
-        etAddressPostalCode = view.findViewById(R.id.et_address_postal_code);
-        etDocumentNumber = view.findViewById(R.id.et_document_number);
-    }
-
-    public void registerCustomer(Customer customer) {
-        if (baseUrl == null || customerId == null) return;
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(JacksonConverterFactory.create()).build();
-
-        Call call1 = retrofit.create(Connection.class).registerCustomer(customer);
-
-        call1.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                if (response.code() == 200) {
-                    Log.i("RegisterCustomerReturn:", response.body().toString());
-
-                    Customer customerResponse = (Customer) response.body();
-
-                    ((MainActivity) getActivity()).removeContent();
-
-                    ((MainActivity) getActivity()).saveSharedPreferences("customerId", customerResponse.getId());
-
-                    showMessage("Cliente cadastrado com sucesso!");
-                } else {
-                    showMessage("Falha no cadastro.");
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                call.cancel();
-                showMessage("Erro ao realizar requisição.");
-            }
-        });
     }
 }
