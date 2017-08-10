@@ -1,5 +1,6 @@
-package com.br.god.father;
+package com.br.god.father.automation;
 
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.br.god.father.R;
 import com.br.god.father.model.Authorization;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Transaction;
@@ -19,7 +21,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -41,26 +42,7 @@ public class AuthorizationTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private Authorization authorization = new Authorization();
     private final String authorizationSuccessSave = "Autorizado com sucesso!";
-
-    @Before
-    public void setUp() {
-
-        TransactionItem item = new TransactionItem();
-        item.setCode("CODE-PRODUCT-001");
-        item.setName("100 min outras operadoras");
-        item.setPrice(new Money("BRL", 199, 2));
-        item.setQuantity(1);
-
-        Transaction transaction = new Transaction();
-        transaction.setPrice(new Money("BRL", 199, 2));
-        transaction.setExternalId("YOUR_TRANSACTION_ID");
-        transaction.setItems(Arrays.asList(item));
-
-        authorization.setIntent("CAPTURE");
-        authorization.setTransaction(transaction);
-    }
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -73,7 +55,9 @@ public class AuthorizationTest {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Autorização")).perform(click());
 
-        onView(withId(R.id.et_authorize_intent))
+        Authorization authorization = AbstractAutomationMock.getAuthorization();
+
+        onView(ViewMatchers.withId(R.id.et_authorize_intent))
                 .perform(typeText(authorization.getIntent()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_external_id))
                 .perform(typeText(authorization.getTransaction().getExternalId()), closeSoftKeyboard());
