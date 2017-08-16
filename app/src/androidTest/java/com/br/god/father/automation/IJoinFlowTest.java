@@ -2,9 +2,6 @@ package com.br.god.father.automation;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.os.SystemClock;
-import android.support.test.espresso.UiController;
-import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.v7.widget.Toolbar;
@@ -21,8 +18,6 @@ import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.sql.Time;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -30,7 +25,6 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -146,7 +140,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
                 .perform(typeText(authorization.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_item_code))
                 .perform(typeText(authorization.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
-        onView(withId(R.id.et_authorize_item_name))
+        onView(withId(R.id.et_cancel_payment_id))
                 .perform(typeText(authorization.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_item_quantity))
                 .perform(typeText(authorization.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());

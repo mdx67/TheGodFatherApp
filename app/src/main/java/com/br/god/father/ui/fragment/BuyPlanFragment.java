@@ -47,7 +47,7 @@ public class BuyPlanFragment extends BaseFragment {
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
         customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
-        connection = ApiUtils.getConnection(baseUrl);
+        connection = ApiUtils.getConnection("http://172.20.48.1:8882/");
 
         return view;
     }

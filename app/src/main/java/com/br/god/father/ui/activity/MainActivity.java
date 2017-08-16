@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.br.god.father.R;
 import com.br.god.father.ui.fragment.AuthorizationFragment;
 import com.br.god.father.ui.fragment.BuyPlanFragment;
+import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.SettingsFragment;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        addCustomerIfNecessary();
     }
 
     @Override
@@ -113,7 +116,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_authorize:
                 fragmentClass = AuthorizationFragment.class;
                 break;
-
+            case R.id.nav_cancel:
+                fragmentClass = CancelFragment.class;
+                break;
             default:
                 return true;
         }
@@ -158,5 +163,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void removeContent() {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment_content)).commit();
+
+        MainActivity.toolbar.setTitle(R.string.app_name);
+    }
+
+    private void addCustomerIfNecessary() {
+//        if (getSharedPreferences("customerId") == null) {
+        saveSharedPreferences("customerId", "83237f28-8853-41a3-83d0-03457db6d014");
+//        }
     }
 }

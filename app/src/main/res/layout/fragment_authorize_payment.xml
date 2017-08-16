@@ -1,125 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_authorize_intent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Intenção"
-        android:inputType="textPersonName" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/et_authorize_external_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_authorize_intent"
-        android:ems="10"
-        android:hint="External ID"
-        android:inputType="textPersonName" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1000dp"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_authorize_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_authorize_external_id"
-        android:ems="10"
-        android:hint="Preço"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/et_authorize_external_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/switch_auth_capt"
+                android:layout_marginTop="12dp"
+                android:ems="10"
+                android:hint="External ID"
+                android:inputType="textPersonName"
+                android:text="mdx-123" />
 
-    <EditText
-        android:id="@+id/et_authorize_item_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView7"
-        android:layout_marginTop="19dp"
-        android:ems="10"
-        android:hint="Código item"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/et_authorize_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/et_authorize_external_id"
+                android:ems="10"
+                android:hint="Preço"
+                android:inputType="textPersonName"
+                android:text="200" />
 
-    <EditText
-        android:id="@+id/et_authorize_item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_authorize_item_code"
-        android:ems="10"
-        android:hint="Nome item"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/et_authorize_item_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView7"
+                android:ems="10"
+                android:hint="Código item"
+                android:inputType="textPersonName"
+                android:text="123" />
 
-    <EditText
-        android:id="@+id/et_authorize_item_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_authorize_item_name"
-        android:ems="10"
-        android:hint="Quantidade"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/et_cancel_payment_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/et_authorize_item_code"
+                android:ems="10"
+                android:hint="Nome item"
+                android:inputType="textPersonName"
+                android:text="item 123" />
 
-    <EditText
-        android:id="@+id/et_authorize_item_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_authorize_item_quantity"
-        android:ems="10"
-        android:hint="Preço item"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/et_authorize_item_quantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/et_cancel_payment_id"
+                android:ems="10"
+                android:hint="Quantidade"
+                android:inputType="textPersonName"
+                android:text="1" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_authorize_price"
-        android:layout_marginTop="28dp"
-        android:text="Item:"
-        android:layout_marginLeft="15dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="24sp" />
+            <EditText
+                android:id="@+id/et_authorize_item_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/et_authorize_item_quantity"
+                android:ems="10"
+                android:hint="Preço item"
+                android:inputType="textPersonName"
+                android:text="200" />
 
-    <Button
-        android:id="@+id/bt_authorize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/et_authorize_item_price"
-        android:layout_marginTop="18dp"
-        android:text="Authorizar" />
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/et_authorize_price"
+                android:layout_marginTop="9dp"
+                android:text="Item:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="24sp" />
 
+            <Button
+                android:id="@+id/bt_authorize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/et_authorize_item_price"
+                android:layout_marginTop="18dp"
+                android:text="Authorizar/Capturar" />
+
+            <Switch
+                android:id="@+id/switch_auth_capt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:showText="true"
+                android:splitTrack="true"
+                android:textOff=" "
+                android:textOn=" "
+                tools:checked="true" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/switch_auth_capt"
+                android:layout_alignBottom="@+id/switch_auth_capt"
+                android:layout_marginEnd="19dp"
+                android:layout_marginRight="19dp"
+                android:layout_toLeftOf="@+id/switch_auth_capt"
+                android:layout_toStartOf="@+id/switch_auth_capt"
+                android:text="Autorizar" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView8"
+                android:layout_marginLeft="19dp"
+                android:layout_marginStart="19dp"
+                android:layout_toEndOf="@+id/switch_auth_capt"
+                android:layout_toRightOf="@+id/switch_auth_capt"
+                android:text="Capturar" />
+
+            <Button
+                android:id="@+id/bt_cancel_refund"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/bt_authorize"
+                android:text="Cancelar/Estornar"
+                android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/spinner_loading_authorize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/et_authorize_item_quantity"
+                android:layout_centerHorizontal="true"
+                tools:visibility="invisible" />
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -8,12 +8,13 @@ public class RetrofitClient {
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient(String baseUrl) {
-        if (retrofit==null) {
+        if (retrofit == null || retrofit.baseUrl().toString() != baseUrl) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(JacksonConverterFactory.create())
                     .build();
         }
+
         return retrofit;
     }
 }

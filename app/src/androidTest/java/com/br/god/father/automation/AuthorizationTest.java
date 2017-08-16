@@ -10,18 +10,12 @@ import android.widget.ImageButton;
 
 import com.br.god.father.R;
 import com.br.god.father.model.Authorization;
-import com.br.god.father.model.Money;
-import com.br.god.father.model.Transaction;
-import com.br.god.father.model.TransactionItem;
 import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.Arrays;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -65,7 +59,7 @@ public class AuthorizationTest {
                 .perform(typeText(authorization.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_item_code))
                 .perform(typeText(authorization.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
-        onView(withId(R.id.et_authorize_item_name))
+        onView(withId(R.id.et_cancel_payment_id))
                 .perform(typeText(authorization.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_item_quantity))
                 .perform(typeText(authorization.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());

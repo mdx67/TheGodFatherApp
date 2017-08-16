@@ -65,7 +65,6 @@ public class RegisterCustomerFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        MainActivity.toolbar.setTitle("God Father App");
     }
 
     private void idenfityFields(View view) {
@@ -82,7 +81,7 @@ public class RegisterCustomerFragment extends BaseFragment {
         connection.registerCustomer(customer).enqueue(new Callback<Customer>() {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
-                if (response.code() == 200) {
+                if (response.isSuccessful()) {
                     Log.i("RegisterCustomerReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();
