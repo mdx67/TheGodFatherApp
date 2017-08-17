@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.br.god.father.R;
-import com.br.god.father.model.Authorization;
+import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.CreditCard;
 import com.br.god.father.model.Customer;
 import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -24,6 +25,7 @@ import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
@@ -38,7 +40,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
     private final String customerSuccessSave = "Cliente cadastrado com sucesso!";
     private final String creditCardSuccessSave = "Cartão cadastrado com sucesso!";
     private final String planSuccessSave = "Plano assinado com sucesso!";
-    private final String authorizationSuccessSave = "Autorizado com sucesso!";
+    private final String authorizationSuccessSave = "Status retornado: AUTHORIZED";
 
     public Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -125,29 +127,30 @@ public class IJoinFlowTest extends AbstractAutomationTest {
 
         Thread.sleep(5000);
 
-        //Authorization
+        //AuthorizationRequest
 
         onView(navigationIconMatcher()).perform(click());
-        onView(withText("Autorização")).perform(click());
+        onView(withText("Autorizar/Capturar")).perform(click());
 
-        Authorization authorization = AbstractAutomationMock.getAuthorization();
+        AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();
 
-        onView(ViewMatchers.withId(R.id.et_authorize_intent))
-                .perform(typeText(authorization.getIntent()), closeSoftKeyboard());
+        onView(ViewMatchers.withId(R.id.switch_auth_capt)).check(matches(Matchers.not(isChecked())));
         onView(withId(R.id.et_authorize_external_id))
-                .perform(typeText(authorization.getTransaction().getExternalId()), closeSoftKeyboard());
+                .perform(typeText(authorizationRequest.getTransaction().getExternalId()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_price))
-                .perform(typeText(authorization.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
+                .perform(typeText(authorizationRequest.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_item_code))
-                .perform(typeText(authorization.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
         onView(withId(R.id.et_cancel_payment_id))
-                .perform(typeText(authorization.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_item_quantity))
-                .perform(typeText(authorization.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_item_price))
-                .perform(typeText(authorization.getTransaction().getItems().get(0).getPrice().getAmount().toString()), closeSoftKeyboard());
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getPrice().getAmount().toString()), closeSoftKeyboard());
 
         onView(withId(R.id.bt_authorize)).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(authorizationSuccessSave))
                 .inRoot(new ToastMatcher())

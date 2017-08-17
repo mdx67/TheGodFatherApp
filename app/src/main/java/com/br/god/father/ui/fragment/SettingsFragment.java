@@ -19,6 +19,7 @@ public class SettingsFragment extends BaseFragment {
 
     EditText etLogin, etPassword, etPaymentUrl, etWalletUrl, etSubscriptionUrl;
     RadioGroup radioGroup;
+    RadioButton rbDev, rbSand, rbProd;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -31,9 +32,10 @@ public class SettingsFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-        MainActivity.toolbar.setTitle("Configurações");
+        MainActivity.toolbar.setTitle(R.string.tittle_settings);
 
         idenfityFields(view);
+
         setFields();
 
         return view;
@@ -41,27 +43,44 @@ public class SettingsFragment extends BaseFragment {
 
     @OnClick(R.id.bt_settings_save)
     public void onClickSaveButton() {
+        saveParams();
+
+        showMessage("Configuração atualizada!");
+    }
+
+    private String buildEnvironmentName() {
+        if (rbDev.isChecked()) {
+            return "dev";
+        } else if (rbSand.isChecked()) {
+            return "sand";
+        } else if (rbProd.isChecked()) {
+            return "prod";
+        }
+
+        return "dev";
+    }
+
+    private void saveParams() {
         ((MainActivity) getActivity()).saveSharedPreferences("login", etLogin.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("password", etPassword.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("paymentUrl", etPaymentUrl.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("walletUrl", etWalletUrl.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("subscriptionUrl", etSubscriptionUrl.getText().toString());
 
-        Integer radioButtonID = radioGroup.getCheckedRadioButtonId();
-
-        ((MainActivity) getActivity()).saveSharedPreferences("environment", radioButtonID.toString());
-
-        showMessage("Configuração atualizada!");
+        ((MainActivity) getActivity()).saveSharedPreferences("environment", buildEnvironmentName());
     }
 
     private void idenfityFields(View view) {
         etLogin = view.findViewById(R.id.et_settings_login);
         etPassword = view.findViewById(R.id.et_settings_password);
-        etPaymentUrl = view.findViewById(R.id.et_settings_payment_url);
+        etPaymentUrl = view.findViewById(R.id.et_settings__payments_url);
         etWalletUrl = view.findViewById(R.id.et_settings_wallet_url);
         etSubscriptionUrl = view.findViewById(R.id.et_settings_subscription_url);
 
         radioGroup = view.findViewById(R.id.radio_group_settings);
+        rbDev = view.findViewById(R.id.radio_dev);
+        rbSand = view.findViewById(R.id.radio_sandbox);
+        rbProd = view.findViewById(R.id.radio_prod);
     }
 
     private void setFields() {
@@ -74,7 +93,20 @@ public class SettingsFragment extends BaseFragment {
         String radioOption = ((MainActivity) getActivity()).getSharedPreferences("environment");
 
         if (radioOption != null) {
-            radioGroup.check(Integer.parseInt(radioOption));
+            switch (radioOption) {
+                case "dev":
+                    rbDev.setChecked(true);
+                    break;
+                case "sand":
+                    rbSand.setChecked(true);
+                    break;
+                case "prod":
+                    rbProd.setChecked(true);
+                    break;
+                default:
+                    rbDev.setChecked(true);
+                    break;
+            }
         }
     }
 }

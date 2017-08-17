@@ -1,7 +1,7 @@
 package com.br.god.father.automation;
 
 import com.br.god.father.model.Address;
-import com.br.god.father.model.Authorization;
+import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.CreditCard;
 import com.br.god.father.model.Customer;
 import com.br.god.father.model.Document;
@@ -44,7 +44,7 @@ public abstract class AbstractAutomationMock {
                 "ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL");
     }
 
-    public static Authorization getAuthorization() {
+    public static AuthorizationRequest getAuthorization() {
         TransactionItem item = new TransactionItem();
         item.setCode("CODE-PRODUCT-001");
         item.setName("100 min outras operadoras");
@@ -56,10 +56,10 @@ public abstract class AbstractAutomationMock {
         transaction.setExternalId("YOUR_TRANSACTION_ID");
         transaction.setItems(Arrays.asList(item));
 
-        Authorization authorization = new Authorization();
-        authorization.setIntent("CAPTURE");
-        authorization.setTransaction(transaction);
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest();
+        authorizationRequest.setIntent("AUTHORIZE");
+        authorizationRequest.setTransaction(transaction);
 
-        return authorization;
+        return authorizationRequest;
     }
 }

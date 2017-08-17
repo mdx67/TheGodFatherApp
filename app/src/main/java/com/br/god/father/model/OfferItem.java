@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OfferItem {
 
-    private String id;
+    private String catalogOfferItemId;
     private Integer productId;
     private String component;
     @JsonIgnore

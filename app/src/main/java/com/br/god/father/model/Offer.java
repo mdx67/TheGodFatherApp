@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Offer {
 
-    private String id;
-    private String type;
+    private String catalogOfferId;
+    private String catalogOfferType;
     private Integer validity;
-    private List<OfferItem> items;
+    private List<OfferItem> offerItems;
 
 }

@@ -24,8 +24,7 @@
                 android:layout_marginTop="12dp"
                 android:ems="10"
                 android:hint="External ID"
-                android:inputType="textPersonName"
-                android:text="mdx-123" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_authorize_price"
@@ -38,8 +37,7 @@
                 android:layout_below="@+id/et_authorize_external_id"
                 android:ems="10"
                 android:hint="Preço"
-                android:inputType="textPersonName"
-                android:text="200" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_authorize_item_code"
@@ -50,8 +48,7 @@
                 android:layout_below="@+id/textView7"
                 android:ems="10"
                 android:hint="Código item"
-                android:inputType="textPersonName"
-                android:text="123" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_cancel_payment_id"
@@ -64,8 +61,7 @@
                 android:layout_below="@+id/et_authorize_item_code"
                 android:ems="10"
                 android:hint="Nome item"
-                android:inputType="textPersonName"
-                android:text="item 123" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_authorize_item_quantity"
@@ -78,8 +74,7 @@
                 android:layout_below="@+id/et_cancel_payment_id"
                 android:ems="10"
                 android:hint="Quantidade"
-                android:inputType="textPersonName"
-                android:text="1" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/et_authorize_item_price"
@@ -92,8 +87,7 @@
                 android:layout_below="@+id/et_authorize_item_quantity"
                 android:ems="10"
                 android:hint="Preço item"
-                android:inputType="textPersonName"
-                android:text="200" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView7"

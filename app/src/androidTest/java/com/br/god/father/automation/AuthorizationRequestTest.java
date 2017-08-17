@@ -1,0 +1,118 @@
+package com.br.god.father.automation;
+
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageButton;
+
+import com.br.god.father.R;
+import com.br.god.father.model.AuthorizationRequest;
+import com.br.god.father.ui.activity.MainActivity;
+
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.core.AllOf.allOf;
+
+@RunWith(AndroidJUnit4.class)
+@LargeTest
+public class AuthorizationRequestTest {
+
+    @Rule
+    public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
+
+    private final String authorizationSuccessSave = "Status retornado: AUTHORIZED";
+    private final String captureSuccessSave = "Status retornado: CONFIRMED";
+
+    public static Matcher<View> navigationIconMatcher() {
+        return allOf(
+                isAssignableFrom(ImageButton.class),
+                withParent(isAssignableFrom(Toolbar.class)));
+    }
+
+    @Test
+    public void registerAuthorization() throws InterruptedException {
+        onView(navigationIconMatcher()).perform(click());
+        onView(withText("Autorizar/Capturar")).perform(click());
+
+        AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();
+
+        onView(ViewMatchers.withId(R.id.switch_auth_capt)).check(matches(Matchers.not(isChecked())));
+        onView(withId(R.id.et_authorize_external_id))
+                .perform(typeText(authorizationRequest.getTransaction().getExternalId()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_price))
+                .perform(typeText(authorizationRequest.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_code))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
+        onView(withId(R.id.et_cancel_payment_id))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_quantity))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_price))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getPrice().getAmount().toString()), closeSoftKeyboard());
+
+        onView(withId(R.id.bt_authorize)).perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withText(authorizationSuccessSave))
+                .inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+
+        onView(withText(authorizationSuccessSave))
+                .inRoot(new ToastMatcher())
+                .check(matches(withText(authorizationSuccessSave)));
+    }
+
+    @Test
+    public void registerCapture() throws InterruptedException {
+        onView(navigationIconMatcher()).perform(click());
+        onView(withText("Autorizar/Capturar")).perform(click());
+        onView(ViewMatchers.withId(R.id.switch_auth_capt)).perform(click());
+
+        AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();
+
+        onView(ViewMatchers.withId(R.id.switch_auth_capt)).check(matches(isChecked()));
+        onView(withId(R.id.et_authorize_external_id))
+                .perform(typeText(authorizationRequest.getTransaction().getExternalId()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_price))
+                .perform(typeText(authorizationRequest.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_code))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
+        onView(withId(R.id.et_cancel_payment_id))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_quantity))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_price))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getPrice().getAmount().toString()), closeSoftKeyboard());
+
+        onView(withId(R.id.bt_authorize)).perform(click());
+
+        Thread.sleep(1000);
+
+        onView(withText(captureSuccessSave))
+                .inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+
+        onView(withText(captureSuccessSave))
+                .inRoot(new ToastMatcher())
+                .check(matches(withText(captureSuccessSave)));
+    }
+}

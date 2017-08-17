@@ -15,7 +15,7 @@ import android.widget.Switch;
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
-import com.br.god.father.model.Authorization;
+import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.AuthorizationResponse;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Payment;
@@ -24,7 +24,6 @@ import com.br.god.father.model.TransactionDescription;
 import com.br.god.father.model.TransactionDetail;
 import com.br.god.father.model.TransactionItem;
 import com.br.god.father.ui.activity.MainActivity;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
 
 import java.util.Arrays;
 
@@ -64,8 +63,9 @@ public class AuthorizationFragment extends BaseFragment {
         idenfityFields(view);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
-        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
-        connection = ApiUtils.getConnection("https://dev-service.apirealwave.io/paymentsmanager/");
+//        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+        customerId = "abc";
+        connection = ApiUtils.getConnection(baseUrl);
 
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
@@ -75,7 +75,11 @@ public class AuthorizationFragment extends BaseFragment {
 
     @OnClick(R.id.bt_authorize)
     public void onClickAuthorizationButton() {
-        if (baseUrl == null || customerId == null) return;
+        if (baseUrl == null || customerId == null) {
+            showMessage("Verifique a URL/Cliente nas configurações.");
+
+            return;
+        }
 
         spinnerLoading.setVisibility(View.VISIBLE);
 
@@ -106,26 +110,26 @@ public class AuthorizationFragment extends BaseFragment {
         }
     }
 
-    private void execute(Authorization authorization) {
+    private void execute(AuthorizationRequest authorizationRequest) {
 //        ObjectMapper mapper = new ObjectMapper();
-//        Authorization obj = authorization;
+//        AuthorizationRequest obj = authorizationRequest;
 //        try {
 //            String jsonInString = mapper.writeValueAsString(obj);
 //        } catch (JsonProcessingException e) {
 //            e.printStackTrace();
 //        }
 
-        if (authorization.getIntent().equals("AUTHORIZE")) {
+        if (authorizationRequest.getIntent().equals("AUTHORIZE")) {
             customerId = "43237f28-8853-41a3-83d0-03457db6d014";
         } else {
             customerId = "83237f28-8853-41a3-83d0-03457db6d014";
         }
 
-        connection.authorize(customerId, authorization).enqueue(new Callback<AuthorizationResponse>() {
+        connection.authorize(customerId, authorizationRequest).enqueue(new Callback<AuthorizationResponse>() {
             @Override
             public void onResponse(Call<AuthorizationResponse> call, Response<AuthorizationResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.i("AuthorizeReturn:", response.body().toString());
+                     Log.i("AuthorizeReturn:", response.body().toString());
 
                     btCancelRefund.setVisibility(View.VISIBLE);
                     paymentIdCreated = response.body().getPaymentId();
@@ -165,11 +169,11 @@ public class AuthorizationFragment extends BaseFragment {
 
     }
 
-    private Authorization buildAuthorization() {
-        Authorization authorization = new Authorization();
+    private AuthorizationRequest buildAuthorization() {
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest();
 
-        authorization.setIntent(switchAuthorizeCapture.isChecked() ? "CAPTURE" : "AUTHORIZE");
-        authorization.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
+        authorizationRequest.setIntent(switchAuthorizeCapture.isChecked() ? "CAPTURE" : "AUTHORIZE");
+        authorizationRequest.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
 
         Transaction transaction = new Transaction();
 
@@ -199,9 +203,9 @@ public class AuthorizationFragment extends BaseFragment {
 
         transaction.setDetails(transactionDetail);
 
-        authorization.setTransaction(transaction);
+        authorizationRequest.setTransaction(transaction);
 
-        return authorization;
+        return authorizationRequest;
     }
 
 }

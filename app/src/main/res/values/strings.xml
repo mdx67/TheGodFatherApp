@@ -7,6 +7,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="tittle_authorize_capture">Autorizar/Capturar</string>
+    <string name="tittle_buy_plan">Ass. Plano</string>
     <string name="tittle_cancel_refund">Cancelar/Estornar</string>
+    <string name="tittle_settings">Configuração</string>
 
 </resources>

@@ -15,7 +15,8 @@ import com.br.god.father.model.Offer;
 import com.br.god.father.model.OfferItem;
 import com.br.god.father.model.Payment;
 import com.br.god.father.model.Recurring;
-import com.br.god.father.model.Subscription;
+import com.br.god.father.model.SubscriptionRequest;
+import com.br.god.father.model.SubscriptionResponse;
 import com.br.god.father.ui.activity.MainActivity;
 
 import java.util.Arrays;
@@ -43,43 +44,48 @@ public class BuyPlanFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-        MainActivity.toolbar.setTitle("Ass. plano");
+        MainActivity.toolbar.setTitle(R.string.tittle_buy_plan);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
-        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
-        connection = ApiUtils.getConnection("http://172.20.48.1:8882/");
+//        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+        customerId = "abc";
+        connection = ApiUtils.getConnection(baseUrl);
 
         return view;
     }
 
     @OnClick(R.id.bt_plan_one)
     public void onClickBtPlanOne() {
-        Subscription subscription = buildSubscription();
+        SubscriptionRequest subscriptionRequest = buildSubscription();
 
-        subscription.setPrice(new Money("BRL", 2990, 2));
+        subscriptionRequest.setPrice(new Money("BRL", 2990, 2));
 
-        subscribe(subscription);
+        subscribe(subscriptionRequest);
     }
 
     @OnClick(R.id.bt_plan_two)
     public void onClickBtPlanTwo() {
-        Subscription subscription = buildSubscription();
+        SubscriptionRequest subscriptionRequest = buildSubscription();
 
-        subscription.setPrice(new Money("BRL", 3990, 2));
+        subscriptionRequest.setPrice(new Money("BRL", 3990, 2));
 
-        subscribe(subscription);
+        subscribe(subscriptionRequest);
     }
 
-    private void subscribe(Subscription subscription) {
-        if (baseUrl == null || customerId == null) return;
+    private void subscribe(SubscriptionRequest subscriptionRequest) {
+        if (baseUrl == null || customerId == null) {
+            showMessage("Verifique a URL/Cliente nas configurações.");
 
-        doSubscribe(subscription);
+            return;
+        }
+
+        doSubscribe(subscriptionRequest);
     }
 
-    private void doSubscribe(Subscription subscription) {
-        connection.subscriptionPlan(customerId, subscription).enqueue(new Callback<Subscription>() {
+    private void doSubscribe(SubscriptionRequest subscriptionRequest) {
+        connection.subscriptionPlan(customerId, subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
-            public void onResponse(Call<Subscription> call, Response<Subscription> response) {
+            public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
                 if (response.isSuccessful()) {
                     Log.i("SubscriptionReturn:", response.body().toString());
 
@@ -92,34 +98,39 @@ public class BuyPlanFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<SubscriptionResponse> call, Throwable t) {
                 call.cancel();
                 showMessage("Erro na requisição!");
             }
         });
     }
 
-    private Subscription buildSubscription() {
-        Subscription subscription = new Subscription();
+    private SubscriptionRequest buildSubscription() {
+        SubscriptionRequest subscriptionRequest = new SubscriptionRequest();
+
+        subscriptionRequest.setExternalId("PLAN-02_233dda31");
+        subscriptionRequest.setOriginApp("MGM");
+        subscriptionRequest.setDescription("Plano 2 - COMBO:  internet + dados moveis");
+        subscriptionRequest.setType("STANDARD");
 
         Offer offer = new Offer();
-        offer.setId("41530168-12dd-4510-be2b-7add0e7d14e9");
-        offer.setType("PLAN");
+        offer.setCatalogOfferId("41530168-12dd-4510-be2b-7add0e7d14e9");
+        offer.setCatalogOfferType("PLAN");
         offer.setValidity(30);
 
         OfferItem item = new OfferItem();
         item.setProductId(1);
-        item.setId("1f0ef0f7-3a46-4b9f-8143-6490a046ff5b");
+        item.setCatalogOfferItemId("1f0ef0f7-3a46-4b9f-8143-6490a046ff5b");
         item.setComponent("INTERNET_MOBILE");
 
-        offer.setItems(Arrays.asList(item));
+        offer.setOfferItems(Arrays.asList(item));
 
-        subscription.setOffer(offer);
+        subscriptionRequest.setOffer(offer);
 
-        subscription.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
+        subscriptionRequest.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
 
-        subscription.setRecurring(new Recurring("2018-06-08", "2019-01-01", "DAY", 15));
+        subscriptionRequest.setRecurring(new Recurring("2018-06-08", "2019-01-01", "DAY", 15));
 
-        return subscription;
+        return subscriptionRequest;
     }
 }

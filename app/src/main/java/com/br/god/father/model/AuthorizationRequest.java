@@ -5,7 +5,7 @@ import java.util.Map;
 import lombok.Data;
 
 @Data
-public class Authorization {
+public class AuthorizationRequest {
 
     private String intent;
     private Payment payment;
