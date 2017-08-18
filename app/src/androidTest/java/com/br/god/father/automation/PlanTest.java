@@ -33,7 +33,7 @@ public class PlanTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private final String planSuccessSave = "Plano assinado com sucesso!";
+    private final String planSuccessSave = "Status retornado: CREATED";
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -47,6 +47,8 @@ public class PlanTest {
         onView(withText("Plano")).perform(click());
 
         onView(ViewMatchers.withId(R.id.bt_plan_two)).perform(click());
+
+        Thread.sleep(1000);
 
         onView(withText(planSuccessSave))
                 .inRoot(new ToastMatcher())

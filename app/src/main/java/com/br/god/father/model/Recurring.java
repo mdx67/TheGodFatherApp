@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 public class Recurring {
 
     private String starDate;
-    private String endDate;
+    public  Integer duration;
     private String period;
     private Integer cycles;
 
-    public Recurring(String starDate, String endDate, String period, Integer cycles) {
+    public Recurring(String starDate, Integer duration, String period, Integer cycles) {
         this.starDate = starDate;
-        this.endDate = endDate;
+        this.duration = duration;
         this.period = period;
         this.cycles = cycles;
     }

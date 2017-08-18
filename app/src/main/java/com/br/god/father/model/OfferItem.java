@@ -14,9 +14,7 @@ public class OfferItem {
     private String catalogOfferItemId;
     private Integer productId;
     private String component;
-    @JsonIgnore
     private List<ItemAttributes> attributes;
-    @JsonIgnore
     private Money price;
 
 }

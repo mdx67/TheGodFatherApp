@@ -6,10 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
+import com.br.god.father.model.ItemAttributes;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Offer;
 import com.br.god.father.model.OfferItem;
@@ -17,6 +19,7 @@ import com.br.god.father.model.Payment;
 import com.br.god.father.model.Recurring;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
+import com.br.god.father.model.UnitValue;
 import com.br.god.father.ui.activity.MainActivity;
 
 import java.util.Arrays;
@@ -27,14 +30,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BuyPlanFragment extends BaseFragment {
+public class SubscriptionFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
     private static Connection connection;
 
-    public static BuyPlanFragment newInstance() {
-        return new BuyPlanFragment();
+    ProgressBar spinnerLoading;
+
+    public static SubscriptionFragment newInstance() {
+        return new SubscriptionFragment();
     }
 
     @Nullable
@@ -50,6 +55,10 @@ public class BuyPlanFragment extends BaseFragment {
 //        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
         customerId = "abc";
         connection = ApiUtils.getConnection(baseUrl);
+
+        spinnerLoading = view.findViewById(R.id.spinner_loading_subscription);
+        spinnerLoading.setVisibility(View.GONE);
+        spinnerLoading.setClickable(false);
 
         return view;
     }
@@ -79,10 +88,14 @@ public class BuyPlanFragment extends BaseFragment {
             return;
         }
 
+        spinnerLoading.setVisibility(View.VISIBLE);
+
         doSubscribe(subscriptionRequest);
     }
 
     private void doSubscribe(SubscriptionRequest subscriptionRequest) {
+        customerId = "83237f28-8853-41a3-83d0-03457db6d014";
+
         connection.subscriptionPlan(customerId, subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
             public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
@@ -91,15 +104,20 @@ public class BuyPlanFragment extends BaseFragment {
 
                     ((MainActivity) getActivity()).removeContent();
 
-                    showMessage("Plano assinado com sucesso!");
+                    showMessage("Status retornado: " + response.body().getStatus());
                 } else {
-                    showMessage("Falha na assinatura.");
+                    showMessage("Falha na assinatura: " + response.code());
                 }
+
+                spinnerLoading.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<SubscriptionResponse> call, Throwable t) {
                 call.cancel();
+
+                spinnerLoading.setVisibility(View.INVISIBLE);
+
                 showMessage("Erro na requisição!");
             }
         });
@@ -112,6 +130,11 @@ public class BuyPlanFragment extends BaseFragment {
         subscriptionRequest.setOriginApp("MGM");
         subscriptionRequest.setDescription("Plano 2 - COMBO:  internet + dados moveis");
         subscriptionRequest.setType("STANDARD");
+        subscriptionRequest.setCallback("http://127.0.0.1:8834/notifications");
+
+        subscriptionRequest.setRecurring(new Recurring("2017-10-01", 1, "MONTH", 6));
+
+        subscriptionRequest.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
 
         Offer offer = new Offer();
         offer.setCatalogOfferId("41530168-12dd-4510-be2b-7add0e7d14e9");
@@ -122,14 +145,18 @@ public class BuyPlanFragment extends BaseFragment {
         item.setProductId(1);
         item.setCatalogOfferItemId("1f0ef0f7-3a46-4b9f-8143-6490a046ff5b");
         item.setComponent("INTERNET_MOBILE");
+        item.setPrice(new Money("BRL", 3990, 2));
+
+        ItemAttributes attributes = new ItemAttributes();
+        attributes.setName("volume");
+        attributes.setValue("4999");
+        attributes.setUnitValue(new UnitValue(3, 0, "GB"));
+
+        item.setAttributes(Arrays.asList(attributes));
 
         offer.setOfferItems(Arrays.asList(item));
 
         subscriptionRequest.setOffer(offer);
-
-        subscriptionRequest.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
-
-        subscriptionRequest.setRecurring(new Recurring("2018-06-08", "2019-01-01", "DAY", 15));
 
         return subscriptionRequest;
     }

@@ -39,7 +39,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
 
     private final String customerSuccessSave = "Cliente cadastrado com sucesso!";
     private final String creditCardSuccessSave = "Cartão cadastrado com sucesso!";
-    private final String planSuccessSave = "Plano assinado com sucesso!";
+    private final String planSuccessSave = "Status retornado: CREATED";
     private final String authorizationSuccessSave = "Status retornado: AUTHORIZED";
 
     public Matcher<View> navigationIconMatcher() {

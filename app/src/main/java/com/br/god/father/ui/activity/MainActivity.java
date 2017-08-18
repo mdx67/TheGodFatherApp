@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.br.god.father.R;
 import com.br.god.father.ui.fragment.AuthorizationFragment;
-import com.br.god.father.ui.fragment.BuyPlanFragment;
+import com.br.god.father.ui.fragment.SubscriptionFragment;
 import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 fragmentClass = RegisterCreditCardFragment.class;
                 break;
             case R.id.nav_plan:
-                fragmentClass = BuyPlanFragment.class;
+                fragmentClass = SubscriptionFragment.class;
                 break;
             case R.id.nav_authorize:
                 fragmentClass = AuthorizationFragment.class;
