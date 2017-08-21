@@ -15,20 +15,20 @@ import com.br.god.father.ui.activity.MainActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SettingsFragment extends BaseFragment {
+public class ConnectionSettingsFragment extends BaseFragment {
 
     EditText etLogin, etPassword, etPaymentUrl, etWalletUrl, etSubscriptionUrl;
     RadioGroup radioGroup;
     RadioButton rbDev, rbSand, rbProd;
 
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
+    public static ConnectionSettingsFragment newInstance() {
+        return new ConnectionSettingsFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_connection_settings, container, false);
 
         ButterKnife.bind(this, view);
 

@@ -1,10 +1,12 @@
 package com.br.god.father.ui.activity;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.util.ArraySet;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,12 +16,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.br.god.father.R;
+import com.br.god.father.model.Customer;
+import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.fragment.AuthorizationFragment;
+import com.br.god.father.ui.fragment.CustomerSettingsFragment;
 import com.br.god.father.ui.fragment.SubscriptionFragment;
 import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
-import com.br.god.father.ui.fragment.SettingsFragment;
+import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -77,8 +87,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
         Class fragmentClass = null;
 
-        if (menuItem.getItemId() == R.id.action_settings) {
-            fragmentClass = SettingsFragment.class;
+        if (menuItem.getItemId() == R.id.action_connection_settings) {
+            fragmentClass = ConnectionSettingsFragment.class;
+        }
+
+        if (menuItem.getItemId() == R.id.action_customer_settings) {
+            fragmentClass = CustomerSettingsFragment.class;
         }
 
         try {
@@ -144,6 +158,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return settings.getString(key, null);
     }
 
+    public Set<String> getSharedPreferencesCustomerList() {
+        SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
+
+        return settings.getStringSet("customerList", null);
+    }
+
     public void saveSharedPreferences(String key, String value) {
         if (key != null) {
             SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
@@ -153,6 +173,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             editor.commit();
         }
+    }
+
+    public void saveSharedPreferences(List<CustomerApp> customerList) {
+        SharedPreferences settings = getSharedPreferences("config_god_father_app", 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        Set<String> tempSet = new HashSet<>();
+
+        for (CustomerApp customer : customerList) {
+            tempSet.add(customer.toString());
+        }
+
+        editor.putStringSet("customerList", tempSet);
+
+        editor.commit();
     }
 
     public void replaceFragment(Fragment fragment) {
