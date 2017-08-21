@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.br.god.father.R;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class CustomerSettingsFragment extends BaseFragment {
 
         idenfityFields(view);
 
-        tvMainCustomer.setText(((MainActivity) getActivity()).getSharedPreferences("mainCustomer"));
+        setParams();
 
         buildList(view);
 
@@ -62,7 +63,7 @@ public class CustomerSettingsFragment extends BaseFragment {
 
         if (customerAppList != null) {
             for (CustomerApp customerApp : customerAppList) {
-                listOfCustomers.add(customerApp.getId());
+                listOfCustomers.add(customerApp.getName());
             }
         }
 
@@ -88,7 +89,6 @@ public class CustomerSettingsFragment extends BaseFragment {
         builder.setTitle(R.string.msg_change_customer);
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
                 updateMainCustomer(customerId);
 
                 dialog.dismiss();
@@ -112,10 +112,18 @@ public class CustomerSettingsFragment extends BaseFragment {
         showMessage("Configuração atualizada!");
     }
 
+    private void setParams() {
+        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+
+        if (mainCustomer == null) return;
+
+        tvMainCustomer.setText(Utils.convertStringToCustomer(mainCustomer).getName());
+    }
+
     private void saveParams() {
         if (customerAppList == null) customerAppList = new ArrayList<>();
 
-        customerAppList.add(new CustomerApp(etName.getText().toString(), etId.getText().toString()));
+        customerAppList.add(new CustomerApp(etId.getText().toString(), etName.getText().toString()));
 
         ((MainActivity) getActivity()).saveSharedPreferences(customerAppList);
     }
@@ -128,9 +136,7 @@ public class CustomerSettingsFragment extends BaseFragment {
         List<CustomerApp> savedCustomers = new ArrayList<>();
 
         for (String value : list) {
-            String id = value.substring(value.indexOf("id") + 3, value.indexOf(","));
-            String name = value.substring(value.indexOf("name") + 5, value.indexOf(")"));
-            savedCustomers.add(new CustomerApp(name, id));
+            savedCustomers.add(Utils.convertStringToCustomer(value));
         }
 
         return savedCustomers;

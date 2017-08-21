@@ -21,6 +21,7 @@ import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
 import com.br.god.father.model.UnitValue;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.Utils;
 
 import java.util.Arrays;
 
@@ -52,8 +53,17 @@ public class SubscriptionFragment extends BaseFragment {
         MainActivity.toolbar.setTitle(R.string.tittle_buy_plan);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
-//        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
-        customerId = "abc";
+
+        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+
+        if (mainCustomer == null) {
+            showMessage(getString(R.string.msg_add_customer));
+
+            return null;
+        }
+
+        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+
         connection = ApiUtils.getConnection(baseUrl);
 
         spinnerLoading = view.findViewById(R.id.spinner_loading_subscription);
@@ -94,8 +104,6 @@ public class SubscriptionFragment extends BaseFragment {
     }
 
     private void doSubscribe(SubscriptionRequest subscriptionRequest) {
-        customerId = "83237f28-8853-41a3-83d0-03457db6d014";
-
         connection.subscriptionPlan(customerId, subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
             public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
@@ -104,7 +112,7 @@ public class SubscriptionFragment extends BaseFragment {
 
                     ((MainActivity) getActivity()).removeContent();
 
-                    showMessage("Status retornado: " + response.body().getStatus());
+                    showMessage(getString(R.string.msg_status_returned) + response.body().getStatus());
                 } else {
                     showMessage("Falha na assinatura: " + response.code());
                 }

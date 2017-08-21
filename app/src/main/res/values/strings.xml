@@ -12,5 +12,7 @@
     <string name="tittle_cancel_refund">Cancelar/Estornar</string>
     <string name="tittle_settings">Configuração</string>
     <string name="msg_change_customer">Colocar esse cliente como principal?</string>
+    <string name="msg_add_customer">Informe o customer nas configurações.</string>
+    <string name="msg_status_returned">Status retornado:</string>
 
 </resources>
