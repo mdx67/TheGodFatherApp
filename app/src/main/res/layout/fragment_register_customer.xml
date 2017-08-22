@@ -109,7 +109,7 @@
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/et_address_complement"
+                android:id="@+id/et_address_district"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/et_address_postal_code"

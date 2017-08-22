@@ -19,6 +19,7 @@ import com.br.god.father.ui.activity.MainActivity;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -31,7 +32,20 @@ public class RegisterCustomerFragment extends BaseFragment {
     private static String customerId;
     private static Connection connection;
 
-    EditText etName, etUserId, etDocumentNumber, etAddressStreet, etAddressNumber, etAddressDistinct, etAddressPostalCode;
+    @BindView(R.id.et_name)
+    EditText etName;
+    @BindView(R.id.et_user_id)
+    EditText etUserId;
+    @BindView(R.id.et_document_number)
+    EditText etDocumentNumber;
+    @BindView(R.id.et_address_street)
+    EditText etAddressStreet;
+    @BindView(R.id.et_address_number)
+    EditText etAddressNumber;
+    @BindView(R.id.et_address_district)
+    EditText etAddressDistinct;
+    @BindView(R.id.et_address_postal_code)
+    EditText etAddressPostalCode;
 
     public static RegisterCustomerFragment newInstance() {
         return new RegisterCustomerFragment();
@@ -44,9 +58,7 @@ public class RegisterCustomerFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-        MainActivity.toolbar.setTitle("Cad. Cliente");
-
-        idenfityFields(view);
+        MainActivity.toolbar.setTitle(R.string.tittle_register_customer);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
         customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
@@ -65,16 +77,6 @@ public class RegisterCustomerFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-    }
-
-    private void idenfityFields(View view) {
-//        etName = view.findViewById(R.id.et_name);
-//        etUserId = view.findViewById(R.id.et_user_id);
-//        etAddressStreet = view.findViewById(R.id.et_address_street);
-//        etAddressNumber = view.findViewById(R.id.et_address_number);
-//        etAddressDistinct = view.findViewById(R.id.et_address_complement);
-//        etAddressPostalCode = view.findViewById(R.id.et_address_postal_code);
-//        etDocumentNumber = view.findViewById(R.id.et_document_number);
     }
 
     public void registerCustomer(Customer customer) {

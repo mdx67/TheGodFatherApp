@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
@@ -50,8 +49,8 @@ public class CancelFragment extends BaseFragment {
         MainActivity.toolbar.setTitle(R.string.tittle_cancel_refund);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
-//        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
-        connection = ApiUtils.getConnection("https://dev-service.apirealwave.io/paymentsmanager/");
+        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+        connection = ApiUtils.getConnection(baseUrl);
 
         getReceivedParams();
         setFieldsIfNecessary();
@@ -79,9 +78,9 @@ public class CancelFragment extends BaseFragment {
 
                     ((MainActivity) getActivity()).removeContent();
 
-                    showMessage("Status retornado: " + response.body().getStatus());
+                    showMessage(getString(R.string.msg_status_returned) + response.body().getStatus());
                 } else {
-                    showMessage("Falha no cancelamento.");
+                    showMessage(getString(R.string.msg_cancellation_fail));
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
@@ -91,7 +90,7 @@ public class CancelFragment extends BaseFragment {
             public void onFailure(Call<AuthorizationResponse> call, Throwable t) {
                 call.cancel();
 
-                showMessage("Erro ao realizar requisição.");
+                showMessage(getString(R.string.msg_request_error));
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
             }

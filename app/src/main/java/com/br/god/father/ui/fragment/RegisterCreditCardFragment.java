@@ -15,6 +15,7 @@ import com.br.god.father.model.CreditCard;
 import com.br.god.father.ui.activity.MainActivity;
 import com.br.god.father.utils.Utils;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -23,7 +24,16 @@ import retrofit2.Response;
 
 public class RegisterCreditCardFragment extends BaseFragment {
 
-    EditText etHolderName, etBin, etLastDigits, etExpirationDate, etBrand;
+    @BindView(R.id.et_credit_card_holder)
+    EditText etHolderName;
+    @BindView(R.id.et_credit_card_bin)
+    EditText etBin;
+    @BindView(R.id.et_credit_card_last_digits)
+    EditText etLastDigits;
+    @BindView(R.id.et_credit_card_expiration_date)
+    EditText etExpirationDate;
+    @BindView(R.id.et_credit_card_brand)
+    EditText etBrand;
 
     private static String baseUrl;
     private static String customerId;
@@ -41,21 +51,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
         ButterKnife.bind(this, view);
         MainActivity.toolbar.setTitle("Cad. Cartão");
 
-        idenfityFields(view);
-
-        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
-
-        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
-
-        if (mainCustomer == null) {
-            showMessage(getString(R.string.msg_add_customer));
-
-            return null;
-        }
-
-        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
-
-        connection = ApiUtils.getConnection(baseUrl);
+        setConnectionParams();
 
         return view;
     }
@@ -69,12 +65,19 @@ public class RegisterCreditCardFragment extends BaseFragment {
         register(creditCard);
     }
 
-    private void idenfityFields(View view) {
-//        etHolderName = view.findViewById(R.id.et_credit_card_holder);
-//        etBin = view.findViewById(R.id.et_credit_card_bin);
-//        etLastDigits = view.findViewById(R.id.et_credit_card_last_digits);
-//        etExpirationDate = view.findViewById(R.id.et_credit_card_expiration_date);
-//        etBrand = view.findViewById(R.id.et_credit_card_brand);
+    private void setConnectionParams() {
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+
+        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+
+        if (mainCustomer == null) {
+            showMessage(getString(R.string.msg_add_customer));
+
+            return;
+        }
+
+        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+        connection = ApiUtils.getConnection(baseUrl);
     }
 
     private CreditCard buildCreditCard() {
@@ -92,14 +95,14 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
                     showMessage(getString(R.string.msg_status_returned));
                 } else {
-                    showMessage("Falha no cadastro.");
+                    showMessage(getString(R.string.msg_register_customer_fail));
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 call.cancel();
-                showMessage("Erro ao realizar requisição.");
+                showMessage(getString(R.string.msg_request_error));
             }
         });
     }

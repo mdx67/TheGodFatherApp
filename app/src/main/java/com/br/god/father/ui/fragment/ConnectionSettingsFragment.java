@@ -7,19 +7,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.br.god.father.R;
 import com.br.god.father.ui.activity.MainActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ConnectionSettingsFragment extends BaseFragment {
 
-    EditText etLogin, etPassword, etPaymentUrl, etWalletUrl, etSubscriptionUrl;
-    RadioGroup radioGroup;
-    RadioButton rbDev, rbSand, rbProd;
+    @BindView(R.id.et_settings_login)
+    EditText etLogin;
+    @BindView(R.id.et_settings_password)
+    EditText etPassword;
+    @BindView(R.id.et_settings__payments_url)
+    EditText etPaymentUrl;
+    @BindView(R.id.et_settings_wallet_url)
+    EditText etWalletUrl;
+    @BindView(R.id.et_settings_subscription_url)
+    EditText etSubscriptionUrl;
+
+    @BindView(R.id.radio_dev)
+    RadioButton rbDev;
+    @BindView(R.id.radio_sandbox)
+    RadioButton rbSand;
+    @BindView(R.id.radio_prod)
+    RadioButton rbProd;
 
     public static ConnectionSettingsFragment newInstance() {
         return new ConnectionSettingsFragment();
@@ -33,8 +47,6 @@ public class ConnectionSettingsFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         MainActivity.toolbar.setTitle(R.string.tittle_settings);
-
-        idenfityFields(view);
 
         setFields();
 
@@ -68,19 +80,6 @@ public class ConnectionSettingsFragment extends BaseFragment {
         ((MainActivity) getActivity()).saveSharedPreferences("subscriptionUrl", etSubscriptionUrl.getText().toString());
 
         ((MainActivity) getActivity()).saveSharedPreferences("environment", buildEnvironmentName());
-    }
-
-    private void idenfityFields(View view) {
-//        etLogin = view.findViewById(R.id.et_settings_login);
-//        etPassword = view.findViewById(R.id.et_settings_password);
-//        etPaymentUrl = view.findViewById(R.id.et_settings__payments_url);
-//        etWalletUrl = view.findViewById(R.id.et_settings_wallet_url);
-//        etSubscriptionUrl = view.findViewById(R.id.et_settings_subscription_url);
-//
-//        radioGroup = view.findViewById(R.id.radio_group_settings);
-//        rbDev = view.findViewById(R.id.radio_dev);
-//        rbSand = view.findViewById(R.id.radio_sandbox);
-//        rbProd = view.findViewById(R.id.radio_prod);
     }
 
     private void setFields() {

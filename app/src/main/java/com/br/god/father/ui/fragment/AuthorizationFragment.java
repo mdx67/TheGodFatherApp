@@ -143,11 +143,11 @@ public class AuthorizationFragment extends BaseFragment {
 //            e.printStackTrace();
 //        }
 
-        if (authorizationRequest.getIntent().equals("AUTHORIZE")) {
-            customerId = "43237f28-8853-41a3-83d0-03457db6d014";
-        } else {
-            customerId = "83237f28-8853-41a3-83d0-03457db6d014";
-        }
+//        if (authorizationRequest.getIntent().equals("AUTHORIZE")) {
+//            customerId = "43237f28-8853-41a3-83d0-03457db6d014";
+//        } else {
+//            customerId = "83237f28-8853-41a3-83d0-03457db6d014";
+//        }
 
         connection.authorize(customerId, authorizationRequest).enqueue(new Callback<AuthorizationResponse>() {
             @Override

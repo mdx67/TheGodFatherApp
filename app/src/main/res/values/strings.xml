@@ -16,5 +16,8 @@
     <string name="msg_status_returned">Status retornado: </string>
     <string name="msg_authorization_fail">Falha na autorização.</string>
     <string name="msg_request_error">Erro ao realizar requisição.</string>
+    <string name="tittle_register_customer">Cad. Cliente</string>
+    <string name="msg_cancellation_fail">Falha no cancelamento.</string>
+    <string name="msg_register_customer_fail">Falha no cadastro.</string>
 
 </resources>
