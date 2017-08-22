@@ -25,6 +25,7 @@ import com.br.god.father.utils.Utils;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -37,6 +38,7 @@ public class SubscriptionFragment extends BaseFragment {
     private static String customerId;
     private static Connection connection;
 
+    @BindView(R.id.spinner_loading_subscription)
     ProgressBar spinnerLoading;
 
     public static SubscriptionFragment newInstance() {
@@ -66,7 +68,6 @@ public class SubscriptionFragment extends BaseFragment {
 
         connection = ApiUtils.getConnection(baseUrl);
 
-        spinnerLoading = view.findViewById(R.id.spinner_loading_subscription);
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
 

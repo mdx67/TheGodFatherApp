@@ -16,6 +16,7 @@ import com.br.god.father.connection.Connection;
 import com.br.god.father.model.AuthorizationResponse;
 import com.br.god.father.ui.activity.MainActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -30,7 +31,9 @@ public class CancelFragment extends BaseFragment {
     private static String paymentCreatedId;
     private static Connection connection;
 
+    @BindView(R.id.et_cancel_payment_id)
     EditText etPaymentId;
+    @BindView(R.id.spinner_loading_cancel)
     ProgressBar spinnerLoading;
 
     public static CancelFragment newInstance() {
@@ -51,7 +54,6 @@ public class CancelFragment extends BaseFragment {
         connection = ApiUtils.getConnection("https://dev-service.apirealwave.io/paymentsmanager/");
 
         getReceivedParams();
-        identityFields(view);
         setFieldsIfNecessary();
 
         spinnerLoading.setVisibility(View.GONE);
@@ -94,12 +96,6 @@ public class CancelFragment extends BaseFragment {
                 spinnerLoading.setVisibility(View.INVISIBLE);
             }
         });
-    }
-
-    private void identityFields(View view) {
-        etPaymentId = view.findViewById(R.id.et_cancel_payment_id);
-
-        spinnerLoading = view.findViewById(R.id.spinner_loading_cancel);
     }
 
     private void setFieldsIfNecessary() {

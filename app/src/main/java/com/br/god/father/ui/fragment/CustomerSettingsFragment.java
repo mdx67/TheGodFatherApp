@@ -62,7 +62,7 @@ public class CustomerSettingsFragment extends BaseFragment {
     }
 
     private void buildList(View view) {
-        ListView lv = view.findViewById(R.id.layout_list_customer);
+        ListView lv = (ListView) view.findViewById(R.id.layout_list_customer);
 
         if (customerAppList != null) {
             for (CustomerApp customerApp : customerAppList) {

@@ -1,8 +1,5 @@
 package com.br.god.father.model;
 
-import lombok.Data;
-
-@Data
 public class Zns {
 
     private String userId;
@@ -11,6 +8,14 @@ public class Zns {
     }
 
     public Zns(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

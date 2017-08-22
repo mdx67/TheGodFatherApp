@@ -70,11 +70,11 @@ public class RegisterCreditCardFragment extends BaseFragment {
     }
 
     private void idenfityFields(View view) {
-        etHolderName = view.findViewById(R.id.et_credit_card_holder);
-        etBin = view.findViewById(R.id.et_credit_card_bin);
-        etLastDigits = view.findViewById(R.id.et_credit_card_last_digits);
-        etExpirationDate = view.findViewById(R.id.et_credit_card_expiration_date);
-        etBrand = view.findViewById(R.id.et_credit_card_brand);
+//        etHolderName = view.findViewById(R.id.et_credit_card_holder);
+//        etBin = view.findViewById(R.id.et_credit_card_bin);
+//        etLastDigits = view.findViewById(R.id.et_credit_card_last_digits);
+//        etExpirationDate = view.findViewById(R.id.et_credit_card_expiration_date);
+//        etBrand = view.findViewById(R.id.et_credit_card_brand);
     }
 
     private CreditCard buildCreditCard() {

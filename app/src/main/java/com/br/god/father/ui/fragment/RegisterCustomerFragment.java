@@ -68,13 +68,13 @@ public class RegisterCustomerFragment extends BaseFragment {
     }
 
     private void idenfityFields(View view) {
-        etName = view.findViewById(R.id.et_name);
-        etUserId = view.findViewById(R.id.et_user_id);
-        etAddressStreet = view.findViewById(R.id.et_address_street);
-        etAddressNumber = view.findViewById(R.id.et_address_number);
-        etAddressDistinct = view.findViewById(R.id.et_address_complement);
-        etAddressPostalCode = view.findViewById(R.id.et_address_postal_code);
-        etDocumentNumber = view.findViewById(R.id.et_document_number);
+//        etName = view.findViewById(R.id.et_name);
+//        etUserId = view.findViewById(R.id.et_user_id);
+//        etAddressStreet = view.findViewById(R.id.et_address_street);
+//        etAddressNumber = view.findViewById(R.id.et_address_number);
+//        etAddressDistinct = view.findViewById(R.id.et_address_complement);
+//        etAddressPostalCode = view.findViewById(R.id.et_address_postal_code);
+//        etDocumentNumber = view.findViewById(R.id.et_document_number);
     }
 
     public void registerCustomer(Customer customer) {

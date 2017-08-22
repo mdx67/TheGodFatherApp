@@ -28,6 +28,7 @@ import com.br.god.father.utils.Utils;
 
 import java.util.Arrays;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -41,9 +42,24 @@ public class AuthorizationFragment extends BaseFragment {
     private static String paymentIdCreated;
     private static Connection connection;
 
-    EditText etAuthorizeExternalId, etAuthorizePrice, etAuthorizeItemCode, etAuthorizeItemName, etAuthorizeItemQuantity, etAuthorizeItemPrice;
+    @BindView(R.id.et_authorize_external_id)
+    EditText etAuthorizeExternalId;
+    @BindView(R.id.et_authorize_price)
+    EditText etAuthorizePrice;
+    @BindView(R.id.et_authorize_item_code)
+    EditText etAuthorizeItemCode;
+    @BindView(R.id.et_cancel_payment_id)
+    EditText etAuthorizeItemName;
+    @BindView(R.id.et_authorize_item_price)
+    EditText etAuthorizeItemPrice;
+    @BindView(R.id.et_authorize_item_quantity)
+    EditText etAuthorizeItemQuantity;
+
+    @BindView(R.id.switch_auth_capt)
     Switch switchAuthorizeCapture;
+    @BindView(R.id.bt_cancel_refund)
     Button btCancelRefund;
+    @BindView(R.id.spinner_loading_authorize)
     ProgressBar spinnerLoading;
 
     public static AuthorizationFragment newInstance() {
@@ -60,8 +76,6 @@ public class AuthorizationFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         MainActivity.toolbar.setTitle(R.string.tittle_authorize_capture);
-
-        idenfityFields(view);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
 
@@ -139,7 +153,7 @@ public class AuthorizationFragment extends BaseFragment {
             @Override
             public void onResponse(Call<AuthorizationResponse> call, Response<AuthorizationResponse> response) {
                 if (response.isSuccessful()) {
-                     Log.i("AuthorizeReturn:", response.body().toString());
+                    Log.i("AuthorizeReturn:", response.body().toString());
 
                     btCancelRefund.setVisibility(View.VISIBLE);
                     paymentIdCreated = response.body().getPaymentId();
@@ -163,22 +177,6 @@ public class AuthorizationFragment extends BaseFragment {
         });
     }
 
-    private void idenfityFields(View view) {
-        etAuthorizeExternalId = view.findViewById(R.id.et_authorize_external_id);
-        etAuthorizePrice = view.findViewById(R.id.et_authorize_price);
-        etAuthorizeItemCode = view.findViewById(R.id.et_authorize_item_code);
-        etAuthorizeItemName = view.findViewById(R.id.et_cancel_payment_id);
-        etAuthorizeItemPrice = view.findViewById(R.id.et_authorize_item_price);
-        etAuthorizeItemQuantity = view.findViewById(R.id.et_authorize_item_quantity);
-
-        switchAuthorizeCapture = view.findViewById(R.id.switch_auth_capt);
-
-        btCancelRefund = view.findViewById(R.id.bt_cancel_refund);
-
-        spinnerLoading = view.findViewById(R.id.spinner_loading_authorize);
-
-    }
-
     private AuthorizationRequest buildAuthorization() {
         AuthorizationRequest authorizationRequest = new AuthorizationRequest();
 
@@ -188,11 +186,11 @@ public class AuthorizationFragment extends BaseFragment {
         Transaction transaction = new Transaction();
 
         transaction.setExternalId(etAuthorizeExternalId.getText().toString());
-        transaction.setPrice(new Money("BRL", 199, 2));
+        transaction.setPrice(new Money("BRL", 199, Integer.parseInt(etAuthorizePrice.getText().toString())));
         transaction.setType("SINGLE");
 
         TransactionItem item = new TransactionItem();
-        item.setPrice(new Money("BRL", 199, 2));
+        item.setPrice(new Money("BRL", 199, Integer.parseInt(etAuthorizeItemPrice.getText().toString())));
         item.setCode(etAuthorizeItemCode.getText().toString());
         item.setName(etAuthorizeItemName.getText().toString());
         item.setQuantity(Integer.parseInt(etAuthorizeItemQuantity.getText().toString()));

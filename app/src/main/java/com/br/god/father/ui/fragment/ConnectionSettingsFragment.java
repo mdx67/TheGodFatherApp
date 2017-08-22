@@ -71,16 +71,16 @@ public class ConnectionSettingsFragment extends BaseFragment {
     }
 
     private void idenfityFields(View view) {
-        etLogin = view.findViewById(R.id.et_settings_login);
-        etPassword = view.findViewById(R.id.et_settings_password);
-        etPaymentUrl = view.findViewById(R.id.et_settings__payments_url);
-        etWalletUrl = view.findViewById(R.id.et_settings_wallet_url);
-        etSubscriptionUrl = view.findViewById(R.id.et_settings_subscription_url);
-
-        radioGroup = view.findViewById(R.id.radio_group_settings);
-        rbDev = view.findViewById(R.id.radio_dev);
-        rbSand = view.findViewById(R.id.radio_sandbox);
-        rbProd = view.findViewById(R.id.radio_prod);
+//        etLogin = view.findViewById(R.id.et_settings_login);
+//        etPassword = view.findViewById(R.id.et_settings_password);
+//        etPaymentUrl = view.findViewById(R.id.et_settings__payments_url);
+//        etWalletUrl = view.findViewById(R.id.et_settings_wallet_url);
+//        etSubscriptionUrl = view.findViewById(R.id.et_settings_subscription_url);
+//
+//        radioGroup = view.findViewById(R.id.radio_group_settings);
+//        rbDev = view.findViewById(R.id.radio_dev);
+//        rbSand = view.findViewById(R.id.radio_sandbox);
+//        rbProd = view.findViewById(R.id.radio_prod);
     }
 
     private void setFields() {
