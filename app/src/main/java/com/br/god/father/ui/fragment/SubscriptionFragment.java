@@ -126,7 +126,7 @@ public class SubscriptionFragment extends BaseFragment {
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
 
-                showMessage("Erro na requisição!");
+                showMessage(getString(R.string.msg_request_error));
             }
         });
     }

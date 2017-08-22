@@ -24,6 +24,7 @@ import com.br.god.father.model.TransactionDescription;
 import com.br.god.father.model.TransactionDetail;
 import com.br.god.father.model.TransactionItem;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.Utils;
 
 import java.util.Arrays;
 
@@ -63,8 +64,17 @@ public class AuthorizationFragment extends BaseFragment {
         idenfityFields(view);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
-//        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
-        customerId = "abc";
+
+        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+
+        if (mainCustomer == null) {
+            showMessage(getString(R.string.msg_add_customer));
+
+            return null;
+        }
+
+        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+
         connection = ApiUtils.getConnection(baseUrl);
 
         spinnerLoading.setVisibility(View.GONE);
@@ -134,9 +144,9 @@ public class AuthorizationFragment extends BaseFragment {
                     btCancelRefund.setVisibility(View.VISIBLE);
                     paymentIdCreated = response.body().getPaymentId();
 
-                    showMessage("Status retornado: " + response.body().getStatus());
+                    showMessage(getString(R.string.msg_status_returned) + response.body().getStatus());
                 } else {
-                    showMessage("Falha na autorização.");
+                    showMessage(getString(R.string.msg_authorization_fail));
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
@@ -148,7 +158,7 @@ public class AuthorizationFragment extends BaseFragment {
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
 
-                showMessage("Erro ao realizar requisição.");
+                showMessage(getString(R.string.msg_request_error));
             }
         });
     }

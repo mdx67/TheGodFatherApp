@@ -33,7 +33,7 @@ public class PlanTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private final String planSuccessSave = "Status retornado: CREATED";
+    private final String planSuccessSave = "Status retornado:CREATED";
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(

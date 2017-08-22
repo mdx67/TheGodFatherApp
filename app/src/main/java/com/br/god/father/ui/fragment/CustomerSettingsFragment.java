@@ -22,12 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class CustomerSettingsFragment extends BaseFragment {
 
-    EditText etName, etId;
+    @BindView(R.id.et_customer_settings_name)
+    EditText etName;
+    @BindView(R.id.et_customer_settings_id)
+    EditText etId;
+    @BindView(R.id.tv_customer_settings_main_customer)
     TextView tvMainCustomer;
 
     private ArrayAdapter<String> adapter;
@@ -48,8 +53,6 @@ public class CustomerSettingsFragment extends BaseFragment {
         MainActivity.toolbar.setTitle(R.string.tittle_settings);
 
         customerAppList = getSavedCustomers();
-
-        idenfityFields(view);
 
         setParams();
 
@@ -142,16 +145,12 @@ public class CustomerSettingsFragment extends BaseFragment {
         return savedCustomers;
     }
 
-    private void idenfityFields(View view) {
-        etName = view.findViewById(R.id.et_customer_settings_name);
-        etId = view.findViewById(R.id.et_customer_settings_id);
-        tvMainCustomer = view.findViewById(R.id.tv_customer_settings_main_customer);
-    }
-
     private void updateMainCustomer(String customerId) {
         for (CustomerApp customerApp : customerAppList) {
-            if (customerApp.getId().equals(customerId)) {
+            if (customerApp.getName().equals(customerId)) {
                 ((MainActivity) getActivity()).saveSharedPreferences("mainCustomer", customerApp.toString());
+
+                tvMainCustomer.setText(customerApp.getName());
 
                 break;
             }

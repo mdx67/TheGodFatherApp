@@ -13,6 +13,7 @@ import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.CreditCard;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,7 +44,17 @@ public class RegisterCreditCardFragment extends BaseFragment {
         idenfityFields(view);
 
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
-        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
+
+        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+
+        if (mainCustomer == null) {
+            showMessage(getString(R.string.msg_add_customer));
+
+            return null;
+        }
+
+        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+
         connection = ApiUtils.getConnection(baseUrl);
 
         return view;
@@ -79,7 +90,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
                     ((MainActivity) getActivity()).removeContent();
 
-                    showMessage("Cartão cadastrado com sucesso!");
+                    showMessage(getString(R.string.msg_status_returned));
                 } else {
                     showMessage("Falha no cadastro.");
                 }

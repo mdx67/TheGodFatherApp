@@ -1,5 +1,7 @@
 package com.br.god.father.automation;
 
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.matcher.RootMatchers;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -14,11 +16,14 @@ import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.hamcrest.object.HasToString;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -38,8 +43,8 @@ public class AuthorizationRequestTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private final String authorizationSuccessSave = "Status retornado: AUTHORIZED";
-    private final String captureSuccessSave = "Status retornado: CONFIRMED";
+    private final String authorizationSuccessSave = "Status retornado:AUTHORIZED";
+    private final String captureSuccessSave = "Status retornado:CONFIRMED";
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -48,9 +53,20 @@ public class AuthorizationRequestTest {
     }
 
     @Test
+    public void myTest() {
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
+
+        onView(withText(R.string.action_customer_settings)).perform(click());
+
+//        onView(withText(R.string.tittle_authorize_capture)).perform(click());
+    }
+
+    @Test
     public void registerAuthorization() throws InterruptedException {
+        selectCustomerForAuthorization();
+
         onView(navigationIconMatcher()).perform(click());
-        onView(withText("Autorizar/Capturar")).perform(click());
+        onView(withText(R.string.tittle_authorize_capture)).perform(click());
 
         AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();
 
@@ -81,10 +97,38 @@ public class AuthorizationRequestTest {
                 .check(matches(withText(authorizationSuccessSave)));
     }
 
+    private void selectCustomerForConfirmation() {
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
+
+        onView(withText(R.string.action_customer_settings)).perform(click());
+
+        onData(HasToString.hasToString("Customer 8323"))
+                .inAdapterView(withId(R.id.layout_list_customer))
+                .perform(click());
+
+        onView(withText("OK")).inRoot(RootMatchers.isDialog())
+                .check(matches(isDisplayed()))
+                .perform(click());
+    }
+
+    private void selectCustomerForAuthorization() {
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
+
+        onView(withText(R.string.action_customer_settings)).perform(click());
+
+        onData(HasToString.hasToString("Customer 4323"))
+                .inAdapterView(withId(R.id.layout_list_customer))
+                .perform(click());
+
+        onView(withText("OK")).inRoot(RootMatchers.isDialog())
+                .check(matches(isDisplayed()))
+                .perform(click());
+    }
+
     @Test
     public void registerCapture() throws InterruptedException {
         onView(navigationIconMatcher()).perform(click());
-        onView(withText("Autorizar/Capturar")).perform(click());
+        onView(withText(R.string.tittle_authorize_capture)).perform(click());
         onView(ViewMatchers.withId(R.id.switch_auth_capt)).perform(click());
 
         AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();

@@ -97,7 +97,7 @@ public class RegisterCustomerFragment extends BaseFragment {
             @Override
             public void onFailure(Call call, Throwable t) {
                 call.cancel();
-                showMessage("Erro ao realizar requisição.");
+                showMessage(getString(R.string.msg_request_error));
             }
         });
     }

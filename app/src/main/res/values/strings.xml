@@ -13,6 +13,8 @@
     <string name="tittle_settings">Configuração</string>
     <string name="msg_change_customer">Colocar esse cliente como principal?</string>
     <string name="msg_add_customer">Informe o customer nas configurações.</string>
-    <string name="msg_status_returned">Status retornado:</string>
+    <string name="msg_status_returned">Status retornado: </string>
+    <string name="msg_authorization_fail">Falha na autorização.</string>
+    <string name="msg_request_error">Erro ao realizar requisição.</string>
 
 </resources>
