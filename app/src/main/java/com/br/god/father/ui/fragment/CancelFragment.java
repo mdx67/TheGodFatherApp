@@ -14,6 +14,7 @@ import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.AuthorizationResponse;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,9 +49,7 @@ public class CancelFragment extends BaseFragment {
 
         MainActivity.toolbar.setTitle(R.string.tittle_cancel_refund);
 
-        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
-        customerId = ((MainActivity) getActivity()).getSharedPreferences("customerId");
-        connection = ApiUtils.getConnection(baseUrl);
+        setConnectionParams();
 
         getReceivedParams();
         setFieldsIfNecessary();
@@ -59,6 +58,22 @@ public class CancelFragment extends BaseFragment {
 
         return view;
     }
+
+    private void setConnectionParams() {
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
+
+        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+
+        if (mainCustomer == null) {
+            showMessage(getString(R.string.msg_add_customer));
+
+            return;
+        }
+
+        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+        connection = ApiUtils.getConnection(baseUrl);
+    }
+
 
     @OnClick(R.id.bt_cancel)
     public void onClickCancellationButton() {
@@ -70,7 +85,7 @@ public class CancelFragment extends BaseFragment {
     }
 
     private void execute() {
-        connection.cancel(customerId, paymentCreatedId).enqueue(new Callback<AuthorizationResponse>() {
+        connection.cancel(customerId, etPaymentId.getText().toString()).enqueue(new Callback<AuthorizationResponse>() {
             @Override
             public void onResponse(Call<AuthorizationResponse> call, Response<AuthorizationResponse> response) {
                 if (response.isSuccessful()) {

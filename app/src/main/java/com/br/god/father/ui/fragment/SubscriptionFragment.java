@@ -54,6 +54,15 @@ public class SubscriptionFragment extends BaseFragment {
 
         MainActivity.toolbar.setTitle(R.string.tittle_buy_plan);
 
+        setConnectionParams();
+
+        spinnerLoading.setVisibility(View.GONE);
+        spinnerLoading.setClickable(false);
+
+        return view;
+    }
+
+    private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
 
         String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
@@ -61,17 +70,11 @@ public class SubscriptionFragment extends BaseFragment {
         if (mainCustomer == null) {
             showMessage(getString(R.string.msg_add_customer));
 
-            return null;
+            return;
         }
 
         customerId = Utils.convertStringToCustomer(mainCustomer).getId();
-
         connection = ApiUtils.getConnection(baseUrl);
-
-        spinnerLoading.setVisibility(View.GONE);
-        spinnerLoading.setClickable(false);
-
-        return view;
     }
 
     @OnClick(R.id.bt_plan_one)

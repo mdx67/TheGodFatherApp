@@ -77,6 +77,15 @@ public class AuthorizationFragment extends BaseFragment {
 
         MainActivity.toolbar.setTitle(R.string.tittle_authorize_capture);
 
+       setConnectionParams();
+
+        spinnerLoading.setVisibility(View.GONE);
+        spinnerLoading.setClickable(false);
+
+        return view;
+    }
+
+    private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
 
         String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
@@ -84,17 +93,11 @@ public class AuthorizationFragment extends BaseFragment {
         if (mainCustomer == null) {
             showMessage(getString(R.string.msg_add_customer));
 
-            return null;
+            return;
         }
 
         customerId = Utils.convertStringToCustomer(mainCustomer).getId();
-
         connection = ApiUtils.getConnection(baseUrl);
-
-        spinnerLoading.setVisibility(View.GONE);
-        spinnerLoading.setClickable(false);
-
-        return view;
     }
 
     @OnClick(R.id.bt_authorize)
