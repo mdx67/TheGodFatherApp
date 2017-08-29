@@ -19,5 +19,6 @@
     <string name="tittle_register_customer">Cad. Cliente</string>
     <string name="msg_cancellation_fail">Falha no cancelamento.</string>
     <string name="msg_register_customer_fail">Falha no cadastro.</string>
+    <string name="url_not_configured">Url não configurada!</string>
 
 </resources>

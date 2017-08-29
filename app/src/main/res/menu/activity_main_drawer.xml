@@ -6,10 +6,10 @@
         <!--android:id="@+id/nav_item_plan"-->
         <!--android:icon="@drawable/ic_account_balance_wallet_black_24dp"-->
         <!--android:title="Plano" />-->
-        <!--<item-->
-            <!--android:id="@+id/nav_register_customer"-->
-            <!--android:icon="@drawable/ic_account_balance_wallet_black_24dp"-->
-            <!--android:title="Cad. Cliente" />-->
+        <item
+            android:id="@+id/nav_register_customer"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:title="Cad. Cliente" />
         <item
             android:id="@+id/nav_register_creditCard"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"

@@ -17,6 +17,7 @@ import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.AuthorizationResponse;
+import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Payment;
 import com.br.god.father.model.Transaction;
@@ -88,7 +89,7 @@ public class AuthorizationFragment extends BaseFragment {
     private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
 
-        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+        CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
         if (mainCustomer == null) {
             showMessage(getString(R.string.msg_add_customer));
@@ -96,7 +97,7 @@ public class AuthorizationFragment extends BaseFragment {
             return;
         }
 
-        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+        customerId = mainCustomer.getId();
         connection = ApiUtils.getConnection(baseUrl);
     }
 
@@ -146,13 +147,7 @@ public class AuthorizationFragment extends BaseFragment {
 //            e.printStackTrace();
 //        }
 
-//        if (authorizationRequest.getIntent().equals("AUTHORIZE")) {
-//            customerId = "43237f28-8853-41a3-83d0-03457db6d014";
-//        } else {
-//            customerId = "83237f28-8853-41a3-83d0-03457db6d014";
-//        }
-
-        connection.authorize(customerId, authorizationRequest).enqueue(new Callback<AuthorizationResponse>() {
+        connection.authorize(ApiUtils.buildHeaders(customerId), authorizationRequest).enqueue(new Callback<AuthorizationResponse>() {
             @Override
             public void onResponse(Call<AuthorizationResponse> call, Response<AuthorizationResponse> response) {
                 if (response.isSuccessful()) {

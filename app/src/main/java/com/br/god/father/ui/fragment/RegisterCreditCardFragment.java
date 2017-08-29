@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.CreditCard;
+import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.activity.MainActivity;
 import com.br.god.father.utils.Utils;
 
@@ -35,6 +37,9 @@ public class RegisterCreditCardFragment extends BaseFragment {
     @BindView(R.id.et_credit_card_brand)
     EditText etBrand;
 
+    @BindView(R.id.spinner_loading_register_credit_card)
+    ProgressBar spinnerLoading;
+
     private static String baseUrl;
     private static String customerId;
     private static Connection connection;
@@ -53,6 +58,9 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
         setConnectionParams();
 
+        spinnerLoading.setVisibility(View.GONE);
+        spinnerLoading.setClickable(false);
+
         return view;
     }
 
@@ -62,13 +70,15 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
         if (baseUrl == null || customerId == null) return;
 
+        spinnerLoading.setVisibility(View.VISIBLE);
+
         register(creditCard);
     }
 
     private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
 
-        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+        CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
         if (mainCustomer == null) {
             showMessage(getString(R.string.msg_add_customer));
@@ -76,7 +86,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
             return;
         }
 
-        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+        customerId = mainCustomer.getId();
         connection = ApiUtils.getConnection(baseUrl);
     }
 
@@ -85,23 +95,26 @@ public class RegisterCreditCardFragment extends BaseFragment {
     }
 
     public void register(CreditCard creditCard) {
-        connection.registerCreditCard(customerId, creditCard).enqueue(new Callback<CreditCard>() {
+        connection.registerCreditCard(ApiUtils.buildHeaders(customerId), creditCard).enqueue(new Callback<CreditCard>() {
             @Override
             public void onResponse(Call<CreditCard> call, Response<CreditCard> response) {
                 if (response.isSuccessful()) {
                     Log.i("CreditCardReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();
-
-                    showMessage(getString(R.string.msg_status_returned));
-                } else {
-                    showMessage(getString(R.string.msg_register_customer_fail));
                 }
+
+                showMessage(getString(R.string.msg_status_returned) + response.code());
+
+                spinnerLoading.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 call.cancel();
+
+                spinnerLoading.setVisibility(View.INVISIBLE);
+
                 showMessage(getString(R.string.msg_request_error));
             }
         });

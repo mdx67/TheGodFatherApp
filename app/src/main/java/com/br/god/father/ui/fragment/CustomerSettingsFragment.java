@@ -103,11 +103,15 @@ public class CustomerSettingsFragment extends BaseFragment {
     }
 
     private void setParams() {
-        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+        CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
-        if (mainCustomer == null) return;
+        if (mainCustomer == null) {
+            showMessage(getString(R.string.msg_add_customer));
 
-        tvMainCustomer.setText(Utils.convertStringToCustomer(mainCustomer).getName());
+            return;
+        }
+
+        tvMainCustomer.setText(mainCustomer.getName());
     }
 
     private void saveParams() {
@@ -135,7 +139,7 @@ public class CustomerSettingsFragment extends BaseFragment {
     private void updateMainCustomer(String customerId) {
         for (CustomerApp customerApp : customerAppList) {
             if (customerApp.getName().equals(customerId)) {
-                ((MainActivity) getActivity()).saveSharedPreferences("mainCustomer", customerApp.toString());
+                ((MainActivity) getActivity()).updateMainCustomer(customerApp);
 
                 tvMainCustomer.setText(customerApp.getName());
 

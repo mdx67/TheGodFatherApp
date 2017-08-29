@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -22,31 +23,6 @@
                 android:layout_marginTop="11dp"
                 android:text="Ambiente" />
 
-            <EditText
-                android:id="@+id/et_settings_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Login"
-                android:layout_below="@+id/textView2"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:id="@+id/et_settings_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@+id/et_settings_login"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/et_settings_login"
-                android:layout_below="@+id/textView2"
-                android:layout_marginTop="35dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Senha" />
-
             <RadioGroup
                 android:id="@+id/radio_group_settings"
                 android:layout_width="wrap_content"
@@ -60,7 +36,6 @@
                     android:id="@+id/radio_dev"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
                     android:checked="true"
                     android:text="Desenvolvimento" />
 
@@ -79,25 +54,16 @@
                     android:text="Produção" />
             </RadioGroup>
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/radio_group_settings"
-                android:layout_marginTop="12dp"
-                android:text="Dados de acesso" />
-
             <EditText
                 android:id="@+id/et_settings__payments_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView6"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:layout_marginTop="11dp"
+                android:layout_below="@+id/textView6"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
             <EditText
                 android:id="@+id/et_settings_wallet_url"
@@ -114,21 +80,22 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Payment URL"
+                android:layout_below="@+id/radio_group_settings"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/et_settings_password"
-                android:layout_marginTop="7dp"
-                android:text="Payment URL" />
+                android:layout_marginTop="12dp" />
 
             <Button
                 android:id="@+id/bt_settings_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="55dp"
+                android:text="Salvar"
+                tools:ignore="HardcodedText"
+                android:layout_alignTop="@+id/et_settings_customer_url"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/et_settings__payments_url"
-                android:layout_marginTop="132dp"
-                android:text="Salvar" />
+                android:layout_alignParentStart="true" />
 
             <EditText
                 android:id="@+id/et_settings_subscription_url"
@@ -160,6 +127,26 @@
                 android:layout_below="@+id/et_settings__payments_url"
                 android:layout_marginTop="8dp"
                 android:text="Wallet URL" />
+
+            <EditText
+                android:id="@+id/et_settings_customer_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_marginTop="8dp"
+                android:layout_below="@+id/textView14"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CustomerUrl"
+                android:layout_below="@+id/et_settings_subscription_url"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
     </ScrollView>

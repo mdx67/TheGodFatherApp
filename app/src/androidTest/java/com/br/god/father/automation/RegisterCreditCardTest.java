@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import com.br.god.father.R;
 import com.br.god.father.model.CreditCard;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.Utils;
 
 import org.hamcrest.Matcher;
 import org.junit.Before;
@@ -73,10 +74,10 @@ public class RegisterCreditCardTest {
                 .perform(typeText(creditCard.getBrand()), closeSoftKeyboard());
 
         SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
-        String custumerId = settings.getString("customerId", null);
+        String mainCustomer = settings.getString("mainCustomer", null);
 
         onView(withId(R.id.et_custumer_id))
-                .perform(typeText(custumerId), closeSoftKeyboard());
+                .perform(typeText(Utils.convertStringToCustomer(mainCustomer).getId()), closeSoftKeyboard());
 
         onView(withId(R.id.bt_credit_card_register)).perform(click());
 

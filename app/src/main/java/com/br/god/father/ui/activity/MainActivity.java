@@ -10,20 +10,22 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.br.god.father.R;
+import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.fragment.AuthorizationFragment;
 import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
 import com.br.god.father.ui.fragment.CustomerSettingsFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
+import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.SubscriptionFragment;
 
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-//    @BindView(R.id.drawer_layout)
     private DrawerLayout drawer;
 
     public static Toolbar toolbar;
@@ -43,6 +45,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     @Override
@@ -98,9 +101,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Class fragmentClass;
 
         switch (menuItem.getItemId()) {
-//            case R.id.nav_register_customer:
-//                fragmentClass = RegisterCustomerFragment.class;
-//                break;
+            case R.id.nav_register_customer:
+                fragmentClass = RegisterCustomerFragment.class;
+                break;
             case R.id.nav_register_creditCard:
                 fragmentClass = RegisterCreditCardFragment.class;
                 break;

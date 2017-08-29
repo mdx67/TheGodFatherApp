@@ -13,6 +13,7 @@ import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.AuthorizationResponse;
+import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.activity.MainActivity;
 import com.br.god.father.utils.Utils;
 
@@ -62,7 +63,7 @@ public class CancelFragment extends BaseFragment {
     private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
 
-        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+        CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
         if (mainCustomer == null) {
             showMessage(getString(R.string.msg_add_customer));
@@ -70,7 +71,7 @@ public class CancelFragment extends BaseFragment {
             return;
         }
 
-        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+        customerId = mainCustomer.getId();
         connection = ApiUtils.getConnection(baseUrl);
     }
 
@@ -85,7 +86,7 @@ public class CancelFragment extends BaseFragment {
     }
 
     private void execute() {
-        connection.cancel(customerId, etPaymentId.getText().toString()).enqueue(new Callback<AuthorizationResponse>() {
+        connection.cancel(ApiUtils.buildHeaders(customerId), etPaymentId.getText().toString()).enqueue(new Callback<AuthorizationResponse>() {
             @Override
             public void onResponse(Call<AuthorizationResponse> call, Response<AuthorizationResponse> response) {
                 if (response.isSuccessful()) {

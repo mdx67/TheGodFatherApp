@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.br.god.father.R;
 import com.br.god.father.model.CustomerApp;
+import com.br.god.father.utils.Utils;
 
 import java.util.HashSet;
 import java.util.List;
@@ -63,5 +64,19 @@ public class BaseActivity extends AppCompatActivity {
         editor.putStringSet("customerList", tempSet);
 
         editor.commit();
+    }
+
+    public void updateMainCustomer(CustomerApp customerApp) {
+        saveSharedPreferences("mainCustomer", customerApp.toString());
+    }
+
+    public CustomerApp getMainCustomer() {
+        String mainCustomer = getSharedPreferences("mainCustomer");
+
+        if (mainCustomer == null) {
+            return null;
+        }
+
+        return Utils.convertStringToCustomer(getSharedPreferences("mainCustomer"));
     }
 }

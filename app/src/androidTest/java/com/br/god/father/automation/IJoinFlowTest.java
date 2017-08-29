@@ -61,7 +61,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
 
         onView(ViewMatchers.withId(R.id.et_name))
                 .perform(typeText(customer.getFullName()), closeSoftKeyboard());
-        onView(withId(R.id.et_user_id))
+        onView(withId(R.id.et_register_customer_email))
                 .perform(typeText(customer.getZns().getUserId()), closeSoftKeyboard());
         onView(withId(R.id.et_document_number))
                 .perform(typeText(customer.getDocuments().get(0).getNumber()), closeSoftKeyboard());
@@ -69,7 +69,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
                 .perform(typeText(customer.getAddresses().get(0).getStreet()), closeSoftKeyboard());
         onView(withId(R.id.et_address_number))
                 .perform(typeText(customer.getAddresses().get(0).getNumber()), closeSoftKeyboard());
-        onView(withId(R.id.et_address_complement))
+        onView(withId(R.id.et_address_district))
                 .perform(typeText(customer.getAddresses().get(0).getDistrict()), closeSoftKeyboard());
         onView(withId(R.id.et_address_postal_code))
                 .perform(typeText(customer.getAddresses().get(0).getZipCode()), closeSoftKeyboard());

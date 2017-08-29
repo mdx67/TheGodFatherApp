@@ -12,6 +12,7 @@ import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.mock.SubscriptionMock;
+import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
@@ -58,7 +59,7 @@ public class SubscriptionFragment extends BaseFragment {
     private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
 
-        String mainCustomer = ((MainActivity) getActivity()).getSharedPreferences("mainCustomer");
+        CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
         if (mainCustomer == null) {
             showMessage(getString(R.string.msg_add_customer));
@@ -66,7 +67,7 @@ public class SubscriptionFragment extends BaseFragment {
             return;
         }
 
-        customerId = Utils.convertStringToCustomer(mainCustomer).getId();
+        customerId = mainCustomer.getId();
         connection = ApiUtils.getConnection(baseUrl);
     }
 
@@ -101,7 +102,7 @@ public class SubscriptionFragment extends BaseFragment {
     }
 
     private void doSubscribe(SubscriptionRequest subscriptionRequest) {
-        connection.subscriptionPlan(customerId, subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
+        connection.subscriptionPlan(ApiUtils.buildHeaders(customerId), subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
             public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
                 if (response.isSuccessful()) {
