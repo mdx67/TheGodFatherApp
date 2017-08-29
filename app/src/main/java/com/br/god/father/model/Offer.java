@@ -6,8 +6,9 @@ public class Offer {
 
     private String catalogOfferId;
     private String catalogOfferType;
-    private Integer validity;
+    private Validity validity;
     private List<OfferItem> offerItems;
+    private Money price;
 
     public String getCatalogOfferId() {
         return catalogOfferId;
@@ -25,11 +26,11 @@ public class Offer {
         this.catalogOfferType = catalogOfferType;
     }
 
-    public Integer getValidity() {
+    public Validity getValidity() {
         return validity;
     }
 
-    public void setValidity(Integer validity) {
+    public void setValidity(Validity validity) {
         this.validity = validity;
     }
 
@@ -39,5 +40,13 @@ public class Offer {
 
     public void setOfferItems(List<OfferItem> offerItems) {
         this.offerItems = offerItems;
+    }
+
+    public Money getPrice() {
+        return price;
+    }
+
+    public void setPrice(Money price) {
+        this.price = price;
     }
 }

@@ -5,6 +5,8 @@ import java.util.List;
 public class OfferItem {
 
     private String catalogOfferItemId;
+    private String productTypeId;
+    private String productTypeName;
     private Integer productId;
     private String component;
     private List<ItemAttributes> attributes;
@@ -16,6 +18,22 @@ public class OfferItem {
 
     public void setCatalogOfferItemId(String catalogOfferItemId) {
         this.catalogOfferItemId = catalogOfferItemId;
+    }
+
+    public String getProductTypeId() {
+        return productTypeId;
+    }
+
+    public void setProductTypeId(String productTypeId) {
+        this.productTypeId = productTypeId;
+    }
+
+    public String getProductTypeName() {
+        return productTypeName;
+    }
+
+    public void setProductTypeName(String productTypeName) {
+        this.productTypeName = productTypeName;
     }
 
     public Integer getProductId() {
