@@ -98,7 +98,7 @@ public class CancelFragment extends BaseFragment {
 
                     ((MainActivity) getActivity()).removeContent();
 
-                    showMessage(getString(R.string.msg_status_returned) + response.body().getStatus());
+                    showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
                     showMessage(getString(R.string.msg_cancellation_fail));
                 }

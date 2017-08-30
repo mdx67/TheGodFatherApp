@@ -2,7 +2,7 @@ package com.br.god.father.automation;
 
 import com.br.god.father.model.Address;
 import com.br.god.father.model.AuthorizationRequest;
-import com.br.god.father.model.CreditCard;
+import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.model.Customer;
 import com.br.god.father.model.Document;
 import com.br.god.father.model.Money;
@@ -34,8 +34,8 @@ public abstract class AbstractAutomationMock {
         return customer;
     }
 
-    public static CreditCard getCreditCard() {
-        return new CreditCard("EXTERNAL_CREDIT_CARD",
+    public static CreditCardRequest getCreditCard() {
+        return new CreditCardRequest("EXTERNAL_CREDIT_CARD",
                 "Filipe",
                 "123455",
                 "1234",

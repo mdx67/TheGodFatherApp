@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
-import com.br.god.father.model.CreditCard;
+import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.activity.MainActivity;
@@ -94,12 +94,12 @@ public class RegisterCreditCardFragment extends BaseFragment {
         connection = ApiUtils.getConnection(baseUrl);
     }
 
-    private CreditCard buildCreditCard() {
-        return new CreditCard("EXTERNAL_CREDIT_CARD", etHolderName.getText().toString(), etBin.getText().toString(), etLastDigits.getText().toString(), etExpirationDate.getText().toString(), etBrand.getText().toString(), etExternalToken.getText().toString());
+    private CreditCardRequest buildCreditCard() {
+        return new CreditCardRequest("EXTERNAL_CREDIT_CARD", etHolderName.getText().toString(), etBin.getText().toString(), etLastDigits.getText().toString(), etExpirationDate.getText().toString(), etBrand.getText().toString(), etExternalToken.getText().toString());
     }
 
-    public void register(CreditCard creditCard) {
-        connection.registerCreditCard(ApiUtils.buildHeaders(customerId), creditCard).enqueue(new Callback<CreditCardResponse>() {
+    public void register(CreditCardRequest creditCardRequest) {
+        connection.registerCreditCard(ApiUtils.buildHeaders(customerId), creditCardRequest).enqueue(new Callback<CreditCardResponse>() {
             @Override
             public void onResponse(Call<CreditCardResponse> call, Response<CreditCardResponse> response) {
                 if (response.isSuccessful()) {

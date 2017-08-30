@@ -3,7 +3,7 @@ package com.br.god.father.model;
 public class RegisterCustomerRequest {
 
     private Customer customer;
-    private CreditCard creditCard;
+    private CreditCardRequest creditCardRequest;
 
     public Customer getCustomer() {
         return customer;
@@ -13,11 +13,11 @@ public class RegisterCustomerRequest {
         this.customer = customer;
     }
 
-    public CreditCard getCreditCard() {
-        return creditCard;
+    public CreditCardRequest getCreditCardRequest() {
+        return creditCardRequest;
     }
 
-    public void setCreditCard(CreditCard creditCard) {
-        this.creditCard = creditCard;
+    public void setCreditCardRequest(CreditCardRequest creditCardRequest) {
+        this.creditCardRequest = creditCardRequest;
     }
 }

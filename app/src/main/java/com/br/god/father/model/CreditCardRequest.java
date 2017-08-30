@@ -2,7 +2,7 @@ package com.br.god.father.model;
 
 import java.util.Map;
 
-public class CreditCard {
+public class CreditCardRequest {
 
     private String type;
     private String holder;
@@ -14,10 +14,10 @@ public class CreditCard {
     private Address address;
     private Map customFields;
 
-    public CreditCard() {
+    public CreditCardRequest() {
     }
 
-    public CreditCard(String type, String holder, String bin, String lastDigits, String expirationDate, String brand, String externalToken) {
+    public CreditCardRequest(String type, String holder, String bin, String lastDigits, String expirationDate, String brand, String externalToken) {
         this.type = type;
         this.holder = holder;
         this.bin = bin;

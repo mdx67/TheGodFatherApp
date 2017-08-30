@@ -3,7 +3,7 @@ package com.br.god.father.connection;
 import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.AuthorizationResponse;
 import com.br.god.father.model.CreateCustomerRequest;
-import com.br.god.father.model.CreditCard;
+import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.Customer;
 import com.br.god.father.model.SubscriptionRequest;
@@ -24,7 +24,7 @@ public interface Connection {
     Call<Customer> registerCustomer(@HeaderMap Map<String, String> headers, @Body CreateCustomerRequest customer);
 
     @POST("v1/wallet/credit-cards")
-    Call<CreditCardResponse> registerCreditCard(@HeaderMap Map<String, String> headers, @Body CreditCard creditCard);
+    Call<CreditCardResponse> registerCreditCard(@HeaderMap Map<String, String> headers, @Body CreditCardRequest creditCardRequest);
 
     @POST("v1/subscriptions")
     Call<SubscriptionResponse> subscriptionPlan(@HeaderMap Map<String, String> headers, @Body SubscriptionRequest subscriptionRequest);

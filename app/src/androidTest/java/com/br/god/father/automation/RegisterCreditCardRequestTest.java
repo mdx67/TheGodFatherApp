@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.br.god.father.R;
-import com.br.god.father.model.CreditCard;
+import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.ui.activity.MainActivity;
 import com.br.god.father.utils.Utils;
 
@@ -35,7 +35,7 @@ import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class RegisterCreditCardTest {
+public class RegisterCreditCardRequestTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
@@ -55,23 +55,22 @@ public class RegisterCreditCardTest {
 
     @Test
     public void registerCreditCad() throws InterruptedException {
-
         Activity activity = mainActivityRule.getActivity();
-        CreditCard creditCard = AbstractAutomationMock.getCreditCard();
+        CreditCardRequest creditCardRequest = AbstractAutomationMock.getCreditCard();
 
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Cad. Cartão")).perform(click());
 
         onView(ViewMatchers.withId(R.id.et_credit_card_holder))
-                .perform(typeText(creditCard.getCardHolderName()), closeSoftKeyboard());
+                .perform(typeText(creditCardRequest.getHolder()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_bin))
-                .perform(typeText(creditCard.getBin()), closeSoftKeyboard());
+                .perform(typeText(creditCardRequest.getBin()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_last_digits))
-                .perform(typeText(creditCard.getLastDigits()), closeSoftKeyboard());
+                .perform(typeText(creditCardRequest.getLastDigits()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_expiration_date))
-                .perform(typeText(creditCard.getExpirationDate()), closeSoftKeyboard());
+                .perform(typeText(creditCardRequest.getExpirationDate()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_brand))
-                .perform(typeText(creditCard.getBrand()), closeSoftKeyboard());
+                .perform(typeText(creditCardRequest.getBrand()), closeSoftKeyboard());
 
         SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
         String mainCustomer = settings.getString("mainCustomer", null);
