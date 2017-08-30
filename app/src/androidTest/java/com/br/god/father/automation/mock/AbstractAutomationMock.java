@@ -58,7 +58,7 @@ public abstract class AbstractAutomationMock {
         Integer token = new Random().nextInt(999999);
 
         return new CreditCardRequest("EXTERNAL_CREDIT_CARD",
-                "Filipe",
+                "Fulano Beltrano",
                 token.toString(),
                 "1234",
                 "01/28",

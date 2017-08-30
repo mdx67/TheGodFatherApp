@@ -62,13 +62,48 @@ public class AuthorizationRequestTest {
     }
 
     @Test
-    public void registerAuthorization() throws InterruptedException {
+    public void authorizationSuccess() throws InterruptedException {
         onView(navigationIconMatcher()).perform(click());
         onView(withText(R.string.tittle_authorize_capture)).perform(click());
 
         AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();
 
         onView(ViewMatchers.withId(R.id.switch_auth_capt)).check(matches(Matchers.not(isChecked())));
+        onView(withId(R.id.et_authorize_external_id))
+                .perform(typeText(authorizationRequest.getTransaction().getExternalId()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_price))
+                .perform(typeText(authorizationRequest.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_code))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
+        onView(withId(R.id.et_cancel_payment_id))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_quantity))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());
+        onView(withId(R.id.et_authorize_item_price))
+                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getPrice().getAmount().toString()), closeSoftKeyboard());
+
+        onView(withId(R.id.bt_authorize)).perform(click());
+
+        Thread.sleep(5000);
+
+        onView(withText(successStatus))
+                .inRoot(new ToastMatcher())
+                .check(matches(isDisplayed()));
+
+        onView(withText(successStatus))
+                .inRoot(new ToastMatcher())
+                .check(matches(withText(successStatus)));
+    }
+
+    @Test
+    public void captureSuccess() throws InterruptedException {
+        onView(navigationIconMatcher()).perform(click());
+        onView(withText(R.string.tittle_authorize_capture)).perform(click());
+        onView(ViewMatchers.withId(R.id.switch_auth_capt)).perform(click());
+
+        AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();
+
+        onView(ViewMatchers.withId(R.id.switch_auth_capt)).check(matches(isChecked()));
         onView(withId(R.id.et_authorize_external_id))
                 .perform(typeText(authorizationRequest.getTransaction().getExternalId()), closeSoftKeyboard());
         onView(withId(R.id.et_authorize_price))
@@ -125,38 +160,4 @@ public class AuthorizationRequestTest {
 //                .perform(click());
 //    }
 
-    @Test
-    public void registerCapture() throws InterruptedException {
-        onView(navigationIconMatcher()).perform(click());
-        onView(withText(R.string.tittle_authorize_capture)).perform(click());
-        onView(ViewMatchers.withId(R.id.switch_auth_capt)).perform(click());
-
-        AuthorizationRequest authorizationRequest = AbstractAutomationMock.getAuthorization();
-
-        onView(ViewMatchers.withId(R.id.switch_auth_capt)).check(matches(isChecked()));
-        onView(withId(R.id.et_authorize_external_id))
-                .perform(typeText(authorizationRequest.getTransaction().getExternalId()), closeSoftKeyboard());
-        onView(withId(R.id.et_authorize_price))
-                .perform(typeText(authorizationRequest.getTransaction().getPrice().getAmount().toString()), closeSoftKeyboard());
-        onView(withId(R.id.et_authorize_item_code))
-                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getCode()), closeSoftKeyboard());
-        onView(withId(R.id.et_cancel_payment_id))
-                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getName()), closeSoftKeyboard());
-        onView(withId(R.id.et_authorize_item_quantity))
-                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getQuantity().toString()), closeSoftKeyboard());
-        onView(withId(R.id.et_authorize_item_price))
-                .perform(typeText(authorizationRequest.getTransaction().getItems().get(0).getPrice().getAmount().toString()), closeSoftKeyboard());
-
-        onView(withId(R.id.bt_authorize)).perform(click());
-
-        Thread.sleep(5000);
-
-        onView(withText(successStatus))
-                .inRoot(new ToastMatcher())
-                .check(matches(isDisplayed()));
-
-        onView(withText(successStatus))
-                .inRoot(new ToastMatcher())
-                .check(matches(withText(successStatus)));
-    }
 }

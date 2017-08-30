@@ -2,6 +2,7 @@ package com.br.god.father.automation;
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,8 +12,10 @@ import com.br.god.father.R;
 import com.br.god.father.automation.mock.AbstractAutomationMock;
 import com.br.god.father.automation.utils.ToastMatcher;
 import com.br.god.father.model.CreditCardRequest;
+import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,6 +34,9 @@ import static org.hamcrest.core.AllOf.allOf;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class RegisterCreditCardRequestTest {
+
+    @Rule
+    public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     private final String creditCardSuccessSave = "Status retornado:202";
 

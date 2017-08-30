@@ -112,10 +112,10 @@ public class AuthorizationFragment extends BaseFragment {
     }
 
     private void setPaymentMethodId() {
-        String paymentMethodId = ((MainActivity) getActivity()).getSharedPreferences("paymentMethodId");
+        String creditCardId = ((MainActivity) getActivity()).getSharedPreferences("creditCardId");
 
-        if (paymentMethodId != null) {
-            etPaymentMethodId.setText(paymentMethodId);
+        if (creditCardId != null) {
+            etPaymentMethodId.setText(creditCardId);
         }
     }
 

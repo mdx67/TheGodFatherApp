@@ -107,7 +107,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
                     ((MainActivity) getActivity()).removeContent();
 
-                    ((MainActivity) getActivity()).saveSharedPreferences("paymentMethodId", response.body().getPaymentMethodId());
+                    ((MainActivity) getActivity()).saveSharedPreferences("creditCardId", response.body().getCreditCardId());
 
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
@@ -123,7 +123,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
 
-                showMessage(getString(R.string.msg_request_error));
+                showAlertDialogWithOKButton("Erro", t.getMessage());
             }
         });
     }

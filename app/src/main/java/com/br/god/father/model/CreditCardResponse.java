@@ -2,13 +2,13 @@ package com.br.god.father.model;
 
 public class CreditCardResponse {
 
-    private String paymentMethodId;
+    private String creditCardId;
 
-    public String getPaymentMethodId() {
-        return paymentMethodId;
+    public String getCreditCardId() {
+        return creditCardId;
     }
 
-    public void setPaymentMethodId(String paymentMethodId) {
-        this.paymentMethodId = paymentMethodId;
+    public void setCreditCardId(String creditCardId) {
+        this.creditCardId = creditCardId;
     }
 }
