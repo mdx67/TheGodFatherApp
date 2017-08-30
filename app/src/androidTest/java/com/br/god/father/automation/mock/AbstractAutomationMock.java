@@ -62,7 +62,7 @@ public abstract class AbstractAutomationMock {
                 token.toString(),
                 "1234",
                 "01/28",
-                "AMEX",
+                "VISA",
                 token.toString());
     }
 
@@ -75,7 +75,7 @@ public abstract class AbstractAutomationMock {
 
         Transaction transaction = new Transaction();
         transaction.setPrice(new Money("BRL", 199, 2));
-        transaction.setExternalId("YOUR_TRANSACTION_ID");
+        transaction.setExternalId("ABC-1234");
         transaction.setItems(Arrays.asList(item));
 
         AuthorizationRequest authorizationRequest = new AuthorizationRequest();
