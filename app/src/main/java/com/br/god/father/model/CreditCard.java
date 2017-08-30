@@ -5,21 +5,21 @@ import java.util.Map;
 public class CreditCard {
 
     private String type;
-    private String cardHolderName;
+    private String holder;
     private String bin;
     private String lastDigits;
     private String expirationDate;
     private String brand;
     private String externalToken;
-    private Address billingAddress;
+    private Address address;
     private Map customFields;
 
     public CreditCard() {
     }
 
-    public CreditCard(String type, String cardHolderName, String bin, String lastDigits, String expirationDate, String brand, String externalToken) {
+    public CreditCard(String type, String holder, String bin, String lastDigits, String expirationDate, String brand, String externalToken) {
         this.type = type;
-        this.cardHolderName = cardHolderName;
+        this.holder = holder;
         this.bin = bin;
         this.lastDigits = lastDigits;
         this.expirationDate = expirationDate;
@@ -35,12 +35,12 @@ public class CreditCard {
         this.type = type;
     }
 
-    public String getCardHolderName() {
-        return cardHolderName;
+    public String getHolder() {
+        return holder;
     }
 
-    public void setCardHolderName(String cardHolderName) {
-        this.cardHolderName = cardHolderName;
+    public void setHolder(String holder) {
+        this.holder = holder;
     }
 
     public String getBin() {
@@ -83,12 +83,12 @@ public class CreditCard {
         this.externalToken = externalToken;
     }
 
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setBillingAddress(Address billingAddress) {
-        this.billingAddress = billingAddress;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Map getCustomFields() {

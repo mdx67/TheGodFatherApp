@@ -13,9 +13,9 @@ import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.model.CreditCard;
+import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +36,8 @@ public class RegisterCreditCardFragment extends BaseFragment {
     EditText etExpirationDate;
     @BindView(R.id.et_credit_card_brand)
     EditText etBrand;
+    @BindView(R.id.et_credit_card_external_token)
+    EditText etExternalToken;
 
     @BindView(R.id.spinner_loading_register_credit_card)
     ProgressBar spinnerLoading;
@@ -91,13 +93,13 @@ public class RegisterCreditCardFragment extends BaseFragment {
     }
 
     private CreditCard buildCreditCard() {
-        return new CreditCard("EXTERNAL_CREDIT_CARD", etHolderName.getText().toString(), etBin.getText().toString(), etLastDigits.getText().toString(), etExpirationDate.getText().toString(), etBrand.getText().toString(), "ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL");
+        return new CreditCard("EXTERNAL_CREDIT_CARD", etHolderName.getText().toString(), etBin.getText().toString(), etLastDigits.getText().toString(), etExpirationDate.getText().toString(), etBrand.getText().toString(), etExternalToken.getText().toString());
     }
 
     public void register(CreditCard creditCard) {
-        connection.registerCreditCard(ApiUtils.buildHeaders(customerId), creditCard).enqueue(new Callback<CreditCard>() {
+        connection.registerCreditCard(ApiUtils.buildHeaders(customerId), creditCard).enqueue(new Callback<CreditCardResponse>() {
             @Override
-            public void onResponse(Call<CreditCard> call, Response<CreditCard> response) {
+            public void onResponse(Call<CreditCardResponse> call, Response<CreditCardResponse> response) {
                 if (response.isSuccessful()) {
                     Log.i("CreditCardReturn:", response.body().toString());
 

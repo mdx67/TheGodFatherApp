@@ -76,7 +76,7 @@ public class RegisterCreditCardTest {
         SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
         String mainCustomer = settings.getString("mainCustomer", null);
 
-        onView(withId(R.id.et_custumer_id))
+        onView(withId(R.id.et_credit_card_external_token))
                 .perform(typeText(Utils.convertStringToCustomer(mainCustomer).getId()), closeSoftKeyboard());
 
         onView(withId(R.id.bt_credit_card_register)).perform(click());

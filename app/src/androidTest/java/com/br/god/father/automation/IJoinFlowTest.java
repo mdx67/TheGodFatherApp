@@ -103,7 +103,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
         SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
         String custumerId = settings.getString("customerId", null);
 
-        onView(withId(R.id.et_custumer_id))
+        onView(withId(R.id.et_credit_card_external_token))
                 .perform(typeText(custumerId), closeSoftKeyboard());
 
         onView(withId(R.id.bt_credit_card_register)).perform(click());

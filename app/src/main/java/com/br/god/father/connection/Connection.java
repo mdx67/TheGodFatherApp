@@ -4,6 +4,7 @@ import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.AuthorizationResponse;
 import com.br.god.father.model.CreateCustomerRequest;
 import com.br.god.father.model.CreditCard;
+import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.Customer;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
@@ -19,11 +20,11 @@ import retrofit2.http.Path;
 
 public interface Connection {
 
-    @POST("customers")
+    @POST("v1/customers")
     Call<Customer> registerCustomer(@HeaderMap Map<String, String> headers, @Body CreateCustomerRequest customer);
 
-    @POST("/mobile/register/creditCard")
-    Call<CreditCard> registerCreditCard(@HeaderMap Map<String, String> headers, @Body CreditCard creditCard);
+    @POST("v1/wallet/credit-cards")
+    Call<CreditCardResponse> registerCreditCard(@HeaderMap Map<String, String> headers, @Body CreditCard creditCard);
 
     @POST("v1/subscriptions")
     Call<SubscriptionResponse> subscriptionPlan(@HeaderMap Map<String, String> headers, @Body SubscriptionRequest subscriptionRequest);

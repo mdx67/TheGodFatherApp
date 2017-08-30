@@ -102,6 +102,10 @@ public class SubscriptionFragment extends BaseFragment {
     }
 
     private void doSubscribe(SubscriptionRequest subscriptionRequest) {
+
+        //TODO: tirar isso depois que tirar o mock do subscription
+        customerId = "83237f28-8853-41a3-83d0-03457db6d014";
+
         connection.subscriptionPlan(ApiUtils.buildHeaders(customerId), subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
             public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
@@ -111,7 +115,7 @@ public class SubscriptionFragment extends BaseFragment {
                     ((MainActivity) getActivity()).removeContent();
                 }
 
-                showMessage(getString(R.string.msg_status_returned) + response.body().getStatus());
+                showMessage(getString(R.string.msg_status_returned) + response.code());
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
             }

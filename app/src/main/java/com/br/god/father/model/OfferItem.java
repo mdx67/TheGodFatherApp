@@ -7,6 +7,8 @@ public class OfferItem {
     private String catalogOfferItemId;
     private String productTypeId;
     private String productTypeName;
+    private String compositionId;
+    private String compositionName;
     private Integer productId;
     private String component;
     private List<ItemAttributes> attributes;
@@ -34,6 +36,22 @@ public class OfferItem {
 
     public void setProductTypeName(String productTypeName) {
         this.productTypeName = productTypeName;
+    }
+
+    public String getCompositionId() {
+        return compositionId;
+    }
+
+    public void setCompositionId(String compositionId) {
+        this.compositionId = compositionId;
+    }
+
+    public String getCompositionName() {
+        return compositionName;
+    }
+
+    public void setCompositionName(String compositionName) {
+        this.compositionName = compositionName;
     }
 
     public Integer getProductId() {

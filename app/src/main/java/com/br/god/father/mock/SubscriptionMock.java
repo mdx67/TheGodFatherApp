@@ -38,6 +38,8 @@ public class SubscriptionMock {
         item.setCatalogOfferItemId("1f0ef0f7-3a46-4b9f-8143-6490a046ff5b");
         item.setProductTypeName("MOBILE_DATA_OFFER");
         item.setProductTypeId("d497bdc4-57e1-4652-86d2-1f8e32435aba");
+        item.setCompositionName("MOBILE_DATA_OFFER");
+        item.setCompositionId("d497bdc4-57e1-4652-86d2-1f8e32435aba");
         item.setComponent("INTERNET_MOBILE");
         item.setPrice(new Money("BRL", 3990, 2));
 
