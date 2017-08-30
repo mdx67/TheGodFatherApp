@@ -2,7 +2,6 @@ package com.br.god.father.automation;
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,10 +9,8 @@ import android.widget.ImageButton;
 
 import com.br.god.father.R;
 import com.br.god.father.model.Customer;
-import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,9 +30,7 @@ import static org.hamcrest.core.AllOf.allOf;
 @LargeTest
 public class RegisterCustomerTest extends AbstractAutomationTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
-    private final String customerSuccessSave = "Cliente cadastrado com sucesso!";
+    private final String customerSuccessSave = "Status retornado:201";
 
     public Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -44,7 +39,7 @@ public class RegisterCustomerTest extends AbstractAutomationTest {
     }
 
     @Test
-    public void registerCustomerTest() throws InterruptedException {
+    public void registerCustomerTest() throws Exception {
         onView(navigationIconMatcher()).perform(click());
         onView(withText("Cad. Cliente")).perform(click());
 
@@ -53,7 +48,7 @@ public class RegisterCustomerTest extends AbstractAutomationTest {
         onView(ViewMatchers.withId(R.id.et_name))
                 .perform(typeText(customer.getFullName()), closeSoftKeyboard());
         onView(withId(R.id.et_register_customer_email))
-                .perform(typeText(customer.getZns().getUserId()), closeSoftKeyboard());
+                .perform(typeText(customer.getContacts().get(0).getContent().getEmail()), closeSoftKeyboard());
         onView(withId(R.id.et_document_number))
                 .perform(typeText(customer.getDocuments().get(0).getNumber()), closeSoftKeyboard());
         onView(withId(R.id.et_address_street))
@@ -67,6 +62,8 @@ public class RegisterCustomerTest extends AbstractAutomationTest {
 
         onView(withId(R.id.bt_register_customer)).perform(click());
 
+        Thread.sleep(2000);
+
         onView(withText(customerSuccessSave))
                 .inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
@@ -75,5 +72,4 @@ public class RegisterCustomerTest extends AbstractAutomationTest {
                 .inRoot(new ToastMatcher())
                 .check(matches(withText(customerSuccessSave)));
     }
-
 }

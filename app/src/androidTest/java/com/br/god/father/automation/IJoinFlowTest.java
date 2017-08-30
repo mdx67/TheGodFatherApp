@@ -49,7 +49,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
     }
 
     @Test
-    public void FlowTest() throws InterruptedException {
+    public void FlowTest() throws Exception {
 
         Activity activity = mainActivityRule.getActivity();
 
@@ -90,7 +90,7 @@ public class IJoinFlowTest extends AbstractAutomationTest {
         CreditCardRequest creditCardRequest = AbstractAutomationMock.getCreditCard();
 
         onView(ViewMatchers.withId(R.id.et_credit_card_holder))
-                .perform(typeText(creditCardRequest.getCardHolderName()), closeSoftKeyboard());
+                .perform(typeText(creditCardRequest.getHolder()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_bin))
                 .perform(typeText(creditCardRequest.getBin()), closeSoftKeyboard());
         onView(withId(R.id.et_credit_card_last_digits))

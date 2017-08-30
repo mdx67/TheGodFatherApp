@@ -1,47 +1,82 @@
 package com.br.god.father.automation;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.support.test.rule.ActivityTestRule;
+
 import com.br.god.father.model.Address;
 import com.br.god.father.model.AuthorizationRequest;
+import com.br.god.father.model.Contact;
+import com.br.god.father.model.ContactContent;
+import com.br.god.father.model.ContactType;
 import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.model.Customer;
 import com.br.god.father.model.Document;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Transaction;
 import com.br.god.father.model.TransactionItem;
-import com.br.god.father.model.Zns;
+import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.CPFGenerator;
+
+import org.junit.Rule;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public abstract class AbstractAutomationMock {
 
-    public static Customer getCustomer() {
-        Zns zns = new Zns("123");
+    @Rule
+    public static ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
+
+    public static Customer getCustomer() throws Exception {
+        Customer customer = new Customer();
+
+        customer.setFullName("Fulano Beltrano");
+        customer.setPersonType("F");
+        customer.setBirthDate("1980-01-20");
+        customer.setCountry("Brasil");
+        customer.setMotherName("Julia Maria");
+        customer.setGender("M");
+
         Document document = new Document();
-        document.setNumber("000000000");
+        document.setNumber(CPFGenerator.geraCPF());
+        document.setDocType("CPF");
+
+        customer.setDocuments(Arrays.asList(document));
+
+        Contact contact = new Contact(ContactType.EMAIL, new Date(), new ContactContent("MAIN", "meu@email2.com.ru"));
+
+        customer.setContacts(Arrays.asList(contact));
 
         Address address = new Address();
-        address.setStreet("Max Colim");
-        address.setNumber("470");
-        address.setDistrict("America");
-        address.setZipCode("89204040");
+        address.setName("Principal");
+        address.setStreet("Rua um");
+        address.setNumber("67");
+        address.setDistrict("Centro");
+        address.setCity("Joinville");
+        address.setState("Santa Catarina");
+        address.setZipCode("89220105");
+        address.setCountry("Brasil");
 
-        Customer customer = new Customer();
-        customer.setFullName("Fulano");
-        customer.setZns(zns);
-        customer.setDocuments(Arrays.asList(document));
         customer.setAddresses(Arrays.asList(address));
+
 
         return customer;
     }
 
     public static CreditCardRequest getCreditCard() {
+        Activity activity = mainActivityRule.getActivity();
+        SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
+        String paymentMethodId = settings.getString("paymentMethodId", null);
+
+
         return new CreditCardRequest("EXTERNAL_CREDIT_CARD",
                 "Filipe",
                 "123455",
                 "1234",
                 "0128",
                 "AMEX",
-                "ASJASJDASDASJDLIAJSLIJDIAJDIASJPDASPDJA-FULL");
+                paymentMethodId);
     }
 
     public static AuthorizationRequest getAuthorization() {
@@ -57,7 +92,6 @@ public abstract class AbstractAutomationMock {
         transaction.setItems(Arrays.asList(item));
 
         AuthorizationRequest authorizationRequest = new AuthorizationRequest();
-        authorizationRequest.setIntent("AUTHORIZE");
         authorizationRequest.setTransaction(transaction);
 
         return authorizationRequest;

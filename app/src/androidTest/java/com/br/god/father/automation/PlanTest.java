@@ -21,7 +21,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
@@ -33,7 +32,7 @@ public class PlanTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private final String planSuccessSave = "Status retornado:CREATED";
+    private final String planSuccessSave = "Status retornado:202";
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -48,7 +47,7 @@ public class PlanTest {
 
         onView(ViewMatchers.withId(R.id.bt_plan_two)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         onView(withText(planSuccessSave))
                 .inRoot(new ToastMatcher())

@@ -1,7 +1,6 @@
 package com.br.god.father.automation;
 
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.matcher.RootMatchers;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -16,12 +15,11 @@ import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
-import org.hamcrest.object.HasToString;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -43,8 +41,7 @@ public class AuthorizationRequestTest {
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    private final String authorizationSuccessSave = "Status retornado:AUTHORIZED";
-    private final String captureSuccessSave = "Status retornado:CONFIRMED";
+    private final String successStatus = "Status retornado:202";
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -53,6 +50,7 @@ public class AuthorizationRequestTest {
     }
 
     @Test
+    @Ignore
     public void myTest() {
         openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
 
@@ -63,8 +61,6 @@ public class AuthorizationRequestTest {
 
     @Test
     public void registerAuthorization() throws InterruptedException {
-        selectCustomerForAuthorization();
-
         onView(navigationIconMatcher()).perform(click());
         onView(withText(R.string.tittle_authorize_capture)).perform(click());
 
@@ -86,44 +82,46 @@ public class AuthorizationRequestTest {
 
         onView(withId(R.id.bt_authorize)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(5000);
 
-        onView(withText(authorizationSuccessSave))
+        onView(withText(successStatus))
                 .inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
 
-        onView(withText(authorizationSuccessSave))
+        onView(withText(successStatus))
                 .inRoot(new ToastMatcher())
-                .check(matches(withText(authorizationSuccessSave)));
+                .check(matches(withText(successStatus)));
     }
 
-    private void selectCustomerForConfirmation() {
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
+//    Not used now!
+//    private void selectCustomerForConfirmation() {
+//        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
+//
+//        onView(withText(R.string.action_customer_settings)).perform(click());
+//
+//        onData(HasToString.hasToString("Customer 8323"))
+//                .inAdapterView(withId(R.id.layout_list_customer))
+//                .perform(click());
+//
+//        onView(withText("OK")).inRoot(RootMatchers.isDialog())
+//                .check(matches(isDisplayed()))
+//                .perform(click());
+//    }
 
-        onView(withText(R.string.action_customer_settings)).perform(click());
-
-        onData(HasToString.hasToString("Customer 8323"))
-                .inAdapterView(withId(R.id.layout_list_customer))
-                .perform(click());
-
-        onView(withText("OK")).inRoot(RootMatchers.isDialog())
-                .check(matches(isDisplayed()))
-                .perform(click());
-    }
-
-    private void selectCustomerForAuthorization() {
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
-
-        onView(withText(R.string.action_customer_settings)).perform(click());
-
-        onData(HasToString.hasToString("Customer 4323"))
-                .inAdapterView(withId(R.id.layout_list_customer))
-                .perform(click());
-
-        onView(withText("OK")).inRoot(RootMatchers.isDialog())
-                .check(matches(isDisplayed()))
-                .perform(click());
-    }
+//    Not used now!
+//    private void selectCustomerForAuthorization() {
+//        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getTargetContext());
+//
+//        onView(withText(R.string.action_customer_settings)).perform(click());
+//
+//        onData(HasToString.hasToString("Customer 4323"))
+//                .inAdapterView(withId(R.id.layout_list_customer))
+//                .perform(click());
+//
+//        onView(withText("OK")).inRoot(RootMatchers.isDialog())
+//                .check(matches(isDisplayed()))
+//                .perform(click());
+//    }
 
     @Test
     public void registerCapture() throws InterruptedException {
@@ -149,14 +147,14 @@ public class AuthorizationRequestTest {
 
         onView(withId(R.id.bt_authorize)).perform(click());
 
-        Thread.sleep(1000);
+        Thread.sleep(5000);
 
-        onView(withText(captureSuccessSave))
+        onView(withText(successStatus))
                 .inRoot(new ToastMatcher())
                 .check(matches(isDisplayed()));
 
-        onView(withText(captureSuccessSave))
+        onView(withText(successStatus))
                 .inRoot(new ToastMatcher())
-                .check(matches(withText(captureSuccessSave)));
+                .check(matches(withText(successStatus)));
     }
 }

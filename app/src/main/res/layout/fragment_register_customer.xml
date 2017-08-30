@@ -134,7 +134,7 @@
                 android:layout_toEndOf="@+id/et_address_number"
                 android:layout_toRightOf="@+id/et_address_number"
                 android:ems="10"
-                android:hint="Complemento"
+                android:hint="Bairro"
                 android:inputType="textPersonName" />
         </RelativeLayout>
     </ScrollView>
