@@ -17,7 +17,6 @@ import com.br.god.father.model.Money;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,9 +112,11 @@ public class SubscriptionFragment extends BaseFragment {
                     Log.i("SubscriptionReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();
-                }
 
-                showMessage(getString(R.string.msg_status_returned) + response.code());
+                    showMessage(getString(R.string.msg_status_returned) + response.code());
+                } else {
+                    showErrorMessageByResponse(response);
+                }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
             }
@@ -130,6 +131,4 @@ public class SubscriptionFragment extends BaseFragment {
             }
         });
     }
-
-
 }

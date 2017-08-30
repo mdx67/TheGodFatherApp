@@ -6,6 +6,10 @@ import android.widget.Toast;
 
 import com.br.god.father.R;
 
+import java.io.IOException;
+
+import retrofit2.Response;
+
 public class BaseFragment extends Fragment {
 
     protected void showMessage(String message) {
@@ -23,6 +27,14 @@ public class BaseFragment extends Fragment {
         AlertDialog dialog = builder.create();
 
         dialog.show();
+    }
+
+    protected void showErrorMessageByResponse(Response response) {
+        try {
+            showAlertDialogWithOKButton("Erro: " + response.code(), response.errorBody().string().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -56,9 +56,9 @@ public class RegisterCreditCardFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_register_credit_card, container, false);
 
         ButterKnife.bind(this, view);
-        MainActivity.toolbar.setTitle("Cad. Cartão");
+        MainActivity.toolbar.setTitle(R.string.tittle_register_credit_card);
 
-        setConnectionParams();
+        validateAndSetConnectionParams();
 
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
@@ -68,17 +68,19 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
     @OnClick(R.id.bt_credit_card_register)
     public void onClickBtCrediCardRegister() {
-        CreditCard creditCard = buildCreditCard();
-
-        if (baseUrl == null || customerId == null) return;
-
         spinnerLoading.setVisibility(View.VISIBLE);
 
-        register(creditCard);
+        register(buildCreditCard());
     }
 
-    private void setConnectionParams() {
+    private void validateAndSetConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+
+        if (baseUrl == null) {
+            showMessage(getString(R.string.msg_add_payments_url));
+
+            return;
+        }
 
         CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
@@ -104,9 +106,13 @@ public class RegisterCreditCardFragment extends BaseFragment {
                     Log.i("CreditCardReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();
-                }
 
-                showMessage(getString(R.string.msg_status_returned) + response.code());
+                    ((MainActivity) getActivity()).saveSharedPreferences("paymentMethodId", response.body().getPaymentMethodId());
+
+                    showMessage(getString(R.string.msg_status_returned) + response.code());
+                } else {
+                    showErrorMessageByResponse(response);
+                }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
             }

@@ -63,6 +63,12 @@ public class CancelFragment extends BaseFragment {
     private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
 
+        if (baseUrl == null) {
+            showMessage(getString(R.string.msg_add_payments_url));
+
+            return;
+        }
+
         CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
         if (mainCustomer == null) {
@@ -78,8 +84,6 @@ public class CancelFragment extends BaseFragment {
 
     @OnClick(R.id.bt_cancel)
     public void onClickCancellationButton() {
-        if (baseUrl == null || customerId == null) return;
-
         spinnerLoading.setVisibility(View.VISIBLE);
 
         execute();
@@ -122,7 +126,6 @@ public class CancelFragment extends BaseFragment {
 
         if (bundle != null) {
             paymentCreatedId = bundle.getString("paymentIdCreated");
-            customerId = bundle.getString("customerId");
             action = bundle.getString("action");
         }
     }

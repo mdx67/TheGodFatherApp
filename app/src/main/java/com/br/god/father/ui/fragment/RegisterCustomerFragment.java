@@ -86,8 +86,6 @@ public class RegisterCustomerFragment extends BaseFragment {
 
     @OnClick(R.id.bt_register_customer)
     public void onClickBtRegisterCustomer() {
-
-
         spinnerLoading.setVisibility(View.VISIBLE);
 
         registerCustomer(buildCustomer());
@@ -103,11 +101,13 @@ public class RegisterCustomerFragment extends BaseFragment {
                     ((MainActivity) getActivity()).removeContent();
 
                     ((MainActivity) getActivity()).updateMainCustomer(new CustomerApp(response.body().getId(), response.body().getNickname()));
+
+                    showMessage(getString(R.string.msg_status_returned) + response.code());
+                } else {
+                    showErrorMessageByResponse(response);
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
-
-                showMessage(getString(R.string.msg_status_returned) + response.code());
             }
 
             @Override

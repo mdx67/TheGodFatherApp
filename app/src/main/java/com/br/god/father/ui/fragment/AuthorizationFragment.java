@@ -25,9 +25,9 @@ import com.br.god.father.model.TransactionDescription;
 import com.br.god.father.model.TransactionDetail;
 import com.br.god.father.model.TransactionItem;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Utils;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +45,8 @@ public class AuthorizationFragment extends BaseFragment {
 
     @BindView(R.id.et_authorize_external_id)
     EditText etAuthorizeExternalId;
+    @BindView(R.id.et_authorize_payment_method_id)
+    EditText etPaymentMethodId;
     @BindView(R.id.et_authorize_price)
     EditText etAuthorizePrice;
     @BindView(R.id.et_authorize_item_code)
@@ -78,7 +80,9 @@ public class AuthorizationFragment extends BaseFragment {
 
         MainActivity.toolbar.setTitle(R.string.tittle_authorize_capture);
 
-       setConnectionParams();
+        setConnectionParams();
+
+        setPaymentMethodId();
 
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
@@ -88,6 +92,12 @@ public class AuthorizationFragment extends BaseFragment {
 
     private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("paymentUrl");
+
+        if (baseUrl == null) {
+            showMessage(getString(R.string.msg_add_payments_url));
+
+            return;
+        }
 
         CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
@@ -101,14 +111,16 @@ public class AuthorizationFragment extends BaseFragment {
         connection = ApiUtils.getConnection(baseUrl);
     }
 
+    private void setPaymentMethodId() {
+        String paymentMethodId = ((MainActivity) getActivity()).getSharedPreferences("paymentMethodId");
+
+        if (paymentMethodId != null) {
+            etPaymentMethodId.setText(paymentMethodId);
+        }
+    }
+
     @OnClick(R.id.bt_authorize)
     public void onClickAuthorizationButton() {
-        if (baseUrl == null || customerId == null) {
-            showMessage("Verifique a URL/Cliente nas configurações.");
-
-            return;
-        }
-
         spinnerLoading.setVisibility(View.VISIBLE);
 
         execute(buildAuthorization());
@@ -123,7 +135,6 @@ public class AuthorizationFragment extends BaseFragment {
 
             Bundle bundle = new Bundle();
             bundle.putString("paymentIdCreated", paymentIdCreated);
-            bundle.putString("customerId", customerId);
             bundle.putString("action", switchAuthorizeCapture.isChecked() ? "CAPTURE" : "AUTHORIZE");
 
             fragment.setArguments(bundle);
@@ -156,9 +167,9 @@ public class AuthorizationFragment extends BaseFragment {
                     btCancelRefund.setVisibility(View.VISIBLE);
                     paymentIdCreated = response.body().getPaymentId();
 
-                    showMessage(getString(R.string.msg_status_returned) + response.body().getStatus());
+                    showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
-                    showMessage(getString(R.string.msg_authorization_fail));
+                    showErrorMessageByResponse(response);
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
@@ -179,7 +190,8 @@ public class AuthorizationFragment extends BaseFragment {
         AuthorizationRequest authorizationRequest = new AuthorizationRequest();
 
         authorizationRequest.setIntent(switchAuthorizeCapture.isChecked() ? "CAPTURE" : "AUTHORIZE");
-        authorizationRequest.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
+
+        authorizationRequest.setPayment(new Payment("CREDIT_CARD", etPaymentMethodId.getText().toString()));
 
         Transaction transaction = new Transaction();
 
@@ -210,6 +222,7 @@ public class AuthorizationFragment extends BaseFragment {
         transaction.setDetails(transactionDetail);
 
         authorizationRequest.setTransaction(transaction);
+        authorizationRequest.setCustomFields(new HashMap()); //bugs se passar null
 
         return authorizationRequest;
     }

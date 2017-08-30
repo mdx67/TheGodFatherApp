@@ -20,5 +20,7 @@
     <string name="msg_cancellation_fail">Falha no cancelamento.</string>
     <string name="msg_register_customer_fail">Falha no cadastro.</string>
     <string name="url_not_configured">Url não configurada!</string>
+    <string name="msg_add_payments_url">Cadastre a url de payments nas configs.</string>
+    <string name="tittle_register_credit_card">Cad. Cartão</string>
 
 </resources>
