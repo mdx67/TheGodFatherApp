@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.br.god.father.R;
+import com.br.god.father.automation.utils.ToastMatcher;
 import com.br.god.father.ui.activity.MainActivity;
 
 import org.hamcrest.Matcher;

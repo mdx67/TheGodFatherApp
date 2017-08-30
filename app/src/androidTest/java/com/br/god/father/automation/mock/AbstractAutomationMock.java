@@ -1,4 +1,4 @@
-package com.br.god.father.automation;
+package com.br.god.father.automation.mock;
 
 import com.br.god.father.model.Address;
 import com.br.god.father.model.AuthorizationRequest;
