@@ -1,10 +1,7 @@
 package com.br.god.father.automation;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -12,12 +9,8 @@ import android.widget.ImageButton;
 
 import com.br.god.father.R;
 import com.br.god.father.model.CreditCardRequest;
-import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Utils;
 
 import org.hamcrest.Matcher;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -37,15 +30,7 @@ import static org.hamcrest.core.AllOf.allOf;
 @LargeTest
 public class RegisterCreditCardRequestTest {
 
-    @Rule
-    public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
-
-    private final String creditCardSuccessSave = "Cartão cadastrado com sucesso!";
-
-    @Before
-    public void setUp() {
-
-    }
+    private final String creditCardSuccessSave = "Status retornado:202";
 
     public static Matcher<View> navigationIconMatcher() {
         return allOf(
@@ -55,7 +40,6 @@ public class RegisterCreditCardRequestTest {
 
     @Test
     public void registerCreditCad() throws InterruptedException {
-        Activity activity = mainActivityRule.getActivity();
         CreditCardRequest creditCardRequest = AbstractAutomationMock.getCreditCard();
 
         onView(navigationIconMatcher()).perform(click());
@@ -72,13 +56,12 @@ public class RegisterCreditCardRequestTest {
         onView(withId(R.id.et_credit_card_brand))
                 .perform(typeText(creditCardRequest.getBrand()), closeSoftKeyboard());
 
-        SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
-        String mainCustomer = settings.getString("mainCustomer", null);
-
         onView(withId(R.id.et_credit_card_external_token))
-                .perform(typeText(Utils.convertStringToCustomer(mainCustomer).getId()), closeSoftKeyboard());
+                .perform(typeText(creditCardRequest.getExternalToken()), closeSoftKeyboard());
 
         onView(withId(R.id.bt_credit_card_register)).perform(click());
+
+        Thread.sleep(2000);
 
         onView(withText(creditCardSuccessSave))
                 .inRoot(new ToastMatcher())

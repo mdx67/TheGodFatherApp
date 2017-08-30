@@ -1,9 +1,5 @@
 package com.br.god.father.automation;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.support.test.rule.ActivityTestRule;
-
 import com.br.god.father.model.Address;
 import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.Contact;
@@ -15,18 +11,13 @@ import com.br.god.father.model.Document;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.Transaction;
 import com.br.god.father.model.TransactionItem;
-import com.br.god.father.ui.activity.MainActivity;
 import com.br.god.father.utils.CPFGenerator;
-
-import org.junit.Rule;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 public abstract class AbstractAutomationMock {
-
-    @Rule
-    public static ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     public static Customer getCustomer() throws Exception {
         Customer customer = new Customer();
@@ -39,7 +30,7 @@ public abstract class AbstractAutomationMock {
         customer.setGender("M");
 
         Document document = new Document();
-        document.setNumber(CPFGenerator.geraCPF());
+        document.setNumber(CPFGenerator.generate());
         document.setDocType("CPF");
 
         customer.setDocuments(Arrays.asList(document));
@@ -60,23 +51,19 @@ public abstract class AbstractAutomationMock {
 
         customer.setAddresses(Arrays.asList(address));
 
-
         return customer;
     }
 
     public static CreditCardRequest getCreditCard() {
-        Activity activity = mainActivityRule.getActivity();
-        SharedPreferences settings = activity.getSharedPreferences("config_god_father_app", 0);
-        String paymentMethodId = settings.getString("paymentMethodId", null);
-
+        Integer token = new Random().nextInt(999999);
 
         return new CreditCardRequest("EXTERNAL_CREDIT_CARD",
                 "Filipe",
-                "123455",
+                token.toString(),
                 "1234",
-                "0128",
+                "01/28",
                 "AMEX",
-                paymentMethodId);
+                token.toString());
     }
 
     public static AuthorizationRequest getAuthorization() {
