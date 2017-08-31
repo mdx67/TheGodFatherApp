@@ -8,6 +8,7 @@ public class Document {
     private String docType;
     private String customerId;
     private Date createdAt;
+    private Date updatedAt;
     private Integer id;
 
     public String getNumber() {
@@ -40,6 +41,14 @@ public class Document {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Integer getId() {

@@ -1,8 +1,10 @@
 package com.br.god.father.model;
 
+import java.util.Date;
+
 public class Recurring {
 
-    private String starDate;
+    private Date starDate;
     public Integer duration;
     private String period;
     private Integer cycles;
@@ -10,18 +12,18 @@ public class Recurring {
     public Recurring() {
     }
 
-    public Recurring(String starDate, Integer duration, String period, Integer cycles) {
+    public Recurring(Date starDate, Integer duration, String period, Integer cycles) {
         this.starDate = starDate;
         this.duration = duration;
         this.period = period;
         this.cycles = cycles;
     }
 
-    public String getStarDate() {
+    public Date getStarDate() {
         return starDate;
     }
 
-    public void setStarDate(String starDate) {
+    public void setStarDate(Date starDate) {
         this.starDate = starDate;
     }
 

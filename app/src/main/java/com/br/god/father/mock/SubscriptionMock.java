@@ -9,6 +9,7 @@ import com.br.god.father.model.Recurring;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.UnitValue;
 import com.br.god.father.model.Validity;
+import com.br.god.father.utils.DateUtils;
 
 import java.util.Arrays;
 
@@ -22,7 +23,7 @@ public class SubscriptionMock {
         subscriptionRequest.setDescription("Plano 2 - COMBO:  internet + dados moveis");
         subscriptionRequest.setType("STANDARD");
 
-        subscriptionRequest.setRecurring(new Recurring("2017-10-01", 1, "MONTH", 6));
+        subscriptionRequest.setRecurring(new Recurring(DateUtils.fromString("2017-10-01"), 1, "MONTH", 6));
 
         subscriptionRequest.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
 
