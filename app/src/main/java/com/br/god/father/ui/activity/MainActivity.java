@@ -10,10 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 import com.br.god.father.R;
-import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.fragment.AuthorizationFragment;
 import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
@@ -22,8 +20,6 @@ import com.br.god.father.ui.fragment.DashboardFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.SubscriptionFragment;
-
-import butterknife.BindView;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -90,7 +86,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).commit();
 
         menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
 
         return super.onOptionsItemSelected(menuItem);
     }
@@ -130,7 +125,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         replaceFragment(fragment);
 
         menuItem.setChecked(true);
-        setTitle(menuItem.getTitle());
+
         drawer.closeDrawers();
 
         return true;

@@ -82,7 +82,7 @@ public class AuthorizationFragment extends BaseFragment {
 
         setConnectionParams();
 
-        setPaymentMethodId();
+        setCreditCardId();
 
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
@@ -111,7 +111,7 @@ public class AuthorizationFragment extends BaseFragment {
         connection = ApiUtils.getConnection(baseUrl);
     }
 
-    private void setPaymentMethodId() {
+    private void setCreditCardId() {
         String creditCardId = ((MainActivity) getActivity()).getSharedPreferences("creditCardId");
 
         if (creditCardId != null) {
