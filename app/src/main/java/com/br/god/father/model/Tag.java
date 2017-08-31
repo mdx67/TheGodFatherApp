@@ -1,6 +1,6 @@
 package com.br.god.father.model;
 
-class Tag {
+public class Tag {
 
     private String name;
 

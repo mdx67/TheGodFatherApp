@@ -15,7 +15,6 @@ import com.br.god.father.connection.Connection;
 import com.br.god.father.model.AuthorizationResponse;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.ui.activity.MainActivity;
-import com.br.god.father.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +27,7 @@ public class CancelFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
-    private static String action;
+    private static String intent;
     private static String paymentCreatedId;
     private static Connection connection;
 
@@ -100,7 +99,7 @@ public class CancelFragment extends BaseFragment {
 
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
-                    showMessage(getString(R.string.msg_cancellation_fail));
+                    showErrorMessageByResponse(response);
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
@@ -110,9 +109,9 @@ public class CancelFragment extends BaseFragment {
             public void onFailure(Call<AuthorizationResponse> call, Throwable t) {
                 call.cancel();
 
-                showMessage(getString(R.string.msg_request_error));
-
                 spinnerLoading.setVisibility(View.INVISIBLE);
+
+                showAlertDialogWithOKButton("Erro", t.getMessage());
             }
         });
     }
@@ -126,7 +125,7 @@ public class CancelFragment extends BaseFragment {
 
         if (bundle != null) {
             paymentCreatedId = bundle.getString("paymentIdCreated");
-            action = bundle.getString("action");
+            intent = bundle.getString("intent");
         }
     }
 }

@@ -60,7 +60,7 @@ public class AuthorizationFragment extends BaseFragment {
 
     @BindView(R.id.switch_auth_capt)
     Switch switchAuthorizeCapture;
-    @BindView(R.id.bt_cancel_refund)
+    @BindView(R.id.bt_authorization_cancel_refund)
     Button btCancelRefund;
     @BindView(R.id.spinner_loading_authorize)
     ProgressBar spinnerLoading;
@@ -126,7 +126,7 @@ public class AuthorizationFragment extends BaseFragment {
         execute(buildAuthorization());
     }
 
-    @OnClick(R.id.bt_cancel_refund)
+    @OnClick(R.id.bt_authorization_cancel_refund)
     public void onClickCancelRefundButton() {
         try {
             Class clazz = CancelFragment.class;
@@ -179,7 +179,7 @@ public class AuthorizationFragment extends BaseFragment {
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
 
-                showMessage(getString(R.string.msg_request_error));
+                showAlertDialogWithOKButton("Erro", t.getMessage());
             }
         });
     }

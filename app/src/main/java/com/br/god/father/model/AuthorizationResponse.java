@@ -1,6 +1,5 @@
 package com.br.god.father.model;
 
-
 public class AuthorizationResponse {
 
     private String status;

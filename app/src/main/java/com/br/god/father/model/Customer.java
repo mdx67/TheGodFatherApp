@@ -3,7 +3,6 @@ package com.br.god.father.model;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Customer {

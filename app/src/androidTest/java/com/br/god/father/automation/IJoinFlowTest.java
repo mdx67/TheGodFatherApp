@@ -19,7 +19,7 @@ public class IJoinFlowTest {
 
         Thread.sleep(2000);
 
-        new RegisterCreditCardRequestTest().registerCreditCad();
+        new RegisterCreditCardTest().registerCreditCad();
 
         Thread.sleep(2000);
 
@@ -27,6 +27,6 @@ public class IJoinFlowTest {
 
         Thread.sleep(2000);
 
-        new AuthorizationRequestTest().captureSuccess();
+        new AuthorizationPaymentTest().captureSuccess();
     }
 }

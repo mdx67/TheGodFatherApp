@@ -147,7 +147,7 @@
                 android:text="Capturar" />
 
             <Button
-                android:id="@+id/bt_cancel_refund"
+                android:id="@+id/bt_authorization_cancel_refund"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

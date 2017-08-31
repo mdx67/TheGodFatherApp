@@ -70,7 +70,7 @@ public class RegisterCustomerTest {
 
         onView(withId(R.id.bt_register_customer)).perform(click());
 
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         onView(withText(customerSuccessSave))
                 .inRoot(new ToastMatcher())

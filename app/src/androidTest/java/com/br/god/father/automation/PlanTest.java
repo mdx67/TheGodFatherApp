@@ -48,7 +48,7 @@ public class PlanTest {
 
         onView(ViewMatchers.withId(R.id.bt_plan_two)).perform(click());
 
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         onView(withText(planSuccessSave))
                 .inRoot(new ToastMatcher())

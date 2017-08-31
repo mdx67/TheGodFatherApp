@@ -33,7 +33,7 @@ import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class RegisterCreditCardRequestTest {
+public class RegisterCreditCardTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
@@ -69,7 +69,7 @@ public class RegisterCreditCardRequestTest {
 
         onView(withId(R.id.bt_credit_card_register)).perform(click());
 
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         onView(withText(creditCardSuccessSave))
                 .inRoot(new ToastMatcher())

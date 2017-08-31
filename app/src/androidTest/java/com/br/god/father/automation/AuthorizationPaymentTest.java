@@ -38,7 +38,7 @@ import static org.hamcrest.core.AllOf.allOf;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class AuthorizationRequestTest {
+public class AuthorizationPaymentTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
@@ -93,6 +93,13 @@ public class AuthorizationRequestTest {
         onView(withText(successStatus))
                 .inRoot(new ToastMatcher())
                 .check(matches(withText(successStatus)));
+    }
+
+    @Test
+    public void authorizationAndCancelSuccess() throws InterruptedException {
+        authorizationSuccess();
+
+        new CancellationPaymentTest().cancellationSuccess();
     }
 
     @Test

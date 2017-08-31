@@ -21,7 +21,6 @@ public class SubscriptionMock {
         subscriptionRequest.setOriginApp("MGM");
         subscriptionRequest.setDescription("Plano 2 - COMBO:  internet + dados moveis");
         subscriptionRequest.setType("STANDARD");
-//        subscriptionRequest.setCallback("http://127.0.0.1:8834/notifications");
 
         subscriptionRequest.setRecurring(new Recurring("2017-10-01", 1, "MONTH", 6));
 
