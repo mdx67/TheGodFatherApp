@@ -9,7 +9,6 @@ public class SubscriptionRequest {
     private String description;
     private String type;
     private String callback;
-
     private Offer offer;
     private Money price;
     private Payment payment;

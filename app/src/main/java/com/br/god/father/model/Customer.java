@@ -3,6 +3,7 @@ package com.br.god.father.model;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Customer {
@@ -17,7 +18,7 @@ public class Customer {
     private String city;
     private String fullName;
     private String nickname;
-    private String birthDate;
+    private Date birthDate;
     private String civilState;
     private String occupation;
     private String motherName;
@@ -31,8 +32,8 @@ public class Customer {
     private List<Tag> tags = new ArrayList<>();
     private Zns zns;
     private JsonNode customFields;
-    private String createdAt;
-    private String updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
     private Status status;
     private Boolean dependent;
 
@@ -116,11 +117,11 @@ public class Customer {
         this.nickname = nickname;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -228,19 +229,19 @@ public class Customer {
         this.customFields = customFields;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 

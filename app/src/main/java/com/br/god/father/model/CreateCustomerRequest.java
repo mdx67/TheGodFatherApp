@@ -1,6 +1,7 @@
 package com.br.god.father.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CreateCustomerRequest {
@@ -9,7 +10,7 @@ public class CreateCustomerRequest {
     private String country;
     private String fullName;
     private String nickname;
-    private String birthDate;
+    private Date birthDate;
     private String motherName;
     private String gender;
     private List<Document> documents = new ArrayList<>();
@@ -48,11 +49,11 @@ public class CreateCustomerRequest {
         this.nickname = nickname;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 

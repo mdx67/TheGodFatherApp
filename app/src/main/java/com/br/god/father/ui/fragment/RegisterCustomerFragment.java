@@ -20,6 +20,7 @@ import com.br.god.father.model.Customer;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Document;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.utils.DateUtils;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -116,20 +117,19 @@ public class RegisterCustomerFragment extends BaseFragment {
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
 
-                showMessage(getString(R.string.msg_request_error));
+                showAlertDialogWithOKButton("Erro", t.getMessage());
             }
         });
     }
 
     private CreateCustomerRequest buildCustomer() {
-
         CreateCustomerRequest customer = new CreateCustomerRequest();
 
         customer.setFullName(etName.getText().toString());
         customer.setNickname(etName.getText().toString());
 
         customer.setPersonType("F");
-        customer.setBirthDate("1980-01-20");
+        customer.setBirthDate(DateUtils.fromString("1980-01-20"));
         customer.setCountry("Brasil");
         customer.setMotherName("Julia Maria");
         customer.setGender("M");

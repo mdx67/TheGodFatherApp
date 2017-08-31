@@ -58,6 +58,12 @@ public class SubscriptionFragment extends BaseFragment {
     private void setConnectionParams() {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
 
+        if (baseUrl == null) {
+            showMessage(getString(R.string.msg_add_payments_url));
+
+            return;
+        }
+
         CustomerApp mainCustomer = ((MainActivity) getActivity()).getMainCustomer();
 
         if (mainCustomer == null) {
@@ -89,12 +95,6 @@ public class SubscriptionFragment extends BaseFragment {
     }
 
     private void subscribe(SubscriptionRequest subscriptionRequest) {
-        if (baseUrl == null || customerId == null) {
-            showMessage("Verifique a URL/Cliente nas configurações.");
-
-            return;
-        }
-
         spinnerLoading.setVisibility(View.VISIBLE);
 
         doSubscribe(subscriptionRequest);
