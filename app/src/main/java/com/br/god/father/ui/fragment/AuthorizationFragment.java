@@ -140,8 +140,6 @@ public class AuthorizationFragment extends BaseFragment {
             fragment.setArguments(bundle);
 
             ((MainActivity) getActivity()).replaceFragment(fragment);
-
-            ((MainActivity) getActivity()).removeContent();
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {

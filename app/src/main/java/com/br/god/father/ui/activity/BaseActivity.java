@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.br.god.father.R;
 import com.br.god.father.model.CustomerApp;
+import com.br.god.father.ui.fragment.DashboardFragment;
 import com.br.god.father.utils.Utils;
 
 import java.util.HashSet;
@@ -26,6 +27,8 @@ public class BaseActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragment_content)).commit();
 
         MainActivity.toolbar.setTitle(R.string.app_name);
+
+        replaceFragment(DashboardFragment.newInstance());
     }
 
     public String getSharedPreferences(String key) {

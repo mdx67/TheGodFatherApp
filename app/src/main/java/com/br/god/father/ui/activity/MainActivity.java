@@ -18,6 +18,7 @@ import com.br.god.father.ui.fragment.AuthorizationFragment;
 import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
 import com.br.god.father.ui.fragment.CustomerSettingsFragment;
+import com.br.god.father.ui.fragment.DashboardFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.SubscriptionFragment;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        replaceFragment(DashboardFragment.newInstance());
     }
 
     @Override
@@ -89,7 +91,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
-
 
         return super.onOptionsItemSelected(menuItem);
     }
