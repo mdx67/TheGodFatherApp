@@ -23,7 +23,7 @@ public class IJoinFlowTest {
 
         Thread.sleep(2000);
 
-        new PlanTest().registePlan();
+        new SubscriptionTest().registePlan();
 
         Thread.sleep(2000);
 

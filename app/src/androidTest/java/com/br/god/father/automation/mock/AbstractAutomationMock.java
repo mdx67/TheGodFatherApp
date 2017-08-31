@@ -12,6 +12,7 @@ import com.br.god.father.model.Money;
 import com.br.god.father.model.Transaction;
 import com.br.god.father.model.TransactionItem;
 import com.br.god.father.utils.CPFGenerator;
+import com.br.god.father.utils.DateUtils;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -24,7 +25,7 @@ public abstract class AbstractAutomationMock {
 
         customer.setFullName("Fulano Beltrano");
         customer.setPersonType("F");
-        customer.setBirthDate("1980-01-20");
+        customer.setBirthDate(DateUtils.fromString("1980-01-20"));
         customer.setCountry("Brasil");
         customer.setMotherName("Julia Maria");
         customer.setGender("M");
