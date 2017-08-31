@@ -19,9 +19,12 @@ import com.br.god.father.model.CreateCustomerRequest;
 import com.br.god.father.model.Customer;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Document;
+import com.br.god.father.model.Error;
 import com.br.god.father.ui.activity.MainActivity;
 import com.br.god.father.utils.DateUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -97,7 +100,6 @@ public class RegisterCustomerFragment extends BaseFragment {
             @Override
             public void onResponse(Call<Customer> call, Response<Customer> response) {
                 if (response.isSuccessful()) {
-                    Log.i("RegisterCustomerReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();
 
@@ -105,7 +107,13 @@ public class RegisterCustomerFragment extends BaseFragment {
 
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
-                    showErrorMessageByResponse(response);
+                    try {
+                        Error error = new ObjectMapper().readValue(response.errorBody().string().toString(), Error.class);
+
+                        showErrorMessage(error);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);

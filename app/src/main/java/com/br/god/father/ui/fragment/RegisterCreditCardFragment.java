@@ -15,7 +15,11 @@ import com.br.god.father.connection.Connection;
 import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.CustomerApp;
+import com.br.god.father.model.Error;
 import com.br.god.father.ui.activity.MainActivity;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -111,7 +115,13 @@ public class RegisterCreditCardFragment extends BaseFragment {
 
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
-                    showErrorMessageByResponse(response);
+                    try {
+                        Error error = new ObjectMapper().readValue(response.errorBody().string().toString(), Error.class);
+
+                        showErrorMessage(error);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);

@@ -13,10 +13,14 @@ import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.mock.SubscriptionMock;
 import com.br.god.father.model.CustomerApp;
+import com.br.god.father.model.Error;
 import com.br.god.father.model.Money;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
 import com.br.god.father.ui.activity.MainActivity;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -115,7 +119,13 @@ public class SubscriptionFragment extends BaseFragment {
 
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
-                    showErrorMessageByResponse(response);
+                    try {
+                        Error error = new ObjectMapper().readValue(response.errorBody().string().toString(), Error.class);
+
+                        showErrorMessage(error);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
@@ -127,7 +137,7 @@ public class SubscriptionFragment extends BaseFragment {
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
 
-                showMessage(getString(R.string.msg_request_error));
+                showAlertDialogWithOKButton("Erro", t.getMessage());
             }
         });
     }
