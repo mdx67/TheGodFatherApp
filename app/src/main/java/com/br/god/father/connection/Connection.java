@@ -7,6 +7,7 @@ import com.br.god.father.model.CreditCardListResponse;
 import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.Customer;
+import com.br.god.father.model.SubscriptionListResponse;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
 
@@ -30,6 +31,9 @@ public interface Connection {
 
     @POST("v1/wallet/credit-cards")
     Call<CreditCardResponse> registerCreditCard(@HeaderMap Map<String, String> headers, @Body CreditCardRequest creditCardRequest);
+
+    @GET("v1/subscriptions")
+    Call<SubscriptionListResponse> listSubscriptions(@HeaderMap Map<String, String> headers);
 
     @POST("v1/subscriptions")
     Call<SubscriptionResponse> subscriptionPlan(@HeaderMap Map<String, String> headers, @Body SubscriptionRequest subscriptionRequest);

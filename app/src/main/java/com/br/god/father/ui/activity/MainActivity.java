@@ -17,10 +17,11 @@ import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
 import com.br.god.father.ui.fragment.CustomerSettingsFragment;
 import com.br.god.father.ui.fragment.DashboardFragment;
-import com.br.god.father.ui.fragment.ListCreditCardFragment;
-import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
+import com.br.god.father.ui.fragment.creditCard.ListCreditCardFragment;
+import com.br.god.father.ui.fragment.creditCard.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
-import com.br.god.father.ui.fragment.SubscriptionFragment;
+import com.br.god.father.ui.fragment.subscription.ListSubscriptionFragment;
+import com.br.god.father.ui.fragment.subscription.RegisterSubscriptionFragment;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -108,7 +109,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 fragmentClass = RegisterCreditCardFragment.class;
                 break;
             case R.id.nav_plan:
-                fragmentClass = SubscriptionFragment.class;
+                fragmentClass = RegisterSubscriptionFragment.class;
+                break;
+            case R.id.nav_list_subscription:
+                fragmentClass = ListSubscriptionFragment.class;
                 break;
             case R.id.nav_authorize:
                 fragmentClass = AuthorizationFragment.class;

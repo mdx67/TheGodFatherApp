@@ -1,4 +1,4 @@
-package com.br.god.father.ui.fragment;
+package com.br.god.father.ui.fragment.creditCard;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +17,7 @@ import com.br.god.father.model.CreditCardListResponse;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Error;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.ui.fragment.BaseFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -92,7 +93,7 @@ public class ListCreditCardFragment extends BaseFragment {
         ListView lv = (ListView) this.getView().findViewById(R.id.layout_list_credit_card);
 
         if (creditCardListResponse != null) {
-            creditCardListResponse.getCreditCardResults().stream().forEach(creditCard -> listOfCreditCards.add(creditCard.getCreditCardId()));
+            creditCardListResponse.getCreditCardResults().stream().forEach(creditCard -> listOfCreditCards.add(creditCard.getHolder()));
         }
 
         adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listOfCreditCards);
@@ -102,7 +103,7 @@ public class ListCreditCardFragment extends BaseFragment {
         lv.setOnItemClickListener((parent, view1, position, arg3) -> {
             view1.setSelected(true);
 
-            showAlertDialogWithOKButton("Credit Card Id", (String) ((TextView) view1).getText());
+            showAlertDialogWithOKButton("Holder", (String) ((TextView) view1).getText());
         });
     }
 
@@ -120,7 +121,7 @@ public class ListCreditCardFragment extends BaseFragment {
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
                     try {
-                        Error error = new ObjectMapper().readValue(response.errorBody().string().toString(), Error.class);
+                        Error error = new ObjectMapper().readValue(response.errorBody().string(), Error.class);
 
                         showErrorMessage(error);
                     } catch (IOException e) {

@@ -23,6 +23,10 @@
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             android:title="Plano" />
         <item
+            android:id="@+id/nav_list_subscription"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:title="Listar Planos" />
+        <item
             android:id="@+id/nav_authorize"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             android:title="@string/tittle_authorize_capture" />

@@ -1,4 +1,4 @@
-package com.br.god.father.ui.fragment;
+package com.br.god.father.ui.fragment.subscription;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,17 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
-import com.br.god.father.model.CreditCardRequest;
-import com.br.god.father.model.CreditCardResponse;
+import com.br.god.father.mock.SubscriptionMock;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Error;
+import com.br.god.father.model.Money;
+import com.br.god.father.model.SubscriptionRequest;
+import com.br.god.father.model.SubscriptionResponse;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.ui.fragment.BaseFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -28,41 +30,29 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterCreditCardFragment extends BaseFragment {
-
-    @BindView(R.id.et_credit_card_holder)
-    EditText etHolderName;
-    @BindView(R.id.et_credit_card_bin)
-    EditText etBin;
-    @BindView(R.id.et_credit_card_last_digits)
-    EditText etLastDigits;
-    @BindView(R.id.et_credit_card_expiration_date)
-    EditText etExpirationDate;
-    @BindView(R.id.et_credit_card_brand)
-    EditText etBrand;
-    @BindView(R.id.et_credit_card_external_token)
-    EditText etExternalToken;
-
-    @BindView(R.id.spinner_loading_register_credit_card)
-    ProgressBar spinnerLoading;
+public class RegisterSubscriptionFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
     private static Connection connection;
 
-    public static RegisterCreditCardFragment newInstance() {
-        return new RegisterCreditCardFragment();
+    @BindView(R.id.spinner_loading_subscription)
+    ProgressBar spinnerLoading;
+
+    public static RegisterSubscriptionFragment newInstance() {
+        return new RegisterSubscriptionFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register_credit_card, container, false);
+        View view = inflater.inflate(R.layout.fragment_plan, container, false);
 
         ButterKnife.bind(this, view);
-        MainActivity.toolbar.setTitle(R.string.tittle_register_credit_card);
 
-        validateAndSetConnectionParams();
+        MainActivity.toolbar.setTitle(R.string.tittle_buy_plan);
+
+        setConnectionParams();
 
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
@@ -70,15 +60,8 @@ public class RegisterCreditCardFragment extends BaseFragment {
         return view;
     }
 
-    @OnClick(R.id.bt_credit_card_register)
-    public void onClickBtCrediCardRegister() {
-        spinnerLoading.setVisibility(View.VISIBLE);
-
-        register(buildCreditCard());
-    }
-
-    private void validateAndSetConnectionParams() {
-        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+    private void setConnectionParams() {
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
 
         if (baseUrl == null) {
             showMessage(getString(R.string.msg_add_payments_url));
@@ -98,20 +81,38 @@ public class RegisterCreditCardFragment extends BaseFragment {
         connection = ApiUtils.getConnection(baseUrl);
     }
 
-    private CreditCardRequest buildCreditCard() {
-        return new CreditCardRequest("EXTERNAL_CREDIT_CARD", etHolderName.getText().toString(), etBin.getText().toString(), etLastDigits.getText().toString(), etExpirationDate.getText().toString(), etBrand.getText().toString(), etExternalToken.getText().toString());
+    @OnClick(R.id.bt_plan_one)
+    public void onClickBtPlanOne() {
+        SubscriptionRequest subscriptionRequest = SubscriptionMock.buildSubscription();
+
+        subscriptionRequest.setPrice(new Money("BRL", 2990, 2));
+
+        subscribe(subscriptionRequest);
     }
 
-    public void register(CreditCardRequest creditCardRequest) {
-        connection.registerCreditCard(ApiUtils.buildHeaders(customerId), creditCardRequest).enqueue(new Callback<CreditCardResponse>() {
+    @OnClick(R.id.bt_plan_two)
+    public void onClickBtPlanTwo() {
+        SubscriptionRequest subscriptionRequest = SubscriptionMock.buildSubscription();
+
+        subscriptionRequest.setPrice(new Money("BRL", 3990, 2));
+
+        subscribe(subscriptionRequest);
+    }
+
+    private void subscribe(SubscriptionRequest subscriptionRequest) {
+        spinnerLoading.setVisibility(View.VISIBLE);
+
+        doSubscribe(subscriptionRequest);
+    }
+
+    private void doSubscribe(SubscriptionRequest subscriptionRequest) {
+        connection.subscriptionPlan(ApiUtils.buildHeaders(customerId), subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
-            public void onResponse(Call<CreditCardResponse> call, Response<CreditCardResponse> response) {
+            public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.i("CreditCardReturn:", response.body().toString());
+                    Log.i("SubscriptionReturn:", response.body().toString());
 
                     ((MainActivity) getActivity()).removeContent();
-
-                    ((MainActivity) getActivity()).saveSharedPreferences("creditCardId", response.body().getCreditCardId());
 
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
@@ -128,7 +129,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
+            public void onFailure(Call<SubscriptionResponse> call, Throwable t) {
                 call.cancel();
 
                 spinnerLoading.setVisibility(View.INVISIBLE);
