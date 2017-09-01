@@ -17,9 +17,10 @@ import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
 import com.br.god.father.ui.fragment.CustomerSettingsFragment;
 import com.br.god.father.ui.fragment.DashboardFragment;
+import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.creditCard.ListCreditCardFragment;
 import com.br.god.father.ui.fragment.creditCard.RegisterCreditCardFragment;
-import com.br.god.father.ui.fragment.RegisterCustomerFragment;
+import com.br.god.father.ui.fragment.payment.ListPaymentsFragment;
 import com.br.god.father.ui.fragment.subscription.ListSubscriptionFragment;
 import com.br.god.father.ui.fragment.subscription.RegisterSubscriptionFragment;
 
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         Fragment fragment = null;
-        Class fragmentClass = null;
+        Class<?> fragmentClass = null;
 
         if (menuItem.getItemId() == R.id.action_connection_settings) {
             fragmentClass = ConnectionSettingsFragment.class;
@@ -92,11 +93,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         return super.onOptionsItemSelected(menuItem);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         Fragment fragment = null;
-        Class fragmentClass;
+        Class<?> fragmentClass;
 
         switch (menuItem.getItemId()) {
             case R.id.nav_register_customer:
@@ -108,11 +108,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_register_creditCard:
                 fragmentClass = RegisterCreditCardFragment.class;
                 break;
-            case R.id.nav_plan:
+            case R.id.nav_register_subscription:
                 fragmentClass = RegisterSubscriptionFragment.class;
                 break;
             case R.id.nav_list_subscription:
                 fragmentClass = ListSubscriptionFragment.class;
+                break;
+            case R.id.nav_list_payment:
+                fragmentClass = ListPaymentsFragment.class;
                 break;
             case R.id.nav_authorize:
                 fragmentClass = AuthorizationFragment.class;

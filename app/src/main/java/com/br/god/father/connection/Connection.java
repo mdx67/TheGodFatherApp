@@ -10,7 +10,9 @@ import com.br.god.father.model.Customer;
 import com.br.god.father.model.SubscriptionListResponse;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
+import com.br.god.father.model.payment.PaymentListResponse;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -37,6 +39,10 @@ public interface Connection {
 
     @POST("v1/subscriptions")
     Call<SubscriptionResponse> subscriptionPlan(@HeaderMap Map<String, String> headers, @Body SubscriptionRequest subscriptionRequest);
+
+    //TODO: remover fixo
+    @GET("v1/payments?startDate=2017-07-01&endDate=2017-12-31")
+    Call<List<PaymentListResponse>> listPayments(@HeaderMap Map<String, String> headers);
 
     @POST("v1/payments")
     Call<AuthorizationResponse> authorize(@HeaderMap Map<String, String> headers, @Body AuthorizationRequest authorizationRequest);

@@ -2,30 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <!--<item-->
-        <!--android:id="@+id/nav_item_plan"-->
-        <!--android:icon="@drawable/ic_account_balance_wallet_black_24dp"-->
-        <!--android:title="Plano" />-->
+
         <item
             android:id="@+id/nav_register_customer"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="Cad. Cliente" />
+            android:title="@string/tittle_register_customer" />
         <item
             android:id="@+id/nav_list_credit_card"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="Listar Cartões" />
+            android:title="@string/tittle_list_credit_cards" />
         <item
             android:id="@+id/nav_register_creditCard"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="Cad. Cartão" />
+            android:title="@string/tittle_register_credit_card" />
         <item
-            android:id="@+id/nav_plan"
+            android:id="@+id/nav_register_subscription"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="Plano" />
+            android:title="@string/tittle_create_subscription" />
         <item
             android:id="@+id/nav_list_subscription"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
-            android:title="Listar Planos" />
+            android:title="@string/tittle_list_subscriptions" />
         <item
             android:id="@+id/nav_authorize"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
@@ -34,10 +31,9 @@
             android:id="@+id/nav_cancel"
             android:icon="@drawable/ic_account_balance_wallet_black_24dp"
             android:title="@string/tittle_cancel_refund" />
-        <!--<item-->
-        <!--android:id="@+id/nav_manage"-->
-        <!--android:icon="@drawable/ic_menu_manage"-->
-        <!--android:title="Settings" />-->
+        <item
+            android:id="@+id/nav_list_payment"
+            android:icon="@drawable/ic_account_balance_wallet_black_24dp"
+            android:title="@string/tittle_list_payments" />
     </group>
-
 </menu>

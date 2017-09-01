@@ -14,7 +14,6 @@ public class IJoinFlowTest {
 
     @Test
     public void flowTest() throws Exception {
-
         new RegisterCustomerTest().registerCustomer();
 
         Thread.sleep(3000);

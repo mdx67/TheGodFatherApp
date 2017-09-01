@@ -1,5 +1,7 @@
 package com.br.god.father.model;
 
+import java.util.List;
+
 public class TransactionDetail {
 
     private Money discount;
@@ -8,6 +10,7 @@ public class TransactionDetail {
     private Money shippingFee;
     private Money shippingDiscount;
     private Money insurance;
+    private List<Discount> discounts;
 
     public Money getDiscount() {
         return discount;
@@ -55,5 +58,13 @@ public class TransactionDetail {
 
     public void setInsurance(Money insurance) {
         this.insurance = insurance;
+    }
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(List<Discount> discounts) {
+        this.discounts = discounts;
     }
 }
