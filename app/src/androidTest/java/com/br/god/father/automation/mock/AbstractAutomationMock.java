@@ -56,17 +56,23 @@ public abstract class AbstractAutomationMock {
     }
 
     public static CreditCardRequest getCreditCard() {
-        Integer token = new Random().nextInt(999999);
-
-        token = token + 100000;
-
         return new CreditCardRequest("EXTERNAL_CREDIT_CARD",
                 "Fulano Beltrano",
-                token.toString(),
+                buildRandomToken().toString(),
                 "1234",
                 "01/28",
                 "VISA",
-                token.toString());
+                buildRandomToken().toString());
+    }
+
+    private static Integer buildRandomToken() {
+        Integer token =  new Random().nextInt(999999);
+
+        if (token.toString().length() < 6) {
+            return buildRandomToken();
+        }
+
+        return token;
     }
 
     public static AuthorizationRequest getAuthorization() {

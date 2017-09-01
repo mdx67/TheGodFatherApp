@@ -15,6 +15,7 @@ import com.br.god.father.mock.SubscriptionMock;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Error;
 import com.br.god.father.model.Money;
+import com.br.god.father.model.Payment;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
 import com.br.god.father.ui.activity.MainActivity;
@@ -95,6 +96,8 @@ public class RegisterSubscriptionFragment extends BaseFragment {
         SubscriptionRequest subscriptionRequest = SubscriptionMock.buildSubscription();
 
         subscriptionRequest.setPrice(new Money("BRL", 3990, 2));
+
+        subscriptionRequest.setPayment(new Payment("CREDIT_CARD", ((MainActivity) getActivity()).getSharedPreferences("creditCardId")));
 
         subscribe(subscriptionRequest);
     }

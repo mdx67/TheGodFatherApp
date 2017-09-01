@@ -26,5 +26,7 @@
     <string name="tittle_list_subscriptions">Listar assinaturas</string>
     <string name="tittle_create_subscription">Assinatura</string>
     <string name="tittle_list_credit_cards">Listar Cartões</string>
+    <string name="msg_add_subscrition_url">Cadastre a url de subscription nas configs.</string>
+
 
 </resources>

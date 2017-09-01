@@ -53,7 +53,7 @@ public class ListCreditCardFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_list_credit_card, container, false);
 
         ButterKnife.bind(this, view);
-        MainActivity.toolbar.setTitle(R.string.tittle_register_credit_card);
+        MainActivity.toolbar.setTitle(R.string.tittle_list_credit_cards);
 
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);

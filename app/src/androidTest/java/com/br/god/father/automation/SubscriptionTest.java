@@ -44,7 +44,7 @@ public class SubscriptionTest {
     @Test
     public void registePlan() throws InterruptedException {
         onView(navigationIconMatcher()).perform(click());
-        onView(withText("Plano")).perform(click());
+        onView(withText("Assinatura")).perform(click());
 
         onView(ViewMatchers.withId(R.id.bt_plan_two)).perform(click());
 

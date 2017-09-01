@@ -53,7 +53,7 @@ public class ListSubscriptionFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_list_subscription, container, false);
 
         ButterKnife.bind(this, view);
-        MainActivity.toolbar.setTitle(R.string.tittle_register_credit_card);
+        MainActivity.toolbar.setTitle(R.string.tittle_list_subscriptions);
 
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
@@ -72,7 +72,7 @@ public class ListSubscriptionFragment extends BaseFragment {
         baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
 
         if (baseUrl == null) {
-            showMessage(getString(R.string.msg_add_payments_url));
+            showMessage(getString(R.string.msg_add_subscrition_url));
 
             return;
         }
