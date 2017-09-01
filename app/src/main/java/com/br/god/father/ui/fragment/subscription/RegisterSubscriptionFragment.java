@@ -1,4 +1,4 @@
-package com.br.god.father.ui.fragment;
+package com.br.god.father.ui.fragment.subscription;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +18,7 @@ import com.br.god.father.model.Money;
 import com.br.god.father.model.SubscriptionRequest;
 import com.br.god.father.model.SubscriptionResponse;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.ui.fragment.BaseFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SubscriptionFragment extends BaseFragment {
+public class RegisterSubscriptionFragment extends BaseFragment {
 
     private static String baseUrl;
     private static String customerId;
@@ -38,8 +39,8 @@ public class SubscriptionFragment extends BaseFragment {
     @BindView(R.id.spinner_loading_subscription)
     ProgressBar spinnerLoading;
 
-    public static SubscriptionFragment newInstance() {
-        return new SubscriptionFragment();
+    public static RegisterSubscriptionFragment newInstance() {
+        return new RegisterSubscriptionFragment();
     }
 
     @Nullable
@@ -105,10 +106,6 @@ public class SubscriptionFragment extends BaseFragment {
     }
 
     private void doSubscribe(SubscriptionRequest subscriptionRequest) {
-
-        //TODO: tirar isso depois que tirar o mock do subscription
-        customerId = "83237f28-8853-41a3-83d0-03457db6d014";
-
         connection.subscriptionPlan(ApiUtils.buildHeaders(customerId), subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
             public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {

@@ -1,84 +1,75 @@
-package com.br.god.father.ui.fragment;
+package com.br.god.father.ui.fragment.subscription;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
-import com.br.god.father.model.CreditCardRequest;
-import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Error;
+import com.br.god.father.model.SubscriptionListResponse;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.ui.fragment.BaseFragment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterCreditCardFragment extends BaseFragment {
+public class ListSubscriptionFragment extends BaseFragment {
 
-    @BindView(R.id.et_credit_card_holder)
-    EditText etHolderName;
-    @BindView(R.id.et_credit_card_bin)
-    EditText etBin;
-    @BindView(R.id.et_credit_card_last_digits)
-    EditText etLastDigits;
-    @BindView(R.id.et_credit_card_expiration_date)
-    EditText etExpirationDate;
-    @BindView(R.id.et_credit_card_brand)
-    EditText etBrand;
-    @BindView(R.id.et_credit_card_external_token)
-    EditText etExternalToken;
-
-    @BindView(R.id.spinner_loading_register_credit_card)
+    @BindView(R.id.spinner_loading_list_subscription)
     ProgressBar spinnerLoading;
 
     private static String baseUrl;
     private static String customerId;
     private static Connection connection;
 
-    public static RegisterCreditCardFragment newInstance() {
-        return new RegisterCreditCardFragment();
+    private ArrayAdapter<String> adapter;
+    private SubscriptionListResponse subscriptionListResponse = new SubscriptionListResponse();
+    private List<String> listOfSubscriptions = new ArrayList<>();
+
+    public static ListSubscriptionFragment newInstance() {
+        return new ListSubscriptionFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_register_credit_card, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_subscription, container, false);
 
         ButterKnife.bind(this, view);
         MainActivity.toolbar.setTitle(R.string.tittle_register_credit_card);
 
-        validateAndSetConnectionParams();
-
         spinnerLoading.setVisibility(View.GONE);
         spinnerLoading.setClickable(false);
+
+        adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listOfSubscriptions);
+        adapter.notifyDataSetChanged();
+
+        validateAndSetConnectionParams();
+
+        list();
 
         return view;
     }
 
-    @OnClick(R.id.bt_credit_card_register)
-    public void onClickBtCrediCardRegister() {
-        spinnerLoading.setVisibility(View.VISIBLE);
-
-        register(buildCreditCard());
-    }
-
     private void validateAndSetConnectionParams() {
-        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("walletUrl");
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl");
 
         if (baseUrl == null) {
             showMessage(getString(R.string.msg_add_payments_url));
@@ -98,25 +89,39 @@ public class RegisterCreditCardFragment extends BaseFragment {
         connection = ApiUtils.getConnection(baseUrl);
     }
 
-    private CreditCardRequest buildCreditCard() {
-        return new CreditCardRequest("EXTERNAL_CREDIT_CARD", etHolderName.getText().toString(), etBin.getText().toString(), etLastDigits.getText().toString(), etExpirationDate.getText().toString(), etBrand.getText().toString(), etExternalToken.getText().toString());
+    private void buildSubscriptionList() {
+        ListView lv = (ListView) this.getView().findViewById(R.id.layout_list_subscription);
+
+        if (subscriptionListResponse != null) {
+            subscriptionListResponse.getSubscriptions().stream().forEach(creditCard -> listOfSubscriptions.add(creditCard.getDescription()));
+        }
+
+        adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, listOfSubscriptions);
+
+        lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener((parent, view1, position, arg3) -> {
+            view1.setSelected(true);
+
+            showAlertDialogWithOKButton("Description", (String) ((TextView) view1).getText());
+        });
     }
 
-    public void register(CreditCardRequest creditCardRequest) {
-        connection.registerCreditCard(ApiUtils.buildHeaders(customerId), creditCardRequest).enqueue(new Callback<CreditCardResponse>() {
+    public void list() {
+        spinnerLoading.setVisibility(View.VISIBLE);
+
+        connection.listSubscriptions(ApiUtils.buildHeaders(customerId)).enqueue(new Callback<SubscriptionListResponse>() {
             @Override
-            public void onResponse(Call<CreditCardResponse> call, Response<CreditCardResponse> response) {
+            public void onResponse(Call<SubscriptionListResponse> call, Response<SubscriptionListResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.i("CreditCardReturn:", response.body().toString());
+                    subscriptionListResponse = response.body();
 
-                    ((MainActivity) getActivity()).removeContent();
-
-                    ((MainActivity) getActivity()).saveSharedPreferences("creditCardId", response.body().getCreditCardId());
+                    buildSubscriptionList();
 
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
                     try {
-                        Error error = new ObjectMapper().readValue(response.errorBody().string().toString(), Error.class);
+                        Error error = new ObjectMapper().readValue(response.errorBody().string(), Error.class);
 
                         showErrorMessage(error);
                     } catch (IOException e) {

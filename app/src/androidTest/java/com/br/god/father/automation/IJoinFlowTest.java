@@ -17,7 +17,7 @@ public class IJoinFlowTest {
 
         new RegisterCustomerTest().registerCustomer();
 
-        Thread.sleep(2000);
+        Thread.sleep(3000);
 
         new RegisterCreditCardTest().registerCreditCad();
 
