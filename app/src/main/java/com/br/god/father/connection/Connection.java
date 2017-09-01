@@ -3,6 +3,7 @@ package com.br.god.father.connection;
 import com.br.god.father.model.AuthorizationRequest;
 import com.br.god.father.model.AuthorizationResponse;
 import com.br.god.father.model.CreateCustomerRequest;
+import com.br.god.father.model.CreditCardListResponse;
 import com.br.god.father.model.CreditCardRequest;
 import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.Customer;
@@ -14,6 +15,7 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -22,6 +24,9 @@ public interface Connection {
 
     @POST("v1/customers")
     Call<Customer> registerCustomer(@HeaderMap Map<String, String> headers, @Body CreateCustomerRequest customer);
+
+    @GET("v1/wallet/credit-cards")
+    Call<CreditCardListResponse> listCreditCard(@HeaderMap Map<String, String> headers);
 
     @POST("v1/wallet/credit-cards")
     Call<CreditCardResponse> registerCreditCard(@HeaderMap Map<String, String> headers, @Body CreditCardRequest creditCardRequest);

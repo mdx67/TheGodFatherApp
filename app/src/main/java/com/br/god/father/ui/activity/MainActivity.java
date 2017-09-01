@@ -17,6 +17,7 @@ import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
 import com.br.god.father.ui.fragment.CustomerSettingsFragment;
 import com.br.god.father.ui.fragment.DashboardFragment;
+import com.br.god.father.ui.fragment.ListCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCreditCardFragment;
 import com.br.god.father.ui.fragment.RegisterCustomerFragment;
 import com.br.god.father.ui.fragment.SubscriptionFragment;
@@ -99,6 +100,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         switch (menuItem.getItemId()) {
             case R.id.nav_register_customer:
                 fragmentClass = RegisterCustomerFragment.class;
+                break;
+            case R.id.nav_list_credit_card:
+                fragmentClass = ListCreditCardFragment.class;
                 break;
             case R.id.nav_register_creditCard:
                 fragmentClass = RegisterCreditCardFragment.class;
