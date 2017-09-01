@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Recurring {
 
-    private Date starDate;
+    private String startDate;
     public Integer duration;
     private String period;
     private Integer cycles;
@@ -12,19 +12,19 @@ public class Recurring {
     public Recurring() {
     }
 
-    public Recurring(Date starDate, Integer duration, String period, Integer cycles) {
-        this.starDate = starDate;
+    public Recurring(String startDate, Integer duration, String period, Integer cycles) {
+        this.startDate = startDate;
         this.duration = duration;
         this.period = period;
         this.cycles = cycles;
     }
 
-    public Date getStarDate() {
-        return starDate;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setStarDate(Date starDate) {
-        this.starDate = starDate;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
     public Integer getDuration() {

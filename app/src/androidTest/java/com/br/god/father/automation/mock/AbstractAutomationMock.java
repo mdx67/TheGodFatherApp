@@ -58,6 +58,8 @@ public abstract class AbstractAutomationMock {
     public static CreditCardRequest getCreditCard() {
         Integer token = new Random().nextInt(999999);
 
+        token = token + 100000;
+
         return new CreditCardRequest("EXTERNAL_CREDIT_CARD",
                 "Fulano Beltrano",
                 token.toString(),

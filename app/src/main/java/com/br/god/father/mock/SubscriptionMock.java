@@ -23,7 +23,7 @@ public class SubscriptionMock {
         subscriptionRequest.setDescription("Plano 2 - COMBO:  internet + dados moveis");
         subscriptionRequest.setType("STANDARD");
 
-        subscriptionRequest.setRecurring(new Recurring(DateUtils.fromString("2017-10-01"), 1, "MONTH", 6));
+        subscriptionRequest.setRecurring(new Recurring("2017-10-01", 1, "MONTH", 6));
 
         subscriptionRequest.setPayment(new Payment("CREDIT_CARD", "CRC-21be8fa4-a29b-410c-9f63-1d49cab63027"));
 
@@ -42,6 +42,7 @@ public class SubscriptionMock {
         item.setCompositionId("d497bdc4-57e1-4652-86d2-1f8e32435aba");
         item.setComponent("INTERNET_MOBILE");
         item.setPrice(new Money("BRL", 3990, 2));
+        item.setRecurrent(true);
 
         ItemAttributes attributes = new ItemAttributes();
         attributes.setName("volume");

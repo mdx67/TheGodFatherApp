@@ -6,12 +6,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 
 import com.br.god.father.R;
 import com.br.god.father.connection.ApiUtils;
 import com.br.god.father.connection.Connection;
 import com.br.god.father.mock.SubscriptionMock;
+import com.br.god.father.model.CreditCardResponse;
 import com.br.god.father.model.CustomerApp;
 import com.br.god.father.model.Error;
 import com.br.god.father.model.Money;
@@ -21,6 +23,8 @@ import com.br.god.father.ui.activity.MainActivity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,10 +109,6 @@ public class SubscriptionFragment extends BaseFragment {
     }
 
     private void doSubscribe(SubscriptionRequest subscriptionRequest) {
-
-        //TODO: tirar isso depois que tirar o mock do subscription
-        customerId = "83237f28-8853-41a3-83d0-03457db6d014";
-
         connection.subscriptionPlan(ApiUtils.buildHeaders(customerId), subscriptionRequest).enqueue(new Callback<SubscriptionResponse>() {
             @Override
             public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {

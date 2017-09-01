@@ -13,6 +13,7 @@ public class OfferItem {
     private String component;
     private List<ItemAttributes> attributes;
     private Money price;
+    private Boolean recurrent;
 
     public String getCatalogOfferItemId() {
         return catalogOfferItemId;
@@ -84,5 +85,13 @@ public class OfferItem {
 
     public void setPrice(Money price) {
         this.price = price;
+    }
+
+    public Boolean getRecurrent() {
+        return recurrent;
+    }
+
+    public void setRecurrent(Boolean recurrent) {
+        this.recurrent = recurrent;
     }
 }
