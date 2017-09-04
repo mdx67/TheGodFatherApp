@@ -17,11 +17,7 @@ import butterknife.OnClick;
 
 public class ConnectionSettingsFragment extends BaseFragment {
 
-//    @BindView(R.id.et_settings_login)
-//    EditText etLogin;
-//    @BindView(R.id.et_settings_password)
-//    EditText etPassword;
-    @BindView(R.id.et_settings__payments_url)
+    @BindView(R.id.et_settings_payments_url)
     EditText etPaymentUrl;
     @BindView(R.id.et_settings_wallet_url)
     EditText etWalletUrl;
@@ -29,6 +25,8 @@ public class ConnectionSettingsFragment extends BaseFragment {
     EditText etSubscriptionUrl;
     @BindView(R.id.et_settings_customer_url)
     EditText etCustomerUrl;
+    @BindView(R.id.et_settings_customer_query_url)
+    EditText etCustomerQueryUrl;
 
     @BindView(R.id.radio_dev)
     RadioButton rbDev;
@@ -75,23 +73,21 @@ public class ConnectionSettingsFragment extends BaseFragment {
     }
 
     private void saveParams() {
-//        ((MainActivity) getActivity()).saveSharedPreferences("login", etLogin.getText().toString());
-//        ((MainActivity) getActivity()).saveSharedPreferences("password", etPassword.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("paymentUrl", etPaymentUrl.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("walletUrl", etWalletUrl.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("subscriptionUrl", etSubscriptionUrl.getText().toString());
         ((MainActivity) getActivity()).saveSharedPreferences("customerUrl", etCustomerUrl.getText().toString());
+        ((MainActivity) getActivity()).saveSharedPreferences("customerQueryUrl", etCustomerQueryUrl.getText().toString());
 
         ((MainActivity) getActivity()).saveSharedPreferences("environment", buildEnvironmentName());
     }
 
     private void setFields() {
-//        etLogin.setText(((MainActivity) getActivity()).getSharedPreferences("login"));
-//        etPassword.setText(((MainActivity) getActivity()).getSharedPreferences("password"));
         etPaymentUrl.setText(((MainActivity) getActivity()).getSharedPreferences("paymentUrl"));
         etWalletUrl.setText(((MainActivity) getActivity()).getSharedPreferences("walletUrl"));
         etSubscriptionUrl.setText(((MainActivity) getActivity()).getSharedPreferences("subscriptionUrl"));
         etCustomerUrl.setText(((MainActivity) getActivity()).getSharedPreferences("customerUrl"));
+        etCustomerQueryUrl.setText(((MainActivity) getActivity()).getSharedPreferences("customerQueryUrl"));
 
         String radioOption = ((MainActivity) getActivity()).getSharedPreferences("environment");
 
