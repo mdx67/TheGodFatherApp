@@ -31,17 +31,17 @@ import retrofit2.Response;
 
 public class RegisterCreditCardFragment extends BaseFragment {
 
-    @BindView(R.id.et_credit_card_holder)
+    @BindView(R.id.et_register_credit_card_holder)
     EditText etHolderName;
-    @BindView(R.id.et_credit_card_bin)
+    @BindView(R.id.et_register_credit_card_bin)
     EditText etBin;
-    @BindView(R.id.et_credit_card_last_digits)
+    @BindView(R.id.et_register_credit_card_last_digits)
     EditText etLastDigits;
-    @BindView(R.id.et_credit_card_expiration_date)
+    @BindView(R.id.et_register_credit_card_expiration_date)
     EditText etExpirationDate;
-    @BindView(R.id.et_credit_card_brand)
+    @BindView(R.id.et_register_credit_card_brand)
     EditText etBrand;
-    @BindView(R.id.et_credit_card_external_token)
+    @BindView(R.id.et_register_credit_card_token)
     EditText etExternalToken;
 
     @BindView(R.id.spinner_loading_register_credit_card)
@@ -71,7 +71,7 @@ public class RegisterCreditCardFragment extends BaseFragment {
         return view;
     }
 
-    @OnClick(R.id.bt_credit_card_register)
+    @OnClick(R.id.bt_register_credit_card_save)
     public void onClickBtCrediCardRegister() {
         spinnerLoading.setVisibility(View.VISIBLE);
 

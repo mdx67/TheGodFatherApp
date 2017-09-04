@@ -2,7 +2,6 @@ package com.br.god.father.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,19 +38,19 @@ public class RegisterCustomerFragment extends BaseFragment {
 
     private static Connection connection;
 
-    @BindView(R.id.et_name)
+    @BindView(R.id.et_register_customer_name)
     EditText etName;
     @BindView(R.id.et_register_customer_email)
     EditText etEmail;
-    @BindView(R.id.et_document_number)
+    @BindView(R.id.et_register_customer_doc)
     EditText etDocumentNumber;
-    @BindView(R.id.et_address_street)
+    @BindView(R.id.et_register_customer_address)
     EditText etAddressStreet;
-    @BindView(R.id.et_address_number)
+    @BindView(R.id.et_register_customer_address_number)
     EditText etAddressNumber;
-    @BindView(R.id.et_address_district)
+    @BindView(R.id.et_register_customer_district)
     EditText etAddressDistinct;
-    @BindView(R.id.et_address_postal_code)
+    @BindView(R.id.et_register_customer_postal_code)
     EditText etAddressPostalCode;
 
     @BindView(R.id.spinner_loading_register_customer)
@@ -88,7 +87,7 @@ public class RegisterCustomerFragment extends BaseFragment {
         return view;
     }
 
-    @OnClick(R.id.bt_register_customer)
+    @OnClick(R.id.bt_register_customer_save)
     public void onClickBtRegisterCustomer() {
         spinnerLoading.setVisibility(View.VISIBLE);
 
@@ -108,7 +107,7 @@ public class RegisterCustomerFragment extends BaseFragment {
                     showMessage(getString(R.string.msg_status_returned) + response.code());
                 } else {
                     try {
-                        Error error = new ObjectMapper().readValue(response.errorBody().string().toString(), Error.class);
+                        Error error = new ObjectMapper().readValue(response.errorBody().string(), Error.class);
 
                         showErrorMessage(error);
                     } catch (IOException e) {

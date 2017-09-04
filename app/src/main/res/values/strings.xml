@@ -27,6 +27,20 @@
     <string name="tittle_create_subscription">Assinatura</string>
     <string name="tittle_list_credit_cards">Listar Cartões</string>
     <string name="msg_add_subscrition_url">Cadastre a url de subscription nas configs.</string>
+    <string name="label_district">Bairro</string>
+    <string name="label_save">Salvar</string>
+    <string name="label_postal_code">CEP</string>
+    <string name="label_number">Número</string>
+    <string name="label_address">Endereço</string>
+    <string name="label_cpf">CPF</string>
+    <string name="label_name">Nome</string>
+    <string name="label_email">E-mail</string>
+    <string name="label_last_digits">Ultimos digitos</string>
+    <string name="label_brand">Bandeira</string>
+    <string name="label_validate_date">Data de validade</string>
+    <string name="label_bin">Bin</string>
+    <string name="label_holer">Holder</string>
+    <string name="label_token">Token</string>
 
 
 </resources>
