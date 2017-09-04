@@ -69,7 +69,7 @@ public class ListPaymentsFragment extends BaseFragment {
     }
 
     private void validateAndSetConnectionParams() {
-        baseUrl = "";
+        baseUrl = ((MainActivity) getActivity()).getSharedPreferences("customerQueryUrl");
 
         if (baseUrl == null) {
             showMessage(getString(R.string.msg_add_payments_url));
