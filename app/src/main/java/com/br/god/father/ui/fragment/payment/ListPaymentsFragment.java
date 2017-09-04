@@ -2,6 +2,7 @@ package com.br.god.father.ui.fragment.payment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ public class ListPaymentsFragment extends BaseFragment {
     private List<PaymentListResponse> paymentListResponse = new ArrayList<>();
     private List<String> listOfPayments = new ArrayList<>();
 
+    private FloatingActionButton fab;
+
     public static ListPaymentsFragment newInstance() {
         return new ListPaymentsFragment();
     }
@@ -64,6 +67,17 @@ public class ListPaymentsFragment extends BaseFragment {
         validateAndSetConnectionParams();
 
         list();
+
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.setVisibility(View.VISIBLE);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                ((MainActivity) getActivity()).replaceFragment(new AuthorizationFragment());
+            }
+        });
 
         return view;
     }
@@ -93,6 +107,8 @@ public class ListPaymentsFragment extends BaseFragment {
         ListView lv = (ListView) this.getView().findViewById(R.id.layout_list_payment);
 
         if (paymentListResponse != null) {
+            listOfPayments = new ArrayList<>();
+
             paymentListResponse.stream().forEach(creditCard -> listOfPayments.add(creditCard.getStatus()));
         }
 
@@ -141,5 +157,12 @@ public class ListPaymentsFragment extends BaseFragment {
                 showAlertDialogWithOKButton("Erro", t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        fab.setVisibility(View.INVISIBLE);
+
+        super.onDestroyView();
     }
 }

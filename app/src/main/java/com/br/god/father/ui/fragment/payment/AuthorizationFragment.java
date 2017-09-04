@@ -1,4 +1,4 @@
-package com.br.god.father.ui.fragment;
+package com.br.god.father.ui.fragment.payment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +25,8 @@ import com.br.god.father.model.TransactionDescription;
 import com.br.god.father.model.TransactionDetail;
 import com.br.god.father.model.TransactionItem;
 import com.br.god.father.ui.activity.MainActivity;
+import com.br.god.father.ui.fragment.BaseFragment;
+import com.br.god.father.ui.fragment.CancelFragment;
 
 import java.util.Arrays;
 import java.util.HashMap;

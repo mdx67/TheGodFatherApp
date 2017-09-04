@@ -1,7 +1,5 @@
 package com.br.god.father.model;
 
-import java.util.Date;
-
 public class Recurring {
 
     private String startDate;

@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.br.god.father.R;
-import com.br.god.father.ui.fragment.AuthorizationFragment;
+import com.br.god.father.ui.fragment.payment.AuthorizationFragment;
 import com.br.god.father.ui.fragment.CancelFragment;
 import com.br.god.father.ui.fragment.ConnectionSettingsFragment;
 import com.br.god.father.ui.fragment.CustomerSettingsFragment;
